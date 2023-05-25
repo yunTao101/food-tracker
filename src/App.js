@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Please wait, querying");
 
   useEffect(() => {
-    fetch("http://localhost:8000/message")
+    fetch("http://localhost:8000/initialize")
       .then((res) => res.json())
       .then((data) => setMessage(data.message));
   }, []);
