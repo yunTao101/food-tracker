@@ -2,6 +2,7 @@
 Setup application:
 
 Run "npm install" in food-tracker and food-tracker/server 
+
 In SQL workbench, run initialize.sql
 
 Start application: 
