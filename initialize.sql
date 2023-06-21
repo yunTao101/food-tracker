@@ -7,3 +7,4 @@ SELECT * FROM users;
 create user 'cs348admin'@'localhost' identified by 'admin';
 grant all on foodData.* to 'cs348admin'@'localhost';	
 alter user 'cs348admin'@'localhost' identified with mysql_native_password by 'admin';
+
