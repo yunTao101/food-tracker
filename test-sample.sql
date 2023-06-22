@@ -4,7 +4,7 @@ USE testFoodData;
 
 -- Creating all tables
 CREATE TABLE Users (
-    uID INT NOT NULL AUTO_INCREMENT, 
+    uID INT NOT NULL, 
     accountType VARCHAR(5) NOT NULL, 
     firstName VARCHAR(100),
     lastName VARCHAR(100),
@@ -13,11 +13,11 @@ CREATE TABLE Users (
     email VARCHAR(255) UNIQUE,
     age INT,
     gender VARCHAR(1),
-    weight INT,
-    height VARCHAR(4),
-    desiredWeight INT,
+    weight FLOAT,
+    height INT,
+    desiredWeight FLOAT,
     caloricGoal INT,
-    PRIMARY KEY(uid)
+    PRIMARY KEY(uID)
 );
 
 CREATE TABLE FoodIngredients(
@@ -102,51 +102,51 @@ UPDATE FoodIngredients SET name = "pita", servingSize =  150 WHERE foodID = 1188
 Select * FROM FoodIngredients;
 
 
--- Testing FoodCustomMeals
-INSERT INTO FoodCustomMeals VALUES (1, 1, "Lasagna", 4, 0);
-INSERT INTO FoodCustomMeals VALUES (1, 34, "Lasagna", 3, 1);
-INSERT INTO FoodCustomMeals VALUES (1, 7, "Lasagna", 5, 1);
-INSERT INTO FoodCustomMeals VALUES (2, 3, "MacNCheese", 1, 1);
-INSERT INTO FoodCustomMeals VALUES (2, 1, "MacNCheese", 1, 1);
-INSERT INTO FoodCustomMeals VALUES (3, 45, "Burger", 2, 1);
-INSERT INTO FoodCustomMeals VALUES (3, 23, "Burger", 3, 1);
-INSERT INTO FoodCustomMeals VALUES (4, 65, "Salad", 1, 1);
--- Insert new Custom Meal 
-Select * FROM FoodCustomMeals;
-INSERT INTO FoodCustomMeals VALUES (4, 816, "Salad", 1, 1);
-Select * FROM FoodCustomMeals;
--- Delete Meal
-Select * FROM FoodCustomMeals;
-DELETE FROM FoodCustomMeals WHERE mealID = "Burger";
-Select * FROM FoodCustomMeals;
--- Update Meal
-Select * FROM FoodCustomMeals;
-UPDATE FoodCustomMeals SET quantity = 2 WHERE foodID = 30 AND mealID = 1;
-Select * FROM FoodCustomMeals;
+-- -- Testing FoodCustomMeals
+-- INSERT INTO FoodCustomMeals VALUES (1, 1, "Lasagna", 4, 0);
+-- INSERT INTO FoodCustomMeals VALUES (1, 34, "Lasagna", 3, 1);
+-- INSERT INTO FoodCustomMeals VALUES (1, 7, "Lasagna", 5, 1);
+-- INSERT INTO FoodCustomMeals VALUES (2, 3, "MacNCheese", 1, 1);
+-- INSERT INTO FoodCustomMeals VALUES (2, 1, "MacNCheese", 1, 1);
+-- INSERT INTO FoodCustomMeals VALUES (3, 45, "Burger", 2, 1);
+-- INSERT INTO FoodCustomMeals VALUES (3, 23, "Burger", 3, 1);
+-- INSERT INTO FoodCustomMeals VALUES (4, 65, "Salad", 1, 1);
+-- -- Insert new Custom Meal 
+-- Select * FROM FoodCustomMeals;
+-- INSERT INTO FoodCustomMeals VALUES (4, 816, "Salad", 1, 1);
+-- Select * FROM FoodCustomMeals;
+-- -- Delete Meal
+-- Select * FROM FoodCustomMeals;
+-- DELETE FROM FoodCustomMeals WHERE mealID = "Burger";
+-- Select * FROM FoodCustomMeals;
+-- -- Update Meal
+-- Select * FROM FoodCustomMeals;
+-- UPDATE FoodCustomMeals SET quantity = 2 WHERE foodID = 30 AND mealID = 1;
+-- Select * FROM FoodCustomMeals;
 
 
--- Testing EatenIngredients
--- PUT THE INSERTS HERE  <-----------------------------
--- Select how many times a user ate a particular ingredient given a date range
-SELECT * FROM EatenIngredients WHERE date BETWEEN "2023-06-20 00:00:00" AND "2023-06-20 23:59:59" AND foodID = 254 AND uID = 2;
--- Marking Ingredient as Eaten
-Select * FROM EatenIngredients;
-INSERT INTO EatenIngredients VALUES (421, 5, GETDATE());
-Select * FROM EatenIngredients;
--- Removing Ingredient as Eaten
-Select * FROM EatenIngredients;
-DELETE FROM EatenIngredients WHERE foodID = 421 AND date = "2023-06-21 20:01:33.817" AND uID = 5;
-Select * FROM EatenIngredients;
+-- -- Testing EatenIngredients
+-- -- PUT THE INSERTS HERE  <-----------------------------
+-- -- Select how many times a user ate a particular ingredient given a date range
+-- SELECT * FROM EatenIngredients WHERE date BETWEEN "2023-06-20 00:00:00" AND "2023-06-20 23:59:59" AND foodID = 254 AND uID = 2;
+-- -- Marking Ingredient as Eaten
+-- Select * FROM EatenIngredients;
+-- INSERT INTO EatenIngredients VALUES (421, 5, GETDATE());
+-- Select * FROM EatenIngredients;
+-- -- Removing Ingredient as Eaten
+-- Select * FROM EatenIngredients;
+-- DELETE FROM EatenIngredients WHERE foodID = 421 AND date = "2023-06-21 20:01:33.817" AND uID = 5;
+-- Select * FROM EatenIngredients;
 
 
--- Testing EatenCustomMeal
--- PUT THE INSERTS HERE <-----------------------------
--- Adding Meal eaten
-Select * from EatenCustomMeal;
-INSERT INTO EatenCustomMeal VALUES (25, 5, GETDATE());
-Select * from EatenCustomMeal;
--- Deleting Meal eaten
-Select * from EatenCustomMeal;
-DELETE FROM EatenCustomMeal WHERE mealID = 25 AND date = "2023-06-23 20:01:33.817" AND uID = 5;
-Select * from EatenCustomMeal;
+-- -- Testing EatenCustomMeal
+-- -- PUT THE INSERTS HERE <-----------------------------
+-- -- Adding Meal eaten
+-- Select * from EatenCustomMeal;
+-- INSERT INTO EatenCustomMeal VALUES (25, 5, GETDATE());
+-- Select * from EatenCustomMeal;
+-- -- Deleting Meal eaten
+-- Select * from EatenCustomMeal;
+-- DELETE FROM EatenCustomMeal WHERE mealID = 25 AND date = "2023-06-23 20:01:33.817" AND uID = 5;
+-- Select * from EatenCustomMeal;
 
