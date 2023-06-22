@@ -127,28 +127,6 @@ SELECT * FROM FoodCustomMeals ORDER BY mealID;
 UPDATE FoodCustomMeals SET quantity = 2 WHERE foodID = 30 AND mealID = 1;
 SELECT * FROM FoodCustomMeals ORDER BY mealID;
 
--- -- Testing FoodCustomMeals
--- INSERT INTO FoodCustomMeals VALUES (1, 1, "Lasagna", 4, 0);
--- INSERT INTO FoodCustomMeals VALUES (1, 34, "Lasagna", 3, 1);
--- INSERT INTO FoodCustomMeals VALUES (1, 7, "Lasagna", 5, 1);
--- INSERT INTO FoodCustomMeals VALUES (2, 3, "MacNCheese", 1, 1);
--- INSERT INTO FoodCustomMeals VALUES (2, 1, "MacNCheese", 1, 1);
--- INSERT INTO FoodCustomMeals VALUES (3, 45, "Burger", 2, 1);
--- INSERT INTO FoodCustomMeals VALUES (3, 23, "Burger", 3, 1);
--- INSERT INTO FoodCustomMeals VALUES (4, 65, "Salad", 1, 1);
--- -- Insert new Custom Meal 
--- Select * FROM FoodCustomMeals;
--- INSERT INTO FoodCustomMeals VALUES (4, 816, "Salad", 1, 1);
--- Select * FROM FoodCustomMeals;
--- -- Delete Meal
--- Select * FROM FoodCustomMeals;
--- DELETE FROM FoodCustomMeals WHERE mealID = "Burger";
--- Select * FROM FoodCustomMeals;
--- -- Update Meal
--- Select * FROM FoodCustomMeals;
--- UPDATE FoodCustomMeals SET quantity = 2 WHERE foodID = 30 AND mealID = 1;
--- Select * FROM FoodCustomMeals;
-
 
 -- -- Testing EatenIngredients
 -- -- PUT THE INSERTS HERE  <-----------------------------
