@@ -88,6 +88,11 @@ INSERT INTO FoodIngredients VALUES(1176, 1, "Lettuce, raw, green leaf", 100, 15,
 INSERT INTO FoodIngredients VALUES(1188, 1, "Bread, whole-wheat, pita", 100, 262, 9.80, 55.89, 2.87, 1.7);
 INSERT INTO FoodIngredients VALUES(2009, 1, "Sweet potato, unprepared, raw", 100, 86, 6.10, 20.12, 4.18, 0.1);
 INSERT INTO FoodIngredients VALUES(3757, 1, "Chicken breast, sliced, fat-free, oven-roasted", 100, 79, 16.79, 2.17, 0.10, 0.4);
+INSERT INTO FoodIngredients VALUES (30, 1, 'Tomato', 100, 15, 1.36, 2.87, 0.78, 0.2);
+INSERT INTO FoodIngredients VALUES (54, 1, 'Tomato Paste', 100, 15, 1.36, 2.87, 0.78, 0.2);
+INSERT INTO FoodIngredients VALUES (8, 1, 'Macoroni', 100, 15, 1.36, 2.87, 0.78, 0.2);
+INSERT INTO FoodIngredients VALUES (816, 1, 'Mozzerella Cheese', 100, 15, 1.36, 2.87, 0.78, 0.2);
+INSERT INTO FoodIngredients VALUES (973, 1, 'Lettuce', 100, 15, 1.36, 2.87, 0.78, 0.2);
 -- Insert New Ingredient
 Select * FROM FoodIngredients;
 INSERT INTO FoodIngredients VALUES (3758, 2, "roti", 100, 200, 0.1, 60, 5, 3);
@@ -101,6 +106,26 @@ Select * FROM FoodIngredients;
 UPDATE FoodIngredients SET name = "pita", servingSize =  150 WHERE foodID = 1188 AND uid = 1;
 Select * FROM FoodIngredients;
 
+
+-- Insert into FoodCustomMeals
+INSERT INTO FoodCustomMeals VALUES (1, 30, 'Lasagna', 4, 1);
+INSERT INTO FoodCustomMeals VALUES (1, 54, 'Lasagna', 3, 2);
+INSERT INTO FoodCustomMeals VALUES (1, 8, 'Lasagna', 5, 2);
+INSERT INTO FoodCustomMeals VALUES (2, 30, 'MacNCheese', 1, 2);
+INSERT INTO FoodCustomMeals VALUES (2, 8, 'MacNCheese', 1, 2);
+INSERT INTO FoodCustomMeals VALUES (3, 816, 'Burger', 2, 2);
+INSERT INTO FoodCustomMeals VALUES (3, 973, 'Burger', 3, 2);
+INSERT INTO FoodCustomMeals VALUES (4, 54, 'Salad', 1, 2);
+SELECT * FROM FoodCustomMeals ORDER BY mealID;
+-- Inserting an ingredient used in a meal
+INSERT INTO FoodCustomMeals VALUES (4, 816, 'Salad', 1, 1);
+SELECT * FROM FoodCustomMeals ORDER BY mealID;
+-- Deleting A Meal
+DELETE FROM FoodCustomMeals WHERE name = "Burger";
+SELECT * FROM FoodCustomMeals ORDER BY mealID;
+-- Update Meal
+UPDATE FoodCustomMeals SET quantity = 2 WHERE foodID = 30 AND mealID = 1;
+SELECT * FROM FoodCustomMeals ORDER BY mealID;
 
 -- -- Testing FoodCustomMeals
 -- INSERT INTO FoodCustomMeals VALUES (1, 1, "Lasagna", 4, 0);
