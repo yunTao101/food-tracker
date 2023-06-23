@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const useGlobalState = () => {
   const [state, setState] = useState({
-    value: "Global state value!",
+    value: "CurState",
   });
 
   const actions = (action: any) => {
