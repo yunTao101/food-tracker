@@ -1,8 +1,10 @@
-Query OK, 5 rows affected (0.02 sec)
+Query OK, 5 rows affected (0.03 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
 Database changed
+Query OK, 0 rows affected (0.00 sec)
+
 Query OK, 0 rows affected (0.01 sec)
 
 Query OK, 0 rows affected (0.00 sec)
@@ -12,83 +14,90 @@ Query OK, 0 rows affected (0.01 sec)
 Query OK, 0 rows affected (0.01 sec)
 
 Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+| uID | accountType | firstName | lastName  | username | password  | email                        | gender | age  | weight | height | desiredWeight | caloricGoal |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL   | NULL |   NULL |   NULL |          NULL |        NULL |
+|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  | M      |   21 |    160 |     69 |           150 |        1800 |
+|   3 | User        | Yun       | Tao       | yunTao   | yun123    | yuntao200@gmail.com          | M      |   21 |    170 |     71 |           165 |        2000 |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+3 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+| uID | accountType | firstName | lastName  | username | password  | email                        | gender | age  | weight | height | desiredWeight | caloricGoal |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL   | NULL |   NULL |   NULL |          NULL |        NULL |
+|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  | M      |   21 |    160 |     69 |           150 |        1800 |
+|   3 | User        | Yun       | Tao       | yunTao   | yun123    | yuntao200@gmail.com          | M      |   21 |    170 |     71 |           165 |        2000 |
+|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          | M      |   21 |    140 |     68 |           150 |        2200 |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+4 rows in set (0.00 sec)
+
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+| uID | accountType | firstName | lastName  | username | password  | email                        | gender | age  | weight | height | desiredWeight | caloricGoal |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL   | NULL |   NULL |   NULL |          NULL |        NULL |
+|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  | M      |   21 |    160 |     69 |           150 |        1800 |
+|   3 | User        | Yun       | Tao       | yunTao   | yun123    | yuntao200@gmail.com          | M      |   21 |    170 |     71 |           165 |        2000 |
+|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          | M      |   21 |    140 |     68 |           150 |        2200 |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+4 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+| uID | accountType | firstName | lastName  | username | password  | email                        | gender | age  | weight | height | desiredWeight | caloricGoal |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL   | NULL |   NULL |   NULL |          NULL |        NULL |
+|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  | M      |   21 |    160 |     69 |           150 |        1800 |
+|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          | M      |   21 |    140 |     68 |           150 |        2200 |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+3 rows in set (0.00 sec)
+
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+| uID | accountType | firstName | lastName  | username | password  | email                        | gender | age  | weight | height | desiredWeight | caloricGoal |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL   | NULL |   NULL |   NULL |          NULL |        NULL |
+|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  | M      |   21 |    160 |     69 |           150 |        1800 |
+|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          | M      |   21 |    140 |     68 |           150 |        2200 |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+3 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+| uID | accountType | firstName | lastName  | username | password  | email                        | gender | age  | weight | height | desiredWeight | caloricGoal |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL   | NULL |   NULL |   NULL |          NULL |        NULL |
+|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  | M      |   21 |    160 |     69 |           150 |        1800 |
+|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          | M      |   22 |    140 |     68 |           150 |        2200 |
++-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
+3 rows in set (0.00 sec)
+
++-----+-------------+-----------+-----------+----------+-----------+-----------------------------+--------+------+--------+--------+---------------+-------------+
+| uID | accountType | firstName | lastName  | username | password  | email                       | gender | age  | weight | height | desiredWeight | caloricGoal |
++-----+-------------+-----------+-----------+----------+-----------+-----------------------------+--------+------+--------+--------+---------------+-------------+
+|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com | M      |   21 |    160 |     69 |           150 |        1800 |
++-----+-------------+-----------+-----------+----------+-----------+-----------------------------+--------+------+--------+--------+---------------+-------------+
+1 row in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.01 sec)
-
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-| uID | accountType | firstName | lastName  | username | password  | email                        | age  | gender | weight | height | desiredWeight | caloricGoal |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL | NULL   |   NULL |   NULL |          NULL |        NULL |
-|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  |   21 | M      |    160 |     69 |           150 |        1800 |
-|   3 | User        | Yun       | Tao       | yunTao   | yun123    | yuntao200@gmail.com          |   21 | M      |    170 |     71 |           165 |        2000 |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-3 rows in set (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-| uID | accountType | firstName | lastName  | username | password  | email                        | age  | gender | weight | height | desiredWeight | caloricGoal |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL | NULL   |   NULL |   NULL |          NULL |        NULL |
-|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  |   21 | M      |    160 |     69 |           150 |        1800 |
-|   3 | User        | Yun       | Tao       | yunTao   | yun123    | yuntao200@gmail.com          |   21 | M      |    170 |     71 |           165 |        2000 |
-|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          |   21 | M      |    140 |     68 |           150 |        2200 |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-4 rows in set (0.00 sec)
-
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-| uID | accountType | firstName | lastName  | username | password  | email                        | age  | gender | weight | height | desiredWeight | caloricGoal |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL | NULL   |   NULL |   NULL |          NULL |        NULL |
-|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  |   21 | M      |    160 |     69 |           150 |        1800 |
-|   3 | User        | Yun       | Tao       | yunTao   | yun123    | yuntao200@gmail.com          |   21 | M      |    170 |     71 |           165 |        2000 |
-|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          |   21 | M      |    140 |     68 |           150 |        2200 |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-4 rows in set (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-| uID | accountType | firstName | lastName  | username | password  | email                        | age  | gender | weight | height | desiredWeight | caloricGoal |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL | NULL   |   NULL |   NULL |          NULL |        NULL |
-|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  |   21 | M      |    160 |     69 |           150 |        1800 |
-|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          |   21 | M      |    140 |     68 |           150 |        2200 |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-3 rows in set (0.00 sec)
-
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-| uID | accountType | firstName | lastName  | username | password  | email                        | age  | gender | weight | height | desiredWeight | caloricGoal |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL | NULL   |   NULL |   NULL |          NULL |        NULL |
-|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  |   21 | M      |    160 |     69 |           150 |        1800 |
-|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          |   21 | M      |    140 |     68 |           150 |        2200 |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-3 rows in set (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
-
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-| uID | accountType | firstName | lastName  | username | password  | email                        | age  | gender | weight | height | desiredWeight | caloricGoal |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-|   1 | Admin       | Admin     | Account   | admin1   | admin1    | admin1FoodTracker@gmmail.com | NULL | NULL   |   NULL |   NULL |          NULL |        NULL |
-|   2 | User        | Akshen    | Jasikumar | akshen28 | akshen123 | akshen.jasikumar@gmmail.com  |   21 | M      |    160 |     69 |           150 |        1800 |
-|   4 | User        | Sahi      | Abdullah  | sahiA12  | abd32     | abd270072@gmail.com          |   22 | M      |    140 |     68 |           150 |        2200 |
-+-----+-------------+-----------+-----------+----------+-----------+------------------------------+------+--------+--------+--------+---------------+-------------+
-3 rows in set (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -229,7 +238,7 @@ Query OK, 1 row affected (0.00 sec)
 +--------+--------+------------+----------+-----+
 8 rows in set (0.00 sec)
 
-Query OK, 1 row affected (0.01 sec)
+Query OK, 1 row affected (0.00 sec)
 
 +--------+--------+------------+----------+-----+
 | mealID | foodID | name       | quantity | uID |
@@ -276,3 +285,106 @@ Rows matched: 1  Changed: 1  Warnings: 0
 |      4 |    816 | Salad      |        1 |   1 |
 +--------+--------+------------+----------+-----+
 7 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | foodID | uID | date       |
++---------+--------+-----+------------+
+|       2 |     54 |   2 | 2023-06-20 |
++---------+--------+-----+------------+
+1 row in set (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | foodID | uID | date       |
++---------+--------+-----+------------+
+|       1 |     30 |   1 | 2023-06-19 |
+|       2 |     54 |   2 | 2023-06-20 |
+|       3 |      8 |   4 | 2023-06-20 |
++---------+--------+-----+------------+
+3 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | foodID | uID | date       |
++---------+--------+-----+------------+
+|       1 |     30 |   1 | 2023-06-19 |
+|       2 |     54 |   2 | 2023-06-20 |
+|       3 |      8 |   4 | 2023-06-20 |
+|       4 |    973 |   2 | 2023-06-22 |
++---------+--------+-----+------------+
+4 rows in set (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | foodID | uID | date       |
++---------+--------+-----+------------+
+|       1 |     30 |   1 | 2023-06-19 |
+|       2 |     54 |   2 | 2023-06-20 |
+|       3 |      8 |   4 | 2023-06-20 |
+|       4 |    973 |   2 | 2023-06-22 |
++---------+--------+-----+------------+
+4 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | foodID | uID | date       |
++---------+--------+-----+------------+
+|       1 |     30 |   1 | 2023-06-19 |
+|       2 |     54 |   2 | 2023-06-20 |
+|       3 |      8 |   4 | 2023-06-20 |
++---------+--------+-----+------------+
+3 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | mealID | uID | date       |
++---------+--------+-----+------------+
+|       1 |      3 |   2 | 2023-06-19 |
+|       2 |      1 |   1 | 2023-06-20 |
+|       3 |      2 |   4 | 2023-06-21 |
++---------+--------+-----+------------+
+3 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | mealID | uID | date       |
++---------+--------+-----+------------+
+|       1 |      3 |   2 | 2023-06-19 |
+|       2 |      1 |   1 | 2023-06-20 |
+|       3 |      2 |   4 | 2023-06-21 |
+|       4 |      4 |   4 | 2023-06-21 |
++---------+--------+-----+------------+
+4 rows in set (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | mealID | uID | date       |
++---------+--------+-----+------------+
+|       1 |      3 |   2 | 2023-06-19 |
+|       2 |      1 |   1 | 2023-06-20 |
+|       3 |      2 |   4 | 2023-06-21 |
+|       4 |      4 |   4 | 2023-06-21 |
++---------+--------+-----+------------+
+4 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++---------+--------+-----+------------+
+| entryID | mealID | uID | date       |
++---------+--------+-----+------------+
+|       1 |      3 |   2 | 2023-06-19 |
+|       2 |      1 |   1 | 2023-06-20 |
+|       3 |      2 |   4 | 2023-06-21 |
++---------+--------+-----+------------+
+3 rows in set (0.00 sec)
