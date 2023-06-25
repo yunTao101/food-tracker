@@ -63,7 +63,7 @@ function routes(app) {
     con.query(sql, (err, result) => {
       if (err) throw err;
       // console.log(result);
-      res.send("Account added...");
+      res.send(result);
     });
   });
 

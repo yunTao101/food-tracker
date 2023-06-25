@@ -5,14 +5,12 @@ import Grid from "@mui/material/Grid";
 import backGroundImage from "../../Resources/white.jpeg";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Avatar from "@mui/material/Avatar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
 import Context from "../../store/context";
 
 const HomePage = () => {
@@ -94,24 +92,6 @@ const HomePage = () => {
     } else if (event.target.id === "caloricGoal") {
       setCaloricGoal(parseInt(event.target.value, 10));
     }
-  };
-
-  const registerUser = () => {
-    AccountService.registerAccount(
-      "User",
-      firstName,
-      lastName,
-      username,
-      email,
-      password,
-      age,
-      gender,
-      weight,
-      height,
-      desiredWeight,
-      caloricGoal
-    );
-    navigate("/homePage");
   };
 
   const deleteUser = () => {
