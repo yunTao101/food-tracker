@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as AccountService from "../../Services/AccountService";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -13,6 +13,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
+import Context from "../../store/context";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const Register = () => {
   const [height, setHeight] = useState<number | null>();
   const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
+  const { state, actions } = useContext<any>(Context);
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -70,8 +72,19 @@ const Register = () => {
       height,
       desiredWeight,
       caloricGoal
-    );
-    navigate("/homePage");
+    ).then(() => {
+      AccountService.loginAccount(username, password).then(({ data }) => {
+        if (data.length !== 0) {
+          actions({
+            type: "setState",
+            payload: { ...state, value: data[0] },
+          });
+          navigate("/homePage");
+        } else {
+          console.log("ERRORR");
+        }
+      });
+    });
   };
 
   return (
