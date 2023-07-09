@@ -17,6 +17,22 @@ CREATE TABLE Users (
     caloricGoal INT,
     PRIMARY KEY(uid)
 );
+
+CREATE TABLE FoodIngredients(
+    foodID INT NOT NULL AUTO_INCREMENT,  
+    uID INT NOT NULL,
+    name VARCHAR(200) NOT NULL, 
+    servingSize INT NOT NULL,
+    calories INT NOT NULL,
+    protein DECIMAL(5, 2) NOT NULL,
+    carbohydrate DECIMAL(5, 2) NOT NULL,
+    sugars DECIMAL(5, 2) NOT NULL,
+    totalFat DECIMAL(5, 2) NOT NULL,
+    PRIMARY KEY(foodID),
+    FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE
+);
+
+
 INSERT INTO Users VALUES (1, "Admin", "Admin", "Account", "admin1", "admin1", "admin1FoodTracker@gmmail.com", null, null, null, null, null, null);
 create user 'cs348admin'@'localhost' identified by 'admin';
 grant all on foodData.* to 'cs348admin'@'localhost';	
