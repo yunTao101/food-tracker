@@ -99,8 +99,14 @@ function parseJson() {
 }
 
 //insert into FoodIngredients table
-function insertFoodIngredients() {
-
+function insertFoodIngredients(vals) {
+  let sql = `INSERT INTO FoodIngredients (uID, name, servingSize, calories, protein, carbohydrate, sugars, totalFat) VALUES (${vals.uID}, "${vals.name}", ${vals.servingSize}, ${vals.calories}, ${vals.protein}, ${vals.carbohydrate}, ${vals.sugars}, ${vals.totalFat})`;
+    con.query(sql, (err, results) => {
+      if (err) {
+        console.log(sql);
+        throw err;
+      }
+    });
 }
 
 //fill FoodIngredients table with production dataset
@@ -118,13 +124,7 @@ function fillFoodIngredients() {
       sugars: food.sugars.replace('g', ''),
       totalFat: food.total_fat.replace('g', '')
     }
-    let sql = `INSERT INTO FoodIngredients (uID, name, servingSize, calories, protein, carbohydrate, sugars, totalFat) VALUES (${vals.uID}, "${vals.name}", ${vals.servingSize}, ${vals.calories}, ${vals.protein}, ${vals.carbohydrate}, ${vals.sugars}, ${vals.totalFat})`;
-    con.query(sql, (err, results) => {
-      if (err) {
-        console.log(sql);
-        throw err;
-      }
-    });
+    insertFoodIngredients(vals);
   }
 }
 

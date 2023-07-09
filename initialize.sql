@@ -32,7 +32,8 @@ CREATE TABLE FoodIngredients(
     FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE
 );
 
-
+drop table FoodIngredients;
+select * from FoodIngredients;
 INSERT INTO Users VALUES (1, "Admin", "Admin", "Account", "admin1", "admin1", "admin1FoodTracker@gmmail.com", null, null, null, null, null, null);
 create user 'cs348admin'@'localhost' identified by 'admin';
 grant all on foodData.* to 'cs348admin'@'localhost';	
