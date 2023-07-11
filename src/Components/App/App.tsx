@@ -3,7 +3,8 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "../AccountPage/Login";
 import Register from "../AccountPage/Register";
 import HomePage from "../Home/HomePage";
-import FoodPage from "../FoodPage/FoodPage";
+import SearchFoods from "../TrackFoods/SearchFoods";
+import AddIngredient from "../TrackFoods/AddIngredient";
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
           <Route path="/" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/homePage" element={<HomePage />}></Route>
-          <Route path="/foodPage" element={<FoodPage />}></Route>
+          <Route path="/foodPage" element={<SearchFoods />}></Route>
+          <Route path="/addIngredient" element={<AddIngredient />}></Route>
         </Routes>
       </BrowserRouter>
     </>

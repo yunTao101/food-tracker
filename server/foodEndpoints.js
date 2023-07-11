@@ -19,11 +19,10 @@ con.connect((err) => {
 });
 
 function routes(app) {
-  // search ingredient
+  // get all ingredients
   app.post("/getIngredients", (req, res) => {
-    //let sql = `select * from FoodIngredients where name LIKE '${req.body.name}%';`
-    //let sql = `select * from ${req.body.table};`
-    let sql = `select * from FoodIngredients`
+    const vals = req.body;
+    let sql = `select * from FoodIngredients Where uID = 1 or uID = ${vals.uID}`
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -31,9 +30,8 @@ function routes(app) {
     });
   });
 
+  // get all meals
   app.post("/getMeals", (req, res) => {
-    //let sql = `select * from FoodIngredients where name LIKE '${req.body.name}%';`
-    //let sql = `select * from ${req.body.table};`
     let sql = `select mealID, name from FoodCustomMeals Group By mealID, name;`
     con.query(sql, (err, results) => {
       if (err) throw err;
@@ -41,7 +39,29 @@ function routes(app) {
       res.send(results);
     });
   });
+
+  app.post("/addIngred", (req, res) => {
+    const vals = req.body;
+    let sql = `INSERT INTO FoodIngredients (uID, name, servingSize, calories, protein, carbohydrate, sugars, totalFat) VALUES (${vals.uID}, "${vals.name}", ${vals.servingSize}, ${vals.calories}, ${vals.protein}, ${vals.carbohydrate}, ${vals.sugars}, ${vals.totalFat})`
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+  app.post("/delIngred", (req, res) => {
+    const vals = req.body;
+    console.log("HERHEHREHER");
+    let sql = `DELETE FROM FoodIngredients WHERE uID = ${vals.uID} AND foodID = ${vals.foodID};`
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
 }
+
 
 function parseJson() {
   let data = fs.readFileSync("database/sample-data.json");
@@ -78,23 +98,5 @@ function fillFoodIngredients() {
   }
 }
 
-function searchFoodIngredients(name) {
-  //let sql = `select * from FoodIngredients where name LIKE '${name}%';`
-  let sql = `select * from FoodIngredients';`
-  con.query(sql, (err, results) => {
-    if (err) throw err;
-    console.log(results);
-  });
-}
-
-function countFoodIngredients(){
-    let sql = `select count(*) from FoodIngredients;`
-    con.query(sql, (err, results) => {
-        if (err) throw err;
-        results = JSON.parse(JSON.stringify(results));
-        console.log(results[0]['count(*)']);
-        return(results);
-      });
-}
 
 module.exports = routes;

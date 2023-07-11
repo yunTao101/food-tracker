@@ -34,6 +34,8 @@ CREATE TABLE FoodIngredients(
 select * from FoodIngredients;
 select count(*) from FoodIngredients;
 
+
+
 CREATE TABLE FoodCustomMeals(
     mealID INT NOT NULL, 
     foodID INT NOT NULL, 
@@ -47,6 +49,7 @@ CREATE TABLE FoodCustomMeals(
 
 select * from Users;
 INSERT INTO Users VALUES (1, "Admin", "Admin", "Account", "admin1", "admin1", "admin1FoodTracker@gmmail.com", null, null, null, null, null, null);
+INSERT INTO Users VALUES (2, "User", "User", "Account", "admin2", "admin2", "admin2FoodTracker@gmmail.com", null, null, null, null, null, null);
 create user 'cs348admin'@'localhost' identified by 'admin';
 grant all on foodData.* to 'cs348admin'@'localhost';	
 alter user 'cs348admin'@'localhost' identified with mysql_native_password by 'admin';
