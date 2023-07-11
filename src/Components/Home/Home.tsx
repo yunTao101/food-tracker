@@ -136,7 +136,7 @@ const Home = () => {
                   navigate("/accountInfo");
                 }}
               >
-                <Avatar sx={{ bgcolor: "#ffffff", mr: "10px" }}>
+                <Avatar sx={{ bgcolor: "#ffffff" }}>
                   <PersonIcon sx={{ color: "black" }} />
                 </Avatar>
               </IconButton>
