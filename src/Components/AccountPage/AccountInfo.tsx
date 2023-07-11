@@ -66,7 +66,7 @@ const AccountInfo = () => {
         setCaloricGoal(userInfoState.caloricGoal);
       }
     }
-  }, [userInfoState.value]);
+  }, [userInfoState]);
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
