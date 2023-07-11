@@ -81,7 +81,7 @@ const SearchFoods = () => {
         return row.foodID.valueOf() != foodID;
       })
       setfilteredFoods(filteredRows);
-      FoodService.getIngredients().then(({ data }) => {
+      FoodService.getIngredients(state.value.uID).then(({ data }) => {
         if (data.length !== 0) {
           setFoods(data);
         } else {
@@ -192,7 +192,7 @@ const SearchFoods = () => {
                   <TableCell align="right">{row.carbohydrate}</TableCell>
                   <TableCell align="right">{row.protein}</TableCell>
                   <TableCell align="right"><Button><AddIcon/></Button></TableCell>
-                  <TableCell align="right"><Button disabled={row.uID != state.value.uID} onClick={() => handleDelete(row.foodID, row.uID)}><DeleteIcon/></Button></TableCell>
+                  <TableCell align="right"><Button disabled={row.uID != state.value.uID} onClick={() => handleDelete(row.foodID, state.value.uID)}><DeleteIcon/></Button></TableCell>
                 </TableRow>
               ))}
             </TableBody>

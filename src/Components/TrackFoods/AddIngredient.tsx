@@ -30,7 +30,7 @@ const AddIngredient = () => {
           sugars,
           totalFat
         );
-        navigate("/foodPage");
+        navigate("/searchFoods");
       };
 
     return (

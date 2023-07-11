@@ -52,7 +52,7 @@ function routes(app) {
 
   app.post("/delIngred", (req, res) => {
     const vals = req.body;
-    console.log("HERHEHREHER");
+    console.log("HERHEHREHER", vals);
     let sql = `DELETE FROM FoodIngredients WHERE uID = ${vals.uID} AND foodID = ${vals.foodID};`
     con.query(sql, (err, results) => {
       if (err) throw err;
