@@ -30,7 +30,7 @@ function routes(app) {
 
   // get all meals
   app.post("/getMeals", (req, res) => {
-    let sql = `select mealID, name from FoodCustomMeals Group By mealID, name;`;
+    let sql = `select mealID, name, uID from FoodCustomMeals Group By mealID, name, uID;`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -58,6 +58,32 @@ function routes(app) {
       res.send(results);
     });
   });
+
+  app.post("/getSizeOfMeals", (req, res) => {
+    let sql = `select count(*) from FoodCustomMeals;`;
+    con.query(sql, (err, results) => {
+      if (err) {
+        console.log("ERROR: ", results);
+        throw err;
+      }
+      const temp = JSON.parse(JSON.stringify(results));
+      const count = parseInt(temp[0]["count(*)"]);
+      console.log(count);
+      res.send(results);
+    });
+  });
+
+  app.post("/addMeal", (req, res) => {
+    console.log("ADDING MEALS");
+    const vals = req.body;
+    let sql = `INSERT INTO FoodCustomMeals VALUES (${vals.mealID}, ${vals.foodID}, "${vals.name}", ${vals.quantity}, ${vals.uID})`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
 }
 
 function parseJson() {

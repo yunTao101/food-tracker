@@ -43,3 +43,18 @@ export function delIngred(uID, foodID) {
     }
     return axios.post(start_point + "/delIngred", vals);
 }
+
+export function addMeal(mealID, foodID, name, uID) {
+    const vals = {
+        mealID: mealID,
+        foodID: foodID,
+        name: name,
+        quantity: 1,
+        uID: uID
+    }
+    return axios.post(start_point + "/addMeal", vals);
+}
+
+export function getSizeOfMeals() {
+    return axios.post(start_point + "/getSizeOfMeals");
+}

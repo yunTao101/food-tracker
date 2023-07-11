@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
+import React, { useState, useContext } from "react";
+import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
 import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,6 +12,7 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CheckIcon from '@mui/icons-material/Check';
 import * as FoodService from "../../Services/FoodService";
 import Context from "../../store/context";
 import { useNavigate } from "react-router-dom";
@@ -31,10 +32,12 @@ const SearchFoods = () => {
     },
   ];
   const navigate = useNavigate();
+  const { actions } = useContext<any>(Context);
   const { userInfoState } = useContext<any>(Context);
   const [search, setSearch] = useState<String>("");
   const [foods, setFoods] = useState(originalRows);
   const [filteredFoods, setfilteredFoods] = useState(originalRows);
+  const [cartList, setCartList] = useState([{}]);
 
   const handleClick = (event: any) => {
     const id: String = event.currentTarget.id;
@@ -84,6 +87,17 @@ const SearchFoods = () => {
     navigate("/addIngredient");
   };
 
+  const handleAddToCart = (foodID: any, uID: any, name: any) => {
+    console.log(foodID, uID);
+    const newList = cartList.concat({foodID, uID, name});
+    console.log("newlist:", newList);
+    setCartList(newList);
+    actions({
+      type: "setCart",
+      payload: newList,
+    });
+  }
+
   const handleDelete = (foodID: any, uID: any) => {
     console.log(foodID, uID);
     FoodService.delIngred(uID, foodID).then(() => {
@@ -101,6 +115,11 @@ const SearchFoods = () => {
       });
     });
   };
+
+  const inCart = (foodID1: any, uID1: any) => {
+    //NOT WORKING HOW TO CHECK IF IT IS IN CART?
+    return cartList.includes({foodID: foodID1, uID: uID1});
+  }
 
   return (
     <Stack spacing={2} sx={{ width: 900 }}>
@@ -209,14 +228,14 @@ const SearchFoods = () => {
                 <TableCell align="right">{row.carbohydrate}</TableCell>
                 <TableCell align="right">{row.protein}</TableCell>
                 <TableCell align="right">
-                  <Button>
-                    <AddIcon />
-                  </Button>
+                <Button onClick={() => handleAddToCart(row.foodID, row.uID, row.name)}>
+                  <AddIcon />
+                </Button>
                 </TableCell>
                 <TableCell align="right">
                   <Button
                     disabled={row.uID != userInfoState.uID}
-                    onClick={() => handleDelete(row.foodID, userInfoState.uID)}
+                    onClick={() => handleDelete(row.foodID, row.uID)}
                   >
                     <DeleteIcon />
                   </Button>
