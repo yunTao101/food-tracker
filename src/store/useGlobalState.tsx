@@ -9,6 +9,7 @@ const useGlobalState = () => {
     const { type, payload } = action;
     switch (type) {
       case "setState":
+        sessionStorage.setItem("payload", JSON.stringify(payload.value));
         return setState(payload);
       default:
         return state;

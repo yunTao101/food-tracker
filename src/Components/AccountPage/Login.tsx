@@ -37,7 +37,7 @@ const Login = () => {
       if (data.length !== 0) {
         actions({
           type: "setState",
-          payload: { ...state, value: data[0] },
+          payload: { value: data[0] },
         });
         setLoginError(false);
         navigate("/homePage");

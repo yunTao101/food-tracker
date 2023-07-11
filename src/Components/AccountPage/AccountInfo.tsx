@@ -12,8 +12,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Context from "../../store/context";
+import Avatar from "@mui/material/Avatar";
+import PersonIcon from "@mui/icons-material/Person";
 
-const HomePage = () => {
+const AccountInfo = () => {
   const navigate = useNavigate();
   const [firstName, setFirstName] = useState<String>();
   const [lastName, setLastName] = useState<String>();
@@ -26,7 +28,7 @@ const HomePage = () => {
   const [height, setHeight] = useState<number | null>();
   const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
-  const { state } = useContext<any>(Context);
+  const { state, actions } = useContext<any>(Context);
 
   useEffect(() => {
     if (state.value) {
@@ -114,8 +116,16 @@ const HomePage = () => {
       height,
       desiredWeight,
       caloricGoal
-    );
-    // navigate("/homePage");
+    ).then(({ data }) => {
+      if (data.length !== 0) {
+        actions({
+          type: "setState",
+          payload: { value: data },
+        });
+      } else {
+        console.log("ERRORR");
+      }
+    });
   };
 
   return (
@@ -147,7 +157,7 @@ const HomePage = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                width: "100vh",
+                width: "150vh",
                 position: "relative",
               }}
             >
@@ -159,7 +169,7 @@ const HomePage = () => {
                   color: "white",
                 }}
                 onClick={() => {
-                  navigate("/");
+                  navigate("/homePage");
                 }}
               >
                 <ArrowBackIcon />
@@ -174,8 +184,11 @@ const HomePage = () => {
                       marginTop: "10px",
                     }}
                   >
+                    <Avatar sx={{ bgcolor: "#ffffff", mr: "10px" }}>
+                      <PersonIcon sx={{ color: "black" }} />
+                    </Avatar>
                     <Typography component="h1" variant="h4">
-                      Welcome!
+                      Account Information
                     </Typography>
                   </Box>
                   <Grid container spacing={1}>
@@ -188,6 +201,7 @@ const HomePage = () => {
                         id="firstName"
                         label="First Name"
                         name="firstName"
+                        InputLabelProps={{ shrink: firstName ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -199,6 +213,7 @@ const HomePage = () => {
                         id="lastName"
                         label="Last Name"
                         name="lastName"
+                        InputLabelProps={{ shrink: lastName ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -210,6 +225,7 @@ const HomePage = () => {
                         id="username"
                         label="Username"
                         name="username"
+                        InputLabelProps={{ shrink: username ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -222,6 +238,7 @@ const HomePage = () => {
                         label="Email"
                         name="email"
                         autoComplete="email"
+                        InputLabelProps={{ shrink: email ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -235,6 +252,7 @@ const HomePage = () => {
                         type="password"
                         name="password"
                         autoComplete="new-password"
+                        InputLabelProps={{ shrink: password ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -245,6 +263,7 @@ const HomePage = () => {
                         id="age"
                         label="Age"
                         name="age"
+                        InputLabelProps={{ shrink: age ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -255,6 +274,7 @@ const HomePage = () => {
                         id="gender"
                         label="Gender"
                         name="gender"
+                        InputLabelProps={{ shrink: gender ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -265,6 +285,7 @@ const HomePage = () => {
                         id="weight"
                         label="Weight"
                         name="weight"
+                        InputLabelProps={{ shrink: weight ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -275,6 +296,7 @@ const HomePage = () => {
                         id="height"
                         label="Height"
                         name="height"
+                        InputLabelProps={{ shrink: height ? true : false }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -284,7 +306,10 @@ const HomePage = () => {
                         fullWidth
                         id="desiredWeight"
                         label="Desired Weight"
-                        name="agdesiredWeighte"
+                        name="desiredWeight"
+                        InputLabelProps={{
+                          shrink: desiredWeight ? true : false,
+                        }}
                       />
                     </Grid>
                     <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
@@ -295,6 +320,9 @@ const HomePage = () => {
                         id="caloricGoal"
                         label="Calorie Goal"
                         name="caloricGoal"
+                        InputLabelProps={{
+                          shrink: caloricGoal ? true : false,
+                        }}
                       />
                     </Grid>
                   </Grid>
@@ -344,6 +372,28 @@ const HomePage = () => {
                         borderRadius: 28,
                         color: "#ffffff",
                         minWidth: "170px",
+                        backgroundColor: "#ECB275",
+                      }}
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    >
+                      logout
+                    </Button>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      size="large"
+                      sx={{
+                        ":hover": {
+                          bgcolor: "white",
+                          color: "black",
+                        },
+                        mt: "10px",
+                        mr: "20px",
+                        borderRadius: 28,
+                        color: "#ffffff",
+                        minWidth: "170px",
                         backgroundColor: "#000000",
                       }}
                       onClick={deleteUser}
@@ -361,4 +411,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default AccountInfo;
