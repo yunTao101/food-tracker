@@ -9,14 +9,12 @@ import AccountInfo from "../AccountPage/AccountInfo";
 import Context from "../../store/context";
 
 const App = () => {
-  const { state, actions } = useContext<any>(Context);
+  const { actions } = useContext<any>(Context);
 
   useEffect(() => {
     actions({
-      type: "setState",
-      payload: {
-        value: JSON.parse(sessionStorage.getItem("payload")!!),
-      },
+      type: "setUserInfo",
+      payload: JSON.parse(sessionStorage.getItem("userInfo")!!),
     });
   }, []);
 

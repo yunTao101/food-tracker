@@ -17,7 +17,7 @@ import Context from "../../store/context";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { state, actions } = useContext<any>(Context);
+  const { actions } = useContext<any>(Context);
   const [username, setUsername] = useState<String>();
   const [password, setPassword] = useState<String>();
   const [loginError, setLoginError] = useState<boolean | undefined>(false);
@@ -36,8 +36,8 @@ const Login = () => {
     AccountService.loginAccount(username, password).then(({ data }) => {
       if (data.length !== 0) {
         actions({
-          type: "setState",
-          payload: { value: data[0] },
+          type: "setUserInfo",
+          payload: data[0],
         });
         setLoginError(false);
         navigate("/homePage");

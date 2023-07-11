@@ -33,7 +33,7 @@ const Home = () => {
   const [height, setHeight] = useState<number | null>();
   const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
-  const { state, actions } = useContext<any>(Context);
+  const { actions } = useContext<any>(Context);
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -81,8 +81,8 @@ const Home = () => {
       AccountService.loginAccount(username, password).then(({ data }) => {
         if (data.length !== 0) {
           actions({
-            type: "setState",
-            payload: { value: data[0] },
+            type: "setUserInfo",
+            payload: data[0],
           });
           navigate("/homePage");
         } else {
@@ -147,11 +147,27 @@ const Home = () => {
                   <Box
                     sx={{
                       display: "flex",
+                      flexDirection: "column",
                       justifyContent: "center",
                       alignItems: "center",
                       marginTop: "10px",
                     }}
                   >
+                    <Typography
+                      component="h1"
+                      variant="h4"
+                      sx={{
+                        // position: "absolute",
+                        top: "3%",
+                        mb: "0.5em",
+                        // left: "50%",
+                        fontSize: 60,
+                        //transform: "translate(-50%, -1%)",
+                        color: "white",
+                      }}
+                    >
+                      EAT. TRACK. REPEAT.
+                    </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker />
                     </LocalizationProvider>
@@ -207,7 +223,9 @@ const Home = () => {
                             minWidth: "170px",
                             backgroundColor: "#ECB275",
                           }}
-                          onClick={() => {navigate("/searchFoods")}}
+                          onClick={() => {
+                            navigate("/searchFoods");
+                          }}
                         >
                           Track
                         </Button>

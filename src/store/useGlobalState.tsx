@@ -1,21 +1,22 @@
 import { useState } from "react";
 
 const useGlobalState = () => {
-  const [state, setState] = useState({
-    value: "CurState",
-  });
+  const [userInfoState, setUserInfoState] = useState("UserInfo");
 
   const actions = (action: any) => {
     const { type, payload } = action;
     switch (type) {
-      case "setState":
-        sessionStorage.setItem("payload", JSON.stringify(payload.value));
-        return setState(payload);
+      case "setUserInfo":
+        sessionStorage.setItem("userInfo", JSON.stringify(payload));
+        return setUserInfoState(payload);
+      case "setCart":
+        sessionStorage.setItem("payload", JSON.stringify(payload));
+        return setUserInfoState(payload);
       default:
-        return state;
+        return setUserInfoState;
     }
   };
-  return { state, actions };
+  return { userInfoState, actions };
 };
 
 export default useGlobalState;

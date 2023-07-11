@@ -28,45 +28,45 @@ const AccountInfo = () => {
   const [height, setHeight] = useState<number | null>();
   const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
-  const { state, actions } = useContext<any>(Context);
+  const { userInfoState, actions } = useContext<any>(Context);
 
   useEffect(() => {
-    if (state.value) {
-      if (state.value.firstName) {
-        setFirstName(state.value.firstName);
+    if (userInfoState) {
+      if (userInfoState.firstName) {
+        setFirstName(userInfoState.firstName);
       }
-      if (state.value.lastName) {
-        setLastName(state.value.lastName);
+      if (userInfoState.lastName) {
+        setLastName(userInfoState.lastName);
       }
-      if (state.value.username) {
-        setUsername(state.value.username);
+      if (userInfoState.username) {
+        setUsername(userInfoState.username);
       }
-      if (state.value.email) {
-        setEmail(state.value.email);
+      if (userInfoState.email) {
+        setEmail(userInfoState.email);
       }
-      if (state.value.password) {
-        setPassword(state.value.password);
+      if (userInfoState.password) {
+        setPassword(userInfoState.password);
       }
-      if (state.value.age) {
-        setAge(state.value.age);
+      if (userInfoState.age) {
+        setAge(userInfoState.age);
       }
-      if (state.value.gender) {
-        setGender(state.value.gender);
+      if (userInfoState.gender) {
+        setGender(userInfoState.gender);
       }
-      if (state.value.weight) {
-        setWeight(state.value.weight);
+      if (userInfoState.weight) {
+        setWeight(userInfoState.weight);
       }
-      if (state.value.height) {
-        setHeight(state.value.height);
+      if (userInfoState.height) {
+        setHeight(userInfoState.height);
       }
-      if (state.value.desiredWeight) {
-        setDesiredWeight(state.value.desiredWeight);
+      if (userInfoState.desiredWeight) {
+        setDesiredWeight(userInfoState.desiredWeight);
       }
-      if (state.value.caloricGoal) {
-        setCaloricGoal(state.value.caloricGoal);
+      if (userInfoState.caloricGoal) {
+        setCaloricGoal(userInfoState.caloricGoal);
       }
     }
-  }, [state.value]);
+  }, [userInfoState.value]);
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -97,13 +97,13 @@ const AccountInfo = () => {
   };
 
   const deleteUser = () => {
-    AccountService.deleteAccount(state.value.uID);
+    AccountService.deleteAccount(userInfoState.uID);
     navigate("/");
   };
 
   const updateUser = () => {
     AccountService.updateAccount(
-      state.value.uID,
+      userInfoState.uID,
       "User",
       firstName,
       lastName,
@@ -119,8 +119,8 @@ const AccountInfo = () => {
     ).then(({ data }) => {
       if (data.length !== 0) {
         actions({
-          type: "setState",
-          payload: { value: data },
+          type: "setUserInfo",
+          payload: data,
         });
       } else {
         console.log("ERRORR");

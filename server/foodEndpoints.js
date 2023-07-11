@@ -9,18 +9,18 @@ var con = mysql.createConnection({
 });
 
 con.connect((err) => {
-    if (err) {
+  if (err) {
     throw err;
-    }
-    console.log("MySQL database connected...");
-    countFoodIngredients();
+  }
+  console.log("MySQL database connected...");
+  countFoodIngredients();
 });
 
 function routes(app) {
   // get all ingredients
   app.post("/getIngredients", (req, res) => {
     const vals = req.body;
-    let sql = `select * from FoodIngredients Where uID = 1 or uID = ${vals.uID}`
+    let sql = `select * from FoodIngredients Where uID = 1 or uID = ${vals.uID}`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -30,7 +30,7 @@ function routes(app) {
 
   // get all meals
   app.post("/getMeals", (req, res) => {
-    let sql = `select mealID, name from FoodCustomMeals Group By mealID, name;`
+    let sql = `select mealID, name from FoodCustomMeals Group By mealID, name;`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -40,7 +40,7 @@ function routes(app) {
 
   app.post("/addIngred", (req, res) => {
     const vals = req.body;
-    let sql = `INSERT INTO FoodIngredients (uID, name, servingSize, calories, protein, carbohydrate, sugars, totalFat) VALUES (${vals.uID}, "${vals.name}", ${vals.servingSize}, ${vals.calories}, ${vals.protein}, ${vals.carbohydrate}, ${vals.sugars}, ${vals.totalFat})`
+    let sql = `INSERT INTO FoodIngredients (uID, name, servingSize, calories, protein, carbohydrate, sugars, totalFat) VALUES (${vals.uID}, "${vals.name}", ${vals.servingSize}, ${vals.calories}, ${vals.protein}, ${vals.carbohydrate}, ${vals.sugars}, ${vals.totalFat})`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -51,7 +51,7 @@ function routes(app) {
   app.post("/delIngred", (req, res) => {
     const vals = req.body;
     console.log("HERHEHREHER", vals);
-    let sql = `DELETE FROM FoodIngredients WHERE uID = ${vals.uID} AND foodID = ${vals.foodID};`
+    let sql = `DELETE FROM FoodIngredients WHERE uID = ${vals.uID} AND foodID = ${vals.foodID};`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -59,7 +59,6 @@ function routes(app) {
     });
   });
 }
-
 
 function parseJson() {
   let data = fs.readFileSync("database/sample-data.json");
@@ -70,58 +69,47 @@ function parseJson() {
 //insert into FoodIngredients table
 function insertFoodIngredients(vals) {
   let sql = `INSERT INTO FoodIngredients (uID, name, servingSize, calories, protein, carbohydrate, sugars, totalFat) VALUES (${vals.uID}, "${vals.name}", ${vals.servingSize}, ${vals.calories}, ${vals.protein}, ${vals.carbohydrate}, ${vals.sugars}, ${vals.totalFat})`;
-    con.query(sql, (err, results) => {
-      if (err) {
-        throw err;
-      }
-    });
-}
-
-
-function dropFoodIngredients() {
-    let sql = `DROP TABLE IF EXISTS FoodIngredients;`
-    con.query(sql, (err, results) => {
-        if (err) {
-          throw err;
-        }
-      });
-}
-
-function countFoodIngredients() {
-    let sql = `select count(*) from FoodIngredients;`
-    let count = 0;
-    con.query(sql, (err, results) => {
-        if (err) {
-          throw err;
-        }
-        console.log(results[0]);
-        let temp = JSON.parse(JSON.stringify(results));
-        count = parseInt(temp[0]['count(*)']);
-        console.log(count);
-        if (count == 0) {
-            fillFoodIngredients();
-        }
-      });
+  con.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+  });
 }
 
 //fill FoodIngredients table with production dataset
 function fillFoodIngredients() {
   let data = parseJson();
   for (let i = 0; i < data.length; i++) {
-    let food = data[i]
-    let vals =  {
+    let food = data[i];
+    let vals = {
       uID: 1,
-      name: food.name.replace(/\,/g, '').replace(/\"/g, ''),
-      servingSize: food.serving_size.replace('g', ''),
+      name: food.name.replace(/\,/g, "").replace(/\"/g, ""),
+      servingSize: food.serving_size.replace("g", ""),
       calories: food.calories,
-      protein: food.protein.replace('g', ''),
-      carbohydrate: food.carbohydrate.replace('g', ''),
-      sugars: food.sugars.replace('g', ''),
-      totalFat: food.total_fat.replace('g', '')
-    }
+      protein: food.protein.replace("g", ""),
+      carbohydrate: food.carbohydrate.replace("g", ""),
+      sugars: food.sugars.replace("g", ""),
+      totalFat: food.total_fat.replace("g", ""),
+    };
     insertFoodIngredients(vals);
   }
 }
 
+function countFoodIngredients() {
+  let sql = `select count(*) from FoodIngredients;`;
+  let count = 0;
+  con.query(sql, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    console.log(results[0]);
+    let temp = JSON.parse(JSON.stringify(results));
+    count = parseInt(temp[0]["count(*)"]);
+    console.log(count);
+    if (count == 0) {
+      fillFoodIngredients();
+    }
+  });
+}
 
 module.exports = routes;
