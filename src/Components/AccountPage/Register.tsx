@@ -28,7 +28,7 @@ const Register = () => {
   const [height, setHeight] = useState<number | null>();
   const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
-  const { state, actions } = useContext<any>(Context);
+  const { actions } = useContext<any>(Context);
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -76,8 +76,8 @@ const Register = () => {
       AccountService.loginAccount(username, password).then(({ data }) => {
         if (data.length !== 0) {
           actions({
-            type: "setState",
-            payload: { value: data[0] },
+            type: "setUserInfo",
+            payload: data[0],
           });
           navigate("/homePage");
         } else {

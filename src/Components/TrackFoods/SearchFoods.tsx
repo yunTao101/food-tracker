@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
-import TextField from '@mui/material/TextField';
-import Stack from '@mui/material/Stack';
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,25 +8,35 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import * as FoodService from "../../Services/FoodService";
 import Context from "../../store/context";
 import { useNavigate } from "react-router-dom";
 
 const SearchFoods = () => {
   const originalRows = [
-    { foodID: 1, uID: 1, name: "Cornstarch", servingSize: 100, calories: 381, protein: 0.26, carbohydrate: 91.27, sugars: 0.00, totalFat: 0.10}
+    {
+      foodID: 1,
+      uID: 1,
+      name: "Cornstarch",
+      servingSize: 100,
+      calories: 381,
+      protein: 0.26,
+      carbohydrate: 91.27,
+      sugars: 0.0,
+      totalFat: 0.1,
+    },
   ];
   const navigate = useNavigate();
-  const { state } = useContext<any>(Context);
+  const { userInfoState } = useContext<any>(Context);
   const [search, setSearch] = useState<String>("");
   const [foods, setFoods] = useState(originalRows);
   const [filteredFoods, setfilteredFoods] = useState(originalRows);
 
-  const handleClick = (event: any ) => {
+  const handleClick = (event: any) => {
     const id: String = event.currentTarget.id;
     if (id == "meals") {
       getMeals();
@@ -36,16 +46,15 @@ const SearchFoods = () => {
   };
 
   const getIngredients = () => {
-    FoodService.getIngredients(state.value.uID).then(({ data }) => {
+    FoodService.getIngredients(userInfoState.uID).then(({ data }) => {
       if (data.length !== 0) {
         setFoods(data);
         setfilteredFoods(data.slice(0, 20));
       } else {
-        console.log("Foods not loaded")
+        console.log("Foods not loaded");
       }
     });
   };
-
 
   const getMeals = () => {
     FoodService.getMeals().then(({ data }) => {
@@ -53,25 +62,27 @@ const SearchFoods = () => {
         setFoods(data);
         setfilteredFoods(data);
       } else {
-        console.log("Foods not loaded")
+        console.log("Foods not loaded");
       }
     });
   };
 
   const handleSearchChange = (event: any) => {
     setSearch(event.target.value);
-  }
+  };
 
   const handleSearchClick = () => {
-    const filteredRows = foods.filter((row) => {
-      return row.name.toLowerCase().includes(search.toLowerCase());
-    }).slice(0, 20);
+    const filteredRows = foods
+      .filter((row) => {
+        return row.name.toLowerCase().includes(search.toLowerCase());
+      })
+      .slice(0, 20);
     setfilteredFoods(filteredRows);
-  }
+  };
 
   const handleAddIngredient = () => {
     navigate("/addIngredient");
-  }
+  };
 
   const handleDelete = (foodID: any, uID: any) => {
     console.log(foodID, uID);
@@ -79,18 +90,18 @@ const SearchFoods = () => {
       console.log(filteredFoods);
       const filteredRows = filteredFoods.filter((row) => {
         return row.foodID.valueOf() != foodID;
-      })
+      });
       setfilteredFoods(filteredRows);
-      FoodService.getIngredients(state.value.uID).then(({ data }) => {
+      FoodService.getIngredients(userInfoState.uID).then(({ data }) => {
         if (data.length !== 0) {
           setFoods(data);
         } else {
-          console.log("Foods not loaded")
+          console.log("Foods not loaded");
         }
       });
     });
-  }
-  
+  };
+
   return (
     <Stack spacing={2} sx={{ width: 900 }}>
       <TextField
@@ -127,7 +138,9 @@ const SearchFoods = () => {
           backgroundColor: "#ECB275",
         }}
         onClick={handleClick}
-      >Ingredients</Button>
+      >
+        Ingredients
+      </Button>
       <Button
         id="meals"
         type="submit"
@@ -147,7 +160,9 @@ const SearchFoods = () => {
           backgroundColor: "#ECB275",
         }}
         onClick={handleClick}
-      >Meals</Button>
+      >
+        Meals
+      </Button>
       <Button
         id="add-ingredient"
         type="submit"
@@ -167,38 +182,51 @@ const SearchFoods = () => {
           backgroundColor: "#ECB275",
         }}
         onClick={handleAddIngredient}
-      >Add Ingredients</Button>
+      >
+        Add Ingredients
+      </Button>
       <TableContainer>
-          <Table aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Food (100g serving)</TableCell>
-                <TableCell align="right">Calories</TableCell>
-                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                <TableCell align="right">Add to Cart</TableCell>
-                <TableCell align="right">Delete</TableCell>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Food (100g serving)</TableCell>
+              <TableCell align="right">Calories</TableCell>
+              <TableCell align="right">Fat&nbsp;(g)</TableCell>
+              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell align="right">Add to Cart</TableCell>
+              <TableCell align="right">Delete</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredFoods.map((row) => (
+              <TableRow key={row.foodID}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.totalFat}</TableCell>
+                <TableCell align="right">{row.carbohydrate}</TableCell>
+                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">
+                  <Button>
+                    <AddIcon />
+                  </Button>
+                </TableCell>
+                <TableCell align="right">
+                  <Button
+                    disabled={row.uID != userInfoState.uID}
+                    onClick={() => handleDelete(row.foodID, userInfoState.uID)}
+                  >
+                    <DeleteIcon />
+                  </Button>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredFoods.map((row) => (
-                <TableRow key={row.foodID}>
-                  <TableCell component="th" scope="row">
-                    {row.name}
-                  </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.totalFat}</TableCell>
-                  <TableCell align="right">{row.carbohydrate}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
-                  <TableCell align="right"><Button><AddIcon/></Button></TableCell>
-                  <TableCell align="right"><Button disabled={row.uID != state.value.uID} onClick={() => handleDelete(row.foodID, state.value.uID)}><DeleteIcon/></Button></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Stack>
   );
-}
+};
 export default SearchFoods;
