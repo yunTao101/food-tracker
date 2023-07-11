@@ -207,7 +207,7 @@ const Home = () => {
                             minWidth: "170px",
                             backgroundColor: "#ECB275",
                           }}
-                          onClick={() => {}}
+                          onClick={() => {navigate("/searchFoods")}}
                         >
                           Track
                         </Button>

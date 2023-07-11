@@ -97,4 +97,5 @@ function parseJson() {
   return dataParsed;
 }
 
+
 module.exports = routes;
