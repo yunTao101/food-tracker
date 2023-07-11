@@ -1,15 +1,48 @@
 import axios from "axios";
 
-const start_point = "http://localhost:8000";
-
+const start_point = "http://localhost:8000"; 
 
 export function getIngredients(uID) {
     const vals = {uID};
     return axios.post(start_point + "/getIngredients", vals);
 }
 
-export function getMeals() {
-    return axios.post(start_point + "/getMeals");
+export function getTotalIngrediantsCount(){
+    return axios.post(start_point + "/getAllIngredientsTotalCount");
+}
+
+export function getTotalMyIngrediantsCount(uID){
+    const vals = {uID};
+    return axios.post(start_point + "/getMyIngredientsTotalCount", vals);
+}
+
+export function getTotalMyMealsCount(){
+    return axios.post(start_point + "/getMyMealsTotalCount");
+}
+
+export function getIngrediantsWithLimit(startIndex, range){
+    const vals = {startIndex, range};
+    return axios.post(start_point + "/getIngredientsWithLimit", vals);
+}
+
+export function getMyIngrediantsWithLimit(uID, startIndex, range){
+    const vals = {uID, startIndex, range};
+    return axios.post(start_point + "/getMyIngredientsWithLimit", vals);
+}
+
+export function getMyMealsWithLimit(startIndex, range){
+    const vals = {startIndex, range};
+    return axios.post(start_point + "/getMealsWithLimit", vals);
+}
+
+export function getMyIngredients(uID, startIndex, range) {
+    const vals = {uID, startIndex, range};
+    return axios.post(start_point + "/getMyIngredients", vals);
+}
+
+export function getMeals(startIndex, range) {
+    const vals = {startIndex, range};
+    return axios.post(start_point + "/getMeals", vals);
 }
 
 export function addIngred(
