@@ -86,7 +86,7 @@ function routes(app) {
       console.log("uod: ", req.body.uID);
       if (err) throw err;
       console.log("Account that was updated: ", results);
-      res.send(results);
+      res.send(req.body);
     });
   });
 }
