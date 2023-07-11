@@ -13,9 +13,7 @@ con.connect((err) => {
     throw err;
     }
     console.log("MySQL database connected...");
- 
-    fillFoodIngredients();
-
+    countFoodIngredients();
 });
 
 function routes(app) {
@@ -77,6 +75,33 @@ function insertFoodIngredients(vals) {
         throw err;
       }
     });
+}
+
+
+function dropFoodIngredients() {
+    let sql = `DROP TABLE IF EXISTS FoodIngredients;`
+    con.query(sql, (err, results) => {
+        if (err) {
+          throw err;
+        }
+      });
+}
+
+function countFoodIngredients() {
+    let sql = `select count(*) from FoodIngredients;`
+    let count = 0;
+    con.query(sql, (err, results) => {
+        if (err) {
+          throw err;
+        }
+        console.log(results[0]);
+        let temp = JSON.parse(JSON.stringify(results));
+        count = parseInt(temp[0]['count(*)']);
+        console.log(count);
+        if (count == 0) {
+            fillFoodIngredients();
+        }
+      });
 }
 
 //fill FoodIngredients table with production dataset
