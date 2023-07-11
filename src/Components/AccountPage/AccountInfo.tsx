@@ -109,12 +109,14 @@ const AccountInfo = () => {
   };
 
   const updateUser = () => {
-    if (
+    if (gender!="" &&
       !(
         (gender && gender.toLocaleLowerCase() === "m") ||
-        (gender && gender.toLocaleLowerCase() === "f")
+        (gender && gender.toLocaleLowerCase() === "f") 
       )
-    ) {
+    ) 
+    
+    {
       setErrorMessage("Gender must be M or F!");
       setUpdateError(true);
     } else {
