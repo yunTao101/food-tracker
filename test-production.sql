@@ -3,7 +3,10 @@ CREATE DATABASE testFoodData;
 USE testFoodData;
 SET SQL_SAFE_UPDATES = 0;
 
--- Creating all tables
+-- ALTER TABLE FoodIngredients RENAME Production;
+
+SELECT * FROM Production LIMIT 10;
+
 CREATE TABLE Users (
     uID INT NOT NULL AUTO_INCREMENT, 
     accountType VARCHAR(5) NOT NULL, 
@@ -22,16 +25,16 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE FoodIngredients(
-    foodID INT NOT NULL,  
+    foodID INT NOT NULL AUTO_INCREMENT,  
     uID INT NOT NULL,
-    name VARCHAR(100) NOT NULL, 
+    name VARCHAR(1000) NOT NULL, 
     servingSize INT NOT NULL,
     calories INT NOT NULL,
-    protein DECIMAL(4, 2) NOT NULL,
-    carbohydrate DECIMAL(4, 2) NOT NULL,
-    sugars DECIMAL(4, 2) NOT NULL,
-    totalFat DECIMAL(4, 2) NOT NULL,
-    PRIMARY KEY(foodID),
+    protein DECIMAL(5, 2) NOT NULL,
+    carbohydrate DECIMAL(5, 2) NOT NULL,
+    sugars DECIMAL(5, 2) NOT NULL,
+    totalFat DECIMAL(5, 2) NOT NULL,
+    PRIMARY KEY (foodID),
     FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE
 );
 
@@ -65,7 +68,6 @@ CREATE TABLE EatenCustomMeals(
     FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE
 );
 
-
 -- Testing User Table
 INSERT INTO Users (accountType, firstName, lastName, username, password, email, gender, age, weight, height, desiredWeight, caloricGoal) VALUES ("Admin", "Admin", "Account", "admin1", "admin1", "admin1FoodTracker@gmmail.com", null, null, null, null, null, null);
 INSERT INTO Users (accountType, firstName, lastName, username, password, email, gender, age, weight, height, desiredWeight, caloricGoal) VALUES ("User", "Akshen", "Jasikumar", "akshen28", "akshen123", "akshen.jasikumar@gmmail.com", "M", 21, 160.0, 69, 150.0, 1800);
@@ -85,30 +87,30 @@ Select * FROM Users;
 -- Login Check
 SELECT * FROM Users WHERE username = "akshen28" AND password = "akshen123";
 
+-- Remove 'g' character from production table columns 
+UPDATE Production SET serving_size=REPLACE(serving_size, 'g', '');
+UPDATE Production SET total_fat=REPLACE(total_fat, 'g', '');
+UPDATE Production SET protein=REPLACE(protein, 'g', '');
+UPDATE Production SET carbohydrate=REPLACE(carbohydrate, 'g', '');
+UPDATE Production SET sugars=REPLACE(sugars, 'g', '');
 
--- Testing FoodIngredients Table
-INSERT INTO FoodIngredients VALUES(1176, 1, "Lettuce, raw, green leaf", 100, 15, 1.36, 2.87, 0.78, 0.2);
-INSERT INTO FoodIngredients VALUES(1188, 1, "Bread, whole-wheat, pita", 100, 262, 9.80, 55.89, 2.87, 1.7);
-INSERT INTO FoodIngredients VALUES(2009, 1, "Sweet potato, unprepared, raw", 100, 86, 6.10, 20.12, 4.18, 0.1);
-INSERT INTO FoodIngredients VALUES(3757, 1, "Chicken breast, sliced, fat-free, oven-roasted", 100, 79, 16.79, 2.17, 0.10, 0.4);
-INSERT INTO FoodIngredients VALUES (30, 1, 'Tomato', 100, 15, 1.36, 2.87, 0.78, 0.2);
-INSERT INTO FoodIngredients VALUES (54, 1, 'Tomato Paste', 100, 15, 1.36, 2.87, 0.78, 0.2);
-INSERT INTO FoodIngredients VALUES (8, 1, 'Macoroni', 100, 15, 1.36, 2.87, 0.78, 0.2);
-INSERT INTO FoodIngredients VALUES (816, 1, 'Mozzerella Cheese', 100, 15, 1.36, 2.87, 0.78, 0.2);
-INSERT INTO FoodIngredients VALUES (973, 1, 'Lettuce', 100, 15, 1.36, 2.87, 0.78, 0.2);
+-- Transfer production rows to FoodIngredients table
+INSERT INTO FoodIngredients 
+SELECT p.MyUnknownColumn + 1, 1, p.name, p.serving_size, p.calories, p.protein, p.carbohydrate, p.sugars, p.total_fat
+FROM Production p;
+
 -- Insert New Ingredient
-Select * FROM FoodIngredients;
-INSERT INTO FoodIngredients VALUES (3758, 2, "roti", 100, 200, 0.1, 60, 5, 3);
-Select * FROM FoodIngredients;
+Select * FROM FoodIngredients LIMIT 10;
+INSERT INTO FoodIngredients (uID, name, servingSize, calories, protein, carbohydrate, sugars, totalFat) VALUES (2, "roti", 100, 200, 0.1, 60, 5, 3);
+Select * FROM FoodIngredients ORDER BY foodID DESC LIMIT 10;
 -- Delete Ingredient
-Select * FROM FoodIngredients;
-DELETE FROM FoodIngredients WHERE uID = 2 AND foodID = 3758;
-Select * FROM FoodIngredients;
+Select * FROM FoodIngredients LIMIT 10;
+DELETE FROM FoodIngredients WHERE uID = 2 AND foodID = 8788;
+Select * FROM FoodIngredients ORDER BY foodID DESC LIMIT 10;
 -- Update Ingredient
-Select * FROM FoodIngredients;
+Select * FROM FoodIngredients WHERE foodID > 1180 AND foodID < 1190;
 UPDATE FoodIngredients SET name = "pita", servingSize =  150 WHERE foodID = 1188 AND uid = 1;
-Select * FROM FoodIngredients;
-
+Select * FROM FoodIngredients WHERE foodID > 1180 AND foodID < 1190;
 
 -- Insert into FoodCustomMeals
 INSERT INTO FoodCustomMeals VALUES (1, 30, 'Lasagna', 4, 1);
@@ -130,7 +132,6 @@ SELECT * FROM FoodCustomMeals ORDER BY mealID;
 UPDATE FoodCustomMeals SET quantity = 2 WHERE foodID = 30 AND mealID = 1;
 SELECT * FROM FoodCustomMeals ORDER BY mealID;
 
-
 -- Testing EatenIngredients
 INSERT INTO EatenIngredients (foodID, uID, date) VALUES (30, 1, "2023-06-19");
 INSERT INTO EatenIngredients (foodID, uID, date) VALUES (54, 2, "2023-06-20");
@@ -145,7 +146,6 @@ Select * FROM EatenIngredients;
 Select * FROM EatenIngredients;
 DELETE FROM EatenIngredients WHERE foodID = 973 AND date = "2023-06-22" AND uID = 2;
 Select * FROM EatenIngredients;
-
 
 -- Testing EatenCustomMeals
 INSERT INTO EatenCustomMeals (mealID, uID, date) VALUES (3, 2, "2023-06-19");
