@@ -1,15 +1,31 @@
-Query OK, 6 rows affected (0.04 sec)
+Query OK, 6 rows affected (0.03 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
 Database changed
 Query OK, 0 rows affected (0.00 sec)
 
-Query OK, 0 rows affected (0.01 sec)
++-----------------+--------------------+--------------+----------+-----------+---------+--------------+--------+
+| MyUnknownColumn | name               | serving_size | calories | total_fat | protein | carbohydrate | sugars |
++-----------------+--------------------+--------------+----------+-----------+---------+--------------+--------+
+|               0 | Cornstarch         | 100          |      381 | 0.1       | 0.26    | 91.27        | 0.00   |
+|               1 | Nuts, pecans       | 100          |      691 | 72        | 9.17    | 13.86        | 3.97   |
+|               2 | Eggplant, raw      | 100          |       25 | 0.2       | 0.98    | 5.88         | 3.53   |
+|               3 | Teff, uncooked     | 100          |      367 | 2.4       | 13.30   | 73.13        | 1.84   |
+|               4 | Sherbet, orange    | 100          |      144 | 2         | 1.10    | 30.40        | 24.32  |
+|               5 | Cauliflower, raw   | 100          |       25 | 0.3       | 1.92    | 4.97         | 1.91   |
+|               6 | Taro leaves, raw   | 100          |       42 | 0.7       | 4.98    | 6.70         | 3.01   |
+|               7 | Lamb, raw, ground  | 100          |      282 | 23        | 16.56   | 0.00         | 0.00   |
+|               8 | Cheese, camembert  | 100          |      300 | 24        | 19.80   | 0.46         | 0.46   |
+|               9 | Vegetarian fillets | 100          |      290 | 18        | 23.00   | 9.00         | 0.80   |
++-----------------+--------------------+--------------+----------+-----------+---------+--------------+--------+
+10 rows in set (0.00 sec)
 
 Query OK, 0 rows affected (0.01 sec)
 
 Query OK, 0 rows affected (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
 
 Query OK, 0 rows affected (0.01 sec)
 
@@ -52,7 +68,7 @@ Query OK, 1 row affected (0.00 sec)
 +-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
 4 rows in set (0.00 sec)
 
-Query OK, 1 row affected (0.00 sec)
+Query OK, 1 row affected (0.01 sec)
 
 +-----+-------------+-----------+-----------+----------+-----------+------------------------------+--------+------+--------+--------+---------------+-------------+
 | uID | accountType | firstName | lastName  | username | password  | email                        | gender | age  | weight | height | desiredWeight | caloricGoal |
@@ -91,128 +107,130 @@ Rows matched: 1  Changed: 1  Warnings: 0
 +-----+-------------+-----------+-----------+----------+-----------+-----------------------------+--------+------+--------+--------+---------------+-------------+
 1 row in set (0.00 sec)
 
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 7797  Changed: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 7797  Changed: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 7797  Changed: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 7797  Changed: 0  Warnings: 0
+
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 7797  Changed: 0  Warnings: 0
+
+Query OK, 7797 rows affected (0.11 sec)
+Records: 7797  Duplicates: 0  Warnings: 0
+
++--------+-----+--------------------+-------------+----------+---------+--------------+--------+----------+
+| foodID | uID | name               | servingSize | calories | protein | carbohydrate | sugars | totalFat |
++--------+-----+--------------------+-------------+----------+---------+--------------+--------+----------+
+|      1 |   1 | Cornstarch         |         100 |      381 |    0.26 |        91.27 |   0.00 |     0.10 |
+|      2 |   1 | Nuts, pecans       |         100 |      691 |    9.17 |        13.86 |   3.97 |    72.00 |
+|      3 |   1 | Eggplant, raw      |         100 |       25 |    0.98 |         5.88 |   3.53 |     0.20 |
+|      4 |   1 | Teff, uncooked     |         100 |      367 |   13.30 |        73.13 |   1.84 |     2.40 |
+|      5 |   1 | Sherbet, orange    |         100 |      144 |    1.10 |        30.40 |  24.32 |     2.00 |
+|      6 |   1 | Cauliflower, raw   |         100 |       25 |    1.92 |         4.97 |   1.91 |     0.30 |
+|      7 |   1 | Taro leaves, raw   |         100 |       42 |    4.98 |         6.70 |   3.01 |     0.70 |
+|      8 |   1 | Lamb, raw, ground  |         100 |      282 |   16.56 |         0.00 |   0.00 |    23.00 |
+|      9 |   1 | Cheese, camembert  |         100 |      300 |   19.80 |         0.46 |   0.46 |    24.00 |
+|     10 |   1 | Vegetarian fillets |         100 |      290 |   23.00 |         9.00 |   0.80 |    18.00 |
++--------+-----+--------------------+-------------+----------+---------+--------------+--------+----------+
+10 rows in set (0.00 sec)
+
 Query OK, 1 row affected (0.00 sec)
+
++--------+-----+-----------------------------------------------------------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
+| foodID | uID | name                                                                                                | servingSize | calories | protein | carbohydrate | sugars | totalFat |
++--------+-----+-----------------------------------------------------------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
+|   8788 |   2 | roti                                                                                                |         100 |      200 |    0.10 |        60.00 |   5.00 |     3.00 |
+|   8787 |   1 | Lamb, raw, separable lean and fat, composite of trimmed retail cuts, frozen, imported, New Zealand  |         100 |      277 |   16.74 |         0.00 |   0.00 |    23.00 |
+|   8786 |   1 | Lamb, cooked, separable lean only, composite of trimmed retail cuts, frozen, imported, New Zealand  |         100 |      206 |   29.59 |         0.00 |   0.00 |     8.90 |
+|   8783 |   1 | Oil, uses similar to 95 degree hard butter, confection fat, palm kernel (hydrogenated), industrial  |         100 |      884 |    0.00 |         0.00 |   0.00 |   100.00 |
+|   8773 |   1 | Pan Dulce, contains wheat flour and rice flour, cookie-like, Salpora de Arroz con Azucar, LA RICURA |         100 |      445 |    8.81 |        66.28 |  21.86 |    16.00 |
+|   8772 |   1 | Infant formula, not reconstituted, liquid concentrate, with iron, GOOD START ESSENTIALS SOY, NESTLE |         100 |      128 |    3.20 |        14.10 |  11.20 |     6.50 |
+|   8771 |   1 | Infant formula, with ARA and DHA, SENSITIVE (LACTOSE FREE) ready-to-feed, SIMILAC, ABBOTT NUTRITION |         100 |       68 |    1.48 |         7.40 |   7.40 |     3.70 |
+|   8768 |   1 | Toddler formula, ready-to-feed, ENFAGROW PREMIUM (formerly ENFAMIL, LIPIL, NEXT STEP), MEAD JOHNSON |         100 |       64 |    1.78 |         7.18 |   7.18 |     3.60 |
+|   8765 |   1 | Apple juice, with added ascorbic acid, diluted with 3 volume water, unsweetened, frozen concentrate |         100 |       47 |    0.14 |        11.54 |   0.00 |     0.10 |
+|   8762 |   1 | Margarine, for flaky pastries, soy oil (partially hydrogenated ), cottonseed, non-dairy, industrial |         100 |      714 |    1.90 |         0.00 |   0.00 |    80.00 |
++--------+-----+-----------------------------------------------------------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
+10 rows in set (0.00 sec)
+
++--------+-----+--------------------+-------------+----------+---------+--------------+--------+----------+
+| foodID | uID | name               | servingSize | calories | protein | carbohydrate | sugars | totalFat |
++--------+-----+--------------------+-------------+----------+---------+--------------+--------+----------+
+|      1 |   1 | Cornstarch         |         100 |      381 |    0.26 |        91.27 |   0.00 |     0.10 |
+|      2 |   1 | Nuts, pecans       |         100 |      691 |    9.17 |        13.86 |   3.97 |    72.00 |
+|      3 |   1 | Eggplant, raw      |         100 |       25 |    0.98 |         5.88 |   3.53 |     0.20 |
+|      4 |   1 | Teff, uncooked     |         100 |      367 |   13.30 |        73.13 |   1.84 |     2.40 |
+|      5 |   1 | Sherbet, orange    |         100 |      144 |    1.10 |        30.40 |  24.32 |     2.00 |
+|      6 |   1 | Cauliflower, raw   |         100 |       25 |    1.92 |         4.97 |   1.91 |     0.30 |
+|      7 |   1 | Taro leaves, raw   |         100 |       42 |    4.98 |         6.70 |   3.01 |     0.70 |
+|      8 |   1 | Lamb, raw, ground  |         100 |      282 |   16.56 |         0.00 |   0.00 |    23.00 |
+|      9 |   1 | Cheese, camembert  |         100 |      300 |   19.80 |         0.46 |   0.46 |    24.00 |
+|     10 |   1 | Vegetarian fillets |         100 |      290 |   23.00 |         9.00 |   0.80 |    18.00 |
++--------+-----+--------------------+-------------+----------+---------+--------------+--------+----------+
+10 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
++--------+-----+-----------------------------------------------------------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
+| foodID | uID | name                                                                                                | servingSize | calories | protein | carbohydrate | sugars | totalFat |
++--------+-----+-----------------------------------------------------------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
+|   8787 |   1 | Lamb, raw, separable lean and fat, composite of trimmed retail cuts, frozen, imported, New Zealand  |         100 |      277 |   16.74 |         0.00 |   0.00 |    23.00 |
+|   8786 |   1 | Lamb, cooked, separable lean only, composite of trimmed retail cuts, frozen, imported, New Zealand  |         100 |      206 |   29.59 |         0.00 |   0.00 |     8.90 |
+|   8783 |   1 | Oil, uses similar to 95 degree hard butter, confection fat, palm kernel (hydrogenated), industrial  |         100 |      884 |    0.00 |         0.00 |   0.00 |   100.00 |
+|   8773 |   1 | Pan Dulce, contains wheat flour and rice flour, cookie-like, Salpora de Arroz con Azucar, LA RICURA |         100 |      445 |    8.81 |        66.28 |  21.86 |    16.00 |
+|   8772 |   1 | Infant formula, not reconstituted, liquid concentrate, with iron, GOOD START ESSENTIALS SOY, NESTLE |         100 |      128 |    3.20 |        14.10 |  11.20 |     6.50 |
+|   8771 |   1 | Infant formula, with ARA and DHA, SENSITIVE (LACTOSE FREE) ready-to-feed, SIMILAC, ABBOTT NUTRITION |         100 |       68 |    1.48 |         7.40 |   7.40 |     3.70 |
+|   8768 |   1 | Toddler formula, ready-to-feed, ENFAGROW PREMIUM (formerly ENFAMIL, LIPIL, NEXT STEP), MEAD JOHNSON |         100 |       64 |    1.78 |         7.18 |   7.18 |     3.60 |
+|   8765 |   1 | Apple juice, with added ascorbic acid, diluted with 3 volume water, unsweetened, frozen concentrate |         100 |       47 |    0.14 |        11.54 |   0.00 |     0.10 |
+|   8762 |   1 | Margarine, for flaky pastries, soy oil (partially hydrogenated ), cottonseed, non-dairy, industrial |         100 |      714 |    1.90 |         0.00 |   0.00 |    80.00 |
+|   8751 |   1 | MORNINGSTAR FARMS Breakfast Sandwich Veggie Sausage Egg & Cheese English Muffin, unprepared, frozen |         100 |      205 |   14.30 |        18.70 |   1.10 |     9.40 |
++--------+-----+-----------------------------------------------------------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
+10 rows in set (0.00 sec)
+
++--------+-----+--------------------------+-------------+----------+---------+--------------+--------+----------+
+| foodID | uID | name                     | servingSize | calories | protein | carbohydrate | sugars | totalFat |
++--------+-----+--------------------------+-------------+----------+---------+--------------+--------+----------+
+|   1181 |   1 | Ostrich, raw, inside leg |         100 |      111 |   22.39 |         0.00 |   0.00 |     1.70 |
+|   1182 |   1 | Seeds, dried, chia seeds |         100 |      486 |   16.54 |        42.12 |   0.00 |    31.00 |
+|   1183 |   1 | SILK Plus Fiber, soymilk |         100 |       41 |    2.47 |         5.76 |   2.88 |     1.40 |
+|   1184 |   1 | Snacks, brown rice chips |         100 |      384 |    8.20 |        81.50 |   0.60 |     2.80 |
+|   1185 |   1 | Corn, raw, yellow, sweet |         100 |       86 |    3.27 |        18.70 |   6.26 |     1.40 |
+|   1186 |   1 | Animal fat, bacon grease |         100 |      897 |    0.00 |         0.00 |   0.00 |   100.00 |
+|   1187 |   1 | Pork, pickled pork hocks |         100 |      171 |   19.11 |         0.00 |   0.00 |    11.00 |
+|   1188 |   1 | Agave, dried (Southwest) |         100 |      341 |    1.71 |        81.98 |  50.70 |     0.70 |
+|   1189 |   1 | Bread, whole-wheat, pita |         100 |      262 |    9.80 |        55.89 |   2.87 |     1.70 |
++--------+-----+--------------------------+-------------+----------+---------+--------------+--------+----------+
+9 rows in set (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
++--------+-----+--------------------------+-------------+----------+---------+--------------+--------+----------+
+| foodID | uID | name                     | servingSize | calories | protein | carbohydrate | sugars | totalFat |
++--------+-----+--------------------------+-------------+----------+---------+--------------+--------+----------+
+|   1181 |   1 | Ostrich, raw, inside leg |         100 |      111 |   22.39 |         0.00 |   0.00 |     1.70 |
+|   1182 |   1 | Seeds, dried, chia seeds |         100 |      486 |   16.54 |        42.12 |   0.00 |    31.00 |
+|   1183 |   1 | SILK Plus Fiber, soymilk |         100 |       41 |    2.47 |         5.76 |   2.88 |     1.40 |
+|   1184 |   1 | Snacks, brown rice chips |         100 |      384 |    8.20 |        81.50 |   0.60 |     2.80 |
+|   1185 |   1 | Corn, raw, yellow, sweet |         100 |       86 |    3.27 |        18.70 |   6.26 |     1.40 |
+|   1186 |   1 | Animal fat, bacon grease |         100 |      897 |    0.00 |         0.00 |   0.00 |   100.00 |
+|   1187 |   1 | Pork, pickled pork hocks |         100 |      171 |   19.11 |         0.00 |   0.00 |    11.00 |
+|   1188 |   1 | pita                     |         150 |      341 |    1.71 |        81.98 |  50.70 |     0.70 |
+|   1189 |   1 | Bread, whole-wheat, pita |         100 |      262 |    9.80 |        55.89 |   2.87 |     1.70 |
++--------+-----+--------------------------+-------------+----------+---------+--------------+--------+----------+
+9 rows in set (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.01 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-| foodID | uID | name                                           | servingSize | calories | protein | carbohydrate | sugars | totalFat |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-|      8 |   1 | Macoroni                                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     30 |   1 | Tomato                                         |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     54 |   1 | Tomato Paste                                   |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    816 |   1 | Mozzerella Cheese                              |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    973 |   1 | Lettuce                                        |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1176 |   1 | Lettuce, raw, green leaf                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1188 |   1 | Bread, whole-wheat, pita                       |         100 |      262 |    9.80 |        55.89 |   2.87 |     1.70 |
-|   2009 |   1 | Sweet potato, unprepared, raw                  |         100 |       86 |    6.10 |        20.12 |   4.18 |     0.10 |
-|   3757 |   1 | Chicken breast, sliced, fat-free, oven-roasted |         100 |       79 |   16.79 |         2.17 |   0.10 |     0.40 |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-9 rows in set (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-| foodID | uID | name                                           | servingSize | calories | protein | carbohydrate | sugars | totalFat |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-|      8 |   1 | Macoroni                                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     30 |   1 | Tomato                                         |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     54 |   1 | Tomato Paste                                   |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    816 |   1 | Mozzerella Cheese                              |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    973 |   1 | Lettuce                                        |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1176 |   1 | Lettuce, raw, green leaf                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1188 |   1 | Bread, whole-wheat, pita                       |         100 |      262 |    9.80 |        55.89 |   2.87 |     1.70 |
-|   2009 |   1 | Sweet potato, unprepared, raw                  |         100 |       86 |    6.10 |        20.12 |   4.18 |     0.10 |
-|   3757 |   1 | Chicken breast, sliced, fat-free, oven-roasted |         100 |       79 |   16.79 |         2.17 |   0.10 |     0.40 |
-|   3758 |   2 | roti                                           |         100 |      200 |    0.10 |        60.00 |   5.00 |     3.00 |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-10 rows in set (0.00 sec)
-
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-| foodID | uID | name                                           | servingSize | calories | protein | carbohydrate | sugars | totalFat |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-|      8 |   1 | Macoroni                                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     30 |   1 | Tomato                                         |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     54 |   1 | Tomato Paste                                   |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    816 |   1 | Mozzerella Cheese                              |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    973 |   1 | Lettuce                                        |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1176 |   1 | Lettuce, raw, green leaf                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1188 |   1 | Bread, whole-wheat, pita                       |         100 |      262 |    9.80 |        55.89 |   2.87 |     1.70 |
-|   2009 |   1 | Sweet potato, unprepared, raw                  |         100 |       86 |    6.10 |        20.12 |   4.18 |     0.10 |
-|   3757 |   1 | Chicken breast, sliced, fat-free, oven-roasted |         100 |       79 |   16.79 |         2.17 |   0.10 |     0.40 |
-|   3758 |   2 | roti                                           |         100 |      200 |    0.10 |        60.00 |   5.00 |     3.00 |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-10 rows in set (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-| foodID | uID | name                                           | servingSize | calories | protein | carbohydrate | sugars | totalFat |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-|      8 |   1 | Macoroni                                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     30 |   1 | Tomato                                         |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     54 |   1 | Tomato Paste                                   |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    816 |   1 | Mozzerella Cheese                              |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    973 |   1 | Lettuce                                        |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1176 |   1 | Lettuce, raw, green leaf                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1188 |   1 | Bread, whole-wheat, pita                       |         100 |      262 |    9.80 |        55.89 |   2.87 |     1.70 |
-|   2009 |   1 | Sweet potato, unprepared, raw                  |         100 |       86 |    6.10 |        20.12 |   4.18 |     0.10 |
-|   3757 |   1 | Chicken breast, sliced, fat-free, oven-roasted |         100 |       79 |   16.79 |         2.17 |   0.10 |     0.40 |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-9 rows in set (0.00 sec)
-
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-| foodID | uID | name                                           | servingSize | calories | protein | carbohydrate | sugars | totalFat |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-|      8 |   1 | Macoroni                                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     30 |   1 | Tomato                                         |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     54 |   1 | Tomato Paste                                   |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    816 |   1 | Mozzerella Cheese                              |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    973 |   1 | Lettuce                                        |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1176 |   1 | Lettuce, raw, green leaf                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1188 |   1 | Bread, whole-wheat, pita                       |         100 |      262 |    9.80 |        55.89 |   2.87 |     1.70 |
-|   2009 |   1 | Sweet potato, unprepared, raw                  |         100 |       86 |    6.10 |        20.12 |   4.18 |     0.10 |
-|   3757 |   1 | Chicken breast, sliced, fat-free, oven-roasted |         100 |       79 |   16.79 |         2.17 |   0.10 |     0.40 |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-9 rows in set (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
-
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-| foodID | uID | name                                           | servingSize | calories | protein | carbohydrate | sugars | totalFat |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-|      8 |   1 | Macoroni                                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     30 |   1 | Tomato                                         |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|     54 |   1 | Tomato Paste                                   |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    816 |   1 | Mozzerella Cheese                              |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|    973 |   1 | Lettuce                                        |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1176 |   1 | Lettuce, raw, green leaf                       |         100 |       15 |    1.36 |         2.87 |   0.78 |     0.20 |
-|   1188 |   1 | pita                                           |         150 |      262 |    9.80 |        55.89 |   2.87 |     1.70 |
-|   2009 |   1 | Sweet potato, unprepared, raw                  |         100 |       86 |    6.10 |        20.12 |   4.18 |     0.10 |
-|   3757 |   1 | Chicken breast, sliced, fat-free, oven-roasted |         100 |       79 |   16.79 |         2.17 |   0.10 |     0.40 |
-+--------+-----+------------------------------------------------+-------------+----------+---------+--------------+--------+----------+
-9 rows in set (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
-
-Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -286,7 +304,7 @@ Rows matched: 1  Changed: 1  Warnings: 0
 +--------+--------+------------+----------+-----+
 7 rows in set (0.00 sec)
 
-Query OK, 1 row affected (0.01 sec)
+Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -376,7 +394,7 @@ Query OK, 1 row affected (0.00 sec)
 |       3 |      2 |   4 | 2023-06-21 |
 |       4 |      4 |   4 | 2023-06-21 |
 +---------+--------+-----+------------+
-4 rows in set (0.00 sec)
+4 rows in set (0.01 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -389,7 +407,7 @@ Query OK, 1 row affected (0.00 sec)
 +---------+--------+-----+------------+
 3 rows in set (0.00 sec)
 
-Query OK, 0 rows affected (0.01 sec)
+Query OK, 0 rows affected (0.00 sec)
 
 Query OK, 0 rows affected (0.00 sec)
 
@@ -403,13 +421,13 @@ Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
-Query OK, 1 row affected (0.00 sec)
+Query OK, 1 row affected (0.01 sec)
 
 +-----+------------+----------+---------+--------------+----------+
 | uID | date       | calories | protein | carbohydrate | totalFat |
 +-----+------------+----------+---------+--------------+----------+
-|   2 | 2023-06-22 |       86 |    6.10 |        20.12 |     0.10 |
-|   2 | 2023-08-22 |       15 |    1.36 |         2.87 |     0.20 |
+|   2 | 2023-06-22 |       59 |    6.38 |         2.19 |     2.70 |
+|   2 | 2023-08-22 |      489 |    3.50 |        64.10 |    26.00 |
 +-----+------------+----------+---------+--------------+----------+
 2 rows in set (0.00 sec)
 
@@ -420,8 +438,8 @@ Query OK, 1 row affected (0.00 sec)
 +-----+------------+----------+---------+--------------+----------+
 | uID | date       | calories | protein | carbohydrate | totalFat |
 +-----+------------+----------+---------+--------------+----------+
-|   2 | 2023-06-22 |       86 |    6.10 |        20.12 |     0.10 |
-|   2 | 2023-08-22 |       30 |    2.72 |         5.74 |     0.40 |
+|   2 | 2023-06-22 |       59 |    6.38 |         2.19 |     2.70 |
+|   2 | 2023-08-22 |      978 |    7.00 |       128.20 |    52.00 |
 +-----+------------+----------+---------+--------------+----------+
 2 rows in set (0.00 sec)
 
@@ -433,13 +451,13 @@ Query OK, 1 row affected (0.00 sec)
 | uID | date       | calories | protein | carbohydrate | totalFat |
 +-----+------------+----------+---------+--------------+----------+
 |   2 | 2023-06-22 |        0 |    0.00 |         0.00 |     0.00 |
-|   2 | 2023-08-22 |       30 |    2.72 |         5.74 |     0.40 |
+|   2 | 2023-08-22 |      978 |    7.00 |       128.20 |    52.00 |
 +-----+------------+----------+---------+--------------+----------+
 2 rows in set (0.00 sec)
 
 Query OK, 0 rows affected (0.00 sec)
 
-Query OK, 0 rows affected (0.01 sec)
+Query OK, 0 rows affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
@@ -448,9 +466,9 @@ Query OK, 1 row affected (0.00 sec)
 +-----+------------+----------+---------+--------------+----------+
 | uID | date       | calories | protein | carbohydrate | totalFat |
 +-----+------------+----------+---------+--------------+----------+
-|   4 | 2023-06-21 |       30 |    2.72 |         5.74 |     0.40 |
+|   4 | 2023-06-21 |      375 |    7.47 |        65.36 |    11.10 |
 |   2 | 2023-06-22 |        0 |    0.00 |         0.00 |     0.00 |
-|   2 | 2023-08-22 |       30 |    2.72 |         5.74 |     0.40 |
+|   2 | 2023-08-22 |      978 |    7.00 |       128.20 |    52.00 |
 +-----+------------+----------+---------+--------------+----------+
 3 rows in set (0.00 sec)
 
@@ -463,7 +481,7 @@ Query OK, 1 row affected (0.00 sec)
 +-----+------------+----------+---------+--------------+----------+
 |   4 | 2023-06-21 |        0 |    0.00 |         0.00 |     0.00 |
 |   2 | 2023-06-22 |        0 |    0.00 |         0.00 |     0.00 |
-|   2 | 2023-08-22 |       30 |    2.72 |         5.74 |     0.40 |
+|   2 | 2023-08-22 |      978 |    7.00 |       128.20 |    52.00 |
 +-----+------------+----------+---------+--------------+----------+
 3 rows in set (0.00 sec)
 
@@ -473,7 +491,7 @@ Query OK, 0 rows affected (0.00 sec)
 
 Query OK, 0 rows affected (0.00 sec)
 
-Query OK, 0 rows affected (0.00 sec)
+Query OK, 0 rows affected (0.01 sec)
 
 Query OK, 0 rows affected (0.00 sec)
 
@@ -489,7 +507,7 @@ Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 
-Query OK, 1 row affected (0.01 sec)
+Query OK, 1 row affected (0.00 sec)
 
 Query OK, 1 row affected (0.00 sec)
 

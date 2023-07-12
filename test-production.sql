@@ -3,9 +3,7 @@ CREATE DATABASE testFoodData;
 USE testFoodData;
 SET SQL_SAFE_UPDATES = 0;
 
--- ALTER TABLE FoodIngredients RENAME Production;
-
-SELECT * FROM Production LIMIT 10;
+SELECT * FROM foodData.Production LIMIT 10;
 
 CREATE TABLE Users (
     uID INT NOT NULL AUTO_INCREMENT, 
@@ -68,17 +66,6 @@ CREATE TABLE EatenCustomMeals(
     FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE
 );
 
--- Indexes
-CREATE INDEX uIDIndex ON Users(uID);
-CREATE INDEX loginCheckIndex ON Users(username, password); 
-CREATE INDEX GetIngredientsIndex ON FoodIngredients(uID);
-CREATE INDEX DeleteIngredientsIndex ON FoodIngredients(foodID, uID);
-CREATE INDEX DeleteMealsIndex ON FoodCustomMeals(name); 
-CREATE INDEX UpdateMealsIndex ON FoodCustomMeals(mealID, foodID); 
-CREATE INDEX SelectEatenIndex ON EatenIngredients(uID, date); 
-CREATE INDEX RemoveEatenIngredientsIndex ON EatenIngredients(foodID, uID, date);
-CREATE INDEX RemoveEatenMealsIndex ON EatenCustomMeals(mealID, uID, date); 
-
 -- Testing User Table
 INSERT INTO Users (accountType, firstName, lastName, username, password, email, gender, age, weight, height, desiredWeight, caloricGoal) VALUES ("Admin", "Admin", "Account", "admin1", "admin1", "admin1FoodTracker@gmmail.com", null, null, null, null, null, null);
 INSERT INTO Users (accountType, firstName, lastName, username, password, email, gender, age, weight, height, desiredWeight, caloricGoal) VALUES ("User", "Akshen", "Jasikumar", "akshen28", "akshen123", "akshen.jasikumar@gmmail.com", "M", 21, 160.0, 69, 150.0, 1800);
@@ -99,16 +86,16 @@ Select * FROM Users;
 SELECT * FROM Users WHERE username = "akshen28" AND password = "akshen123";
 
 -- Remove 'g' character from production table columns 
-UPDATE Production SET serving_size=REPLACE(serving_size, 'g', '');
-UPDATE Production SET total_fat=REPLACE(total_fat, 'g', '');
-UPDATE Production SET protein=REPLACE(protein, 'g', '');
-UPDATE Production SET carbohydrate=REPLACE(carbohydrate, 'g', '');
-UPDATE Production SET sugars=REPLACE(sugars, 'g', '');
+UPDATE foodData.Production SET serving_size=REPLACE(serving_size, 'g', '');
+UPDATE foodData.Production SET total_fat=REPLACE(total_fat, 'g', '');
+UPDATE foodData.Production SET protein=REPLACE(protein, 'g', '');
+UPDATE foodData.Production SET carbohydrate=REPLACE(carbohydrate, 'g', '');
+UPDATE foodData.Production SET sugars=REPLACE(sugars, 'g', '');
 
 -- Transfer production rows to FoodIngredients table
 INSERT INTO FoodIngredients 
 SELECT p.MyUnknownColumn + 1, 1, p.name, p.serving_size, p.calories, p.protein, p.carbohydrate, p.sugars, p.total_fat
-FROM Production p;
+FROM foodData.Production p;
 
 -- Insert New Ingredient
 Select * FROM FoodIngredients LIMIT 10;
@@ -181,11 +168,7 @@ CREATE TABLE ProgressInfo(
     totalFat DECIMAL(5, 2) NOT NULL,
     PRIMARY KEY(uID, date),
     FOREIGN KEY (uID) REFERENCES Users(uID));
-
--- Indexes 
-CREATE INDEX DiaryIndex ON ProgressInfo(uID, date);
-CREATE INDEX ProgressIndex ON ProgressInfo(uID, date, calories); 
-
+    
 -- Procedure to insert and update rows in ProgressInfo when foods are eaten
 DELIMITER //
 CREATE PROCEDURE afterEatenIngredientInsert(newFoodID INT, userID INT, addedDate DATE)
