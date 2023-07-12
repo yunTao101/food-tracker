@@ -16,6 +16,17 @@ con.connect((err) => {
 });
 
 function routes(app) {
+  // AuthExistingUser
+  app.post("/authUser", (req, res) => {
+    console.log("Authenticating...", req.body);
+    let sql = `SELECT * FROM Users WHERE username = '${req.body.username}' OR email = '${req.body.email}'`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Account that was found: ", results);
+      res.send(results);
+    });
+  });
+
   // login
   app.post("/login", (req, res) => {
     console.log("Loging in...", req.body);
