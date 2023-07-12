@@ -14,7 +14,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import ButtonGroup from '@mui/material/ButtonGroup';
 import DeleteIcon from "@mui/icons-material/Delete";
-import CheckIcon from '@mui/icons-material/Check';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Grid from '@mui/material/Grid';
 import * as FoodService from "../../Services/FoodService";
