@@ -23,18 +23,13 @@ const ShoppingCart = () => {
             const temp = JSON.parse(JSON.stringify(data));
             const count = parseInt(temp[0]["count(*)"]) + 1;
             console.log(count);
-            cart.forEach((element: { foodID: any; uID: any; }) => {
-                if (element.foodID != null && element.uID != null){
-                    console.log(element.foodID, element.uID);
-                    FoodService.addMeal(count, element.foodID, name, element.uID);
+            cart.forEach((element: { foodID: any; }) => {
+                if (element.foodID != null && userInfoState.uID != null){
+                    console.log(element.foodID, userInfoState.uID);
+                    FoodService.addMeal(count, element.foodID, name, userInfoState.uID);
                 }
             });
         });
-        // const temp = JSON.parse(JSON.stringify(results));
-        // const count = parseInt(temp[0]["count(*)"]);
-        // console.log(results);
-        
-        // console.log("HERELO");
     }
 
     return (
@@ -44,6 +39,7 @@ const ShoppingCart = () => {
             <TableHead>
                 <TableRow>
                 <TableCell>Cart</TableCell>
+                <TableCell align="right">Quantity</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -52,6 +48,7 @@ const ShoppingCart = () => {
                     <TableCell component="th" scope="row">
                     {row.name}
                     </TableCell>
+                    <TableCell align="right">{row.quantity}</TableCell>
                 </TableRow>
                 ))}
             </TableBody>

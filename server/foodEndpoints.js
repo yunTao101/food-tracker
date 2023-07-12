@@ -1,5 +1,5 @@
 var mysql = require("mysql");
-const fs = require("fs");
+const fs = require("fs"); 
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -11,16 +11,17 @@ var con = mysql.createConnection({
 con.connect((err) => {
   if (err) {
     throw err;
-  }
+  } 
   console.log("MySQL database connected...");
   countFoodIngredients();
 });
 
-function routes(app) {
+function routes(app) { 
+
   // get all ingredients
   app.post("/getIngredients", (req, res) => {
     const vals = req.body;
-    let sql = `select * from FoodIngredients Where uID = 1 or uID = ${vals.uID}`;
+    let sql = `select * from FoodIngredients Where uID = 1`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -28,9 +29,88 @@ function routes(app) {
     });
   });
 
+  // get all UID specific ingrediants
+  app.post("/getAllIngredientsTotalCount", (req, res) => {
+    const vals = req.body;
+    let sql = `select count(*) from FoodIngredients Where uID = 1`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+  app.post("/getMyIngredientsTotalCount", (req, res) => {
+    const vals = req.body;
+    let sql = `select count(*) from FoodIngredients Where uID = ${vals.uID}`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+  
+  app.post("/getMyMealsTotalCount", (req, res) => {
+    const vals = req.body;
+    let sql = `select count(*) from FoodCustomMeals Group By mealID, name`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+  // get ingrediants with limit
+  app.post("/getIngredientsWithLimit", (req, res) => {
+    const vals = req.body;
+    let sql = `select * from FoodIngredients Where uID = 1 Limit ${vals.startIndex},${vals.range}`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+    // get my ingrediants with limit
+    app.post("/getMyIngredientsWithLimit", (req, res) => {
+      const vals = req.body;
+      let sql = `select * from FoodIngredients Where uID = ${vals.uID} Limit ${vals.startIndex},${vals.range}`;
+      con.query(sql, (err, results) => {
+        if (err) throw err;
+        console.log("Search results: ", results);
+        res.send(results);
+      });
+    });
+
+    
+      // get meals with limit
+  app.post("/getMealsWithLimit", (req, res) => {
+    const vals = req.body;
+    let sql = `select mealID, name from FoodCustomMeals Group By mealID, name Limit ${vals.startIndex},${vals.range}`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+
+
+    // get all UID specific ingrediants
+    app.post("/getMyIngredients", (req, res) => {
+      const vals = req.body;
+      let sql = `select * from FoodIngredients Where uID = ${vals.uID}`;
+      con.query(sql, (err, results) => {
+        if (err) throw err;
+        console.log("Search results: ", results);
+        res.send(results);
+      });
+    });
+
   // get all meals
   app.post("/getMeals", (req, res) => {
-    let sql = `select mealID, name, uID from FoodCustomMeals Group By mealID, name, uID;`;
+    const vals = req.body;
+    let sql = `select mealID, name, uID from FoodCustomMeals Where uID = ${vals.uID} Group By mealID, name, uID ;`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -74,12 +154,21 @@ function routes(app) {
   });
 
   app.post("/addMeal", (req, res) => {
-    console.log("ADDING MEALS");
     const vals = req.body;
     let sql = `INSERT INTO FoodCustomMeals VALUES (${vals.mealID}, ${vals.foodID}, "${vals.name}", ${vals.quantity}, ${vals.uID})`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+  app.post("/delMeal", (req, res) => {
+    const vals = req.body;
+    let sql = `DELETE FROM FoodCustomMeals WHERE name = "${vals.name}";`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("delete results: ", results);
       res.send(results);
     });
   });

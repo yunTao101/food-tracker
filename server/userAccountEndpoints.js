@@ -16,33 +16,6 @@ con.connect((err) => {
 });
 
 function routes(app) {
-  // Get food
-  // app.get("/initialize", (req, res) => {
-  //   let data = parseJson();
-
-  //   con.query("DELETE FROM users");
-  //   for (let i = 0; i < data.length; i++) {
-  //     con.query(
-  //       "INSERT INTO users (uid, name) VALUES (" +
-  //         data[i].FIELD1 +
-  //         ", '" +
-  //         data[i].name +
-  //         "')",
-  //       function (err, result) {}
-  //     );
-  //   }
-
-  //   con.query("SELECT * FROM users", function (err, result, fields) {
-  //     if (err) throw err;
-
-  //     res.json({
-  //       message:
-  //         "INSERTED ALL FOODS, RESULTS (and check database):\n" +
-  //         JSON.stringify(result),
-  //     });
-  //   });
-  // });
-
   // login
   app.post("/login", (req, res) => {
     console.log("Loging in...", req.body);
@@ -96,6 +69,5 @@ function parseJson() {
   let dataParsed = JSON.parse(data);
   return dataParsed;
 }
-
 
 module.exports = routes;

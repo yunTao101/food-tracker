@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import Context from "../../store/context";
 import Avatar from "@mui/material/Avatar";
 import PersonIcon from "@mui/icons-material/Person";
+import Snackbar from "@mui/base/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const AccountInfo = () => {
   const navigate = useNavigate();
@@ -22,13 +24,18 @@ const AccountInfo = () => {
   const [username, setUsername] = useState<String>();
   const [email, setEmail] = useState<String>();
   const [password, setPassword] = useState<String>();
-  const [age, setAge] = useState<number | null>();
-  const [gender, setGender] = useState<String>();
-  const [weight, setWeight] = useState<number | null>();
-  const [height, setHeight] = useState<number | null>();
-  const [desiredWeight, setDesiredWeight] = useState<number | null>();
-  const [caloricGoal, setCaloricGoal] = useState<number | null>();
+  const [age, setAge] = useState<number | null>(null);
+  const [gender, setGender] = useState<String | null>("");
+  const [weight, setWeight] = useState<number | null>(null);
+  const [height, setHeight] = useState<number | null>(null);
+  const [desiredWeight, setDesiredWeight] = useState<number | null>(null);
+  const [caloricGoal, setCaloricGoal] = useState<number | null>(null);
   const { userInfoState, actions } = useContext<any>(Context);
+  const [updateError, setUpdateError] = useState<boolean | undefined>(false);
+  const [errorMessage, setErrorMessage] = useState<String>();
+  const [updateSuccess, setUpdateSuccess] = useState<boolean | undefined>(
+    false
+  );
 
   useEffect(() => {
     if (userInfoState) {
@@ -102,34 +109,101 @@ const AccountInfo = () => {
   };
 
   const updateUser = () => {
-    AccountService.updateAccount(
-      userInfoState.uID,
-      "User",
-      firstName,
-      lastName,
-      username,
-      email,
-      password,
-      age,
-      gender,
-      weight,
-      height,
-      desiredWeight,
-      caloricGoal
-    ).then(({ data }) => {
-      if (data.length !== 0) {
-        actions({
-          type: "setUserInfo",
-          payload: data,
+    if (gender!="" &&
+      !(
+        (gender && gender.toLocaleLowerCase() === "m") ||
+        (gender && gender.toLocaleLowerCase() === "f") 
+      )
+    ) 
+    
+    {
+      setErrorMessage("Gender must be M or F!");
+      setUpdateError(true);
+    } else {
+      setErrorMessage("Gender must be M ddddor F!");
+      setUpdateError(false);
+      if (
+        firstName !== "" &&
+        lastName !== "" &&
+        username !== "" &&
+        email !== "" &&
+        password !== ""
+      ) {
+        AccountService.updateAccount(
+          userInfoState.uID,
+          "User",
+          firstName,
+          lastName,
+          username,
+          email,
+          password,
+          age,
+          gender,
+          weight,
+          height,
+          desiredWeight,
+          caloricGoal
+        ).then(({ data }) => {
+          if (data.length !== 0) {
+            setUpdateSuccess(true);
+            setUpdateError(false);
+            actions({
+              type: "setUserInfo",
+              payload: data,
+            });
+          } else {
+            console.log("ERRORR");
+          }
         });
       } else {
-        console.log("ERRORR");
+        setErrorMessage("Must fill required fields!");
+        setUpdateError(true);
       }
-    });
+    }
+  };
+
+  const handleCloseSnackBar = (event: any, reason?: any) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setUpdateError(false);
+  };
+
+  const handleCloseSucSnackBar = (event: any, reason?: any) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setUpdateSuccess(false);
   };
 
   return (
     <>
+      {updateError && (
+        <Snackbar open={updateError} onClose={handleCloseSnackBar}>
+          <Alert
+            onClose={handleCloseSnackBar}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
+            {errorMessage}
+          </Alert>
+        </Snackbar>
+      )}
+
+      <Snackbar
+        open={updateSuccess}
+        autoHideDuration={1000}
+        onClose={handleCloseSucSnackBar}
+      >
+        <Alert
+          onClose={handleCloseSnackBar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Information has been updated!
+        </Alert>
+      </Snackbar>
+
       <Box
         style={{
           backgroundColor: "#ffffff",
@@ -272,7 +346,7 @@ const AccountInfo = () => {
                         value={gender}
                         fullWidth
                         id="gender"
-                        label="Gender"
+                        label="Gender (M/F)"
                         name="gender"
                         InputLabelProps={{ shrink: gender ? true : false }}
                       />
