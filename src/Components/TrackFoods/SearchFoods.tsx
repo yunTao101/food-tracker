@@ -38,11 +38,13 @@ const SearchFoods = () => {
     },
   ];
   const navigate = useNavigate();
+  const { actions } = useContext<any>(Context);
   const { userInfoState } = useContext<any>(Context);
   const [search, setSearch] = useState<String>("");
   const [foods, setFoods] = useState(originalRows);
   const [tabsIndex, setTabsIndex] = useState(0);
   const [filteredFoods, setfilteredFoods] = useState(originalRows);
+  const [cartList, setCartList] = useState<Array<any>>([{}]);
   
   const currentTab = useRef(0);
   const isSearching = useRef(false);
@@ -151,6 +153,8 @@ const SearchFoods = () => {
 
   const getMeals = (startIndex: number, range: number) => {
     FoodService.getMeals(startIndex * 25, range).then(({ data }) => {
+  const getMeals = (startIndex: Number, range: Number) => {
+    FoodService.getMeals(startIndex, range, userInfoState.uID).then(({ data }) => {
       if (data.length !== 0) {
         setFoods(data);
         setfilteredFoods(data);
@@ -184,23 +188,71 @@ const SearchFoods = () => {
     navigate("/addIngredient");
   };
 
-  const handleDelete = (foodID: any, uID: any) => {
-    console.log(foodID, uID);
-    FoodService.delIngred(uID, foodID).then(() => {
-      console.log(filteredFoods);
-      const filteredRows = filteredFoods.filter((row) => {
-        return row.foodID.valueOf() != foodID;
-      });
-      setfilteredFoods(filteredRows);
-      FoodService.getIngredients(userInfoState.uID).then(({ data }) => {
-        if (data.length !== 0) {
-          setFoods(data);
-        } else {
-          console.log("Foods not loaded");
-        }
-      });
+  const handleAddToCart = (foodID: any, uID: any, name: any) => {
+    let updatedQuant = false;
+    let newList = cartList;
+    for (let i = newList.length - 1; i >= 0; i--) { 
+      if (newList[i].foodID == foodID && newList[i].uID == uID){
+        const tempName = newList[i].name;
+        const tempQuantity = newList[i].quantity + 1;
+        newList.splice(i, 1);
+        updatedQuant = true;
+        newList = newList.concat({foodID, uID, name: tempName, quantity: tempQuantity});
+      }
+    }
+    if (!updatedQuant) {
+      newList = cartList.concat({foodID, uID, name, quantity: 1});
+    }
+    // console.log("newlist:", newList);
+    setCartList(newList);
+    actions({
+      type: "setCart",
+      payload: newList,
     });
+  }
+
+  const quantCheck = (foodID: any) => {
+    let count = 0;
+    
+    cartList.forEach(item => {
+      if (item.foodID == foodID) {
+        count = item.quantity;
+      }
+    })
+    if (count) {
+      return count.toString();
+    } else {
+      return "0";
+    }
+  }
+
+  const handleDelete = (foodID: any, uID: any, name:any) => {
+    console.log(foodID, uID);
+    if (currentTab.current == 0 || currentTab.current == 1) {
+      FoodService.delIngred(uID, foodID).then(() => {
+        console.log(filteredFoods);
+        const filteredRows = filteredFoods.filter((row) => {
+          return row.foodID.valueOf() != foodID;
+        });
+        setfilteredFoods(filteredRows);
+        FoodService.getIngredients(userInfoState.uID).then(({ data }) => {
+          if (data.length !== 0) {
+            setFoods(data);
+          } else {
+            console.log("Foods not loaded");
+          }
+        });
+      });
+    } else {
+      FoodService.delMeal(name).then(() => {
+        const filteredRows = filteredFoods.filter((row) => {
+          return row.name.valueOf() != name;
+        });
+        setfilteredFoods(filteredRows);
+      });
+    }
   };
+
 
   return (
     <Box style={{
@@ -279,7 +331,7 @@ const SearchFoods = () => {
         </Grid>
         <Grid xs={7}/>
         <Grid xs={1}>
-        <IconButton color="primary" aria-label="add to shopping cart">
+        <IconButton onClick={() => navigate("/cart")} color="primary" aria-label="add to shopping cart">
           <AddShoppingCartIcon sx={{width : 50 , height : 50}} htmlColor="#ECB275" />
         </IconButton>
         </Grid>
@@ -300,6 +352,7 @@ const SearchFoods = () => {
               <TableCell align="right">Fat&nbsp;(g)</TableCell>
               <TableCell align="right">Carbs&nbsp;(g)</TableCell>
               <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell align="right">Quantity</TableCell>
               <TableCell align="right">Add to Cart</TableCell>
               <TableCell align="right">Delete</TableCell>
             </TableRow>
@@ -314,15 +367,16 @@ const SearchFoods = () => {
                 <TableCell align="right">{row.totalFat}</TableCell>
                 <TableCell align="right">{row.carbohydrate}</TableCell>
                 <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">{quantCheck(row.foodID)}</TableCell>
                 <TableCell align="right">
-                  <Button>
-                    <AddIcon />
-                  </Button>
+                <Button onClick={() => handleAddToCart(row.foodID, row.uID, row.name)}>
+                  <AddIcon />
+                </Button>
                 </TableCell>
                 <TableCell align="right">
                   <Button
                     disabled={row.uID != userInfoState.uID}
-                    onClick={() => handleDelete(row.foodID, userInfoState.uID)}
+                    onClick={() => handleDelete(row.foodID, row.uID, row.name)}
                   >
                     <DeleteIcon />
                   </Button>

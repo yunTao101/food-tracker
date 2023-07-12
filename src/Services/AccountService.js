@@ -41,6 +41,14 @@ export function loginAccount(username, password) {
   return axios.post(start_point + "/login", vals);
 }
 
+export function authAccount(username, email) {
+  const vals = {
+    username: username,
+    email: email,
+  };
+  return axios.post(start_point + "/authUser", vals);
+}
+
 export function deleteAccount(uID) {
   const vals = {
     uID: uID,

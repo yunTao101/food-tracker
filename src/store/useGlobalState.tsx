@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const useGlobalState = () => {
   const [userInfoState, setUserInfoState] = useState("UserInfo");
+  const [cartState, setCartState] = useState("Cart");
 
   const actions = (action: any) => {
     const { type, payload } = action;
@@ -10,13 +11,13 @@ const useGlobalState = () => {
         sessionStorage.setItem("userInfo", JSON.stringify(payload));
         return setUserInfoState(payload);
       case "setCart":
-        sessionStorage.setItem("payload", JSON.stringify(payload));
-        return setUserInfoState(payload);
+        sessionStorage.setItem("cart", JSON.stringify(payload));
+        return setCartState(payload);
       default:
         return setUserInfoState;
     }
   };
-  return { userInfoState, actions };
+  return { userInfoState, cartState, actions };
 };
 
 export default useGlobalState;

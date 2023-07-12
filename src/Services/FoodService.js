@@ -40,8 +40,8 @@ export function getMyIngredients(uID, startIndex, range) {
     return axios.post(start_point + "/getMyIngredients", vals);
 }
 
-export function getMeals(startIndex, range) {
-    const vals = {startIndex, range};
+export function getMeals(startIndex, range, uID) {
+    const vals = {startIndex, range, uID};
     return axios.post(start_point + "/getMeals", vals);
 }
 
@@ -80,4 +80,26 @@ export function delIngred(uID, foodID) {
         foodID: foodID,
     }
     return axios.post(start_point + "/delIngred", vals);
+}
+
+export function addMeal(mealID, foodID, name, uID) {
+    const vals = {
+        mealID: mealID,
+        foodID: foodID,
+        name: name,
+        quantity: 1,
+        uID: uID
+    }
+    return axios.post(start_point + "/addMeal", vals);
+}
+
+export function delMeal(name) {
+    const vals = {
+        name: name
+    }
+    return axios.post(start_point + "/delMeal", vals);
+}
+
+export function getSizeOfMeals() {
+    return axios.post(start_point + "/getSizeOfMeals");
 }
