@@ -68,6 +68,17 @@ CREATE TABLE EatenCustomMeals(
     FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE
 );
 
+-- Indexes
+CREATE INDEX uIDIndex ON Users(uID);
+CREATE INDEX loginCheckIndex ON Users(username, password); 
+CREATE INDEX GetIngredientsIndex ON FoodIngredients(uID);
+CREATE INDEX DeleteIngredientsIndex ON FoodIngredients(foodID, uID);
+CREATE INDEX DeleteMealsIndex ON FoodCustomMeals(name); 
+CREATE INDEX UpdateMealsIndex ON FoodCustomMeals(mealID, foodID); 
+CREATE INDEX SelectEatenIndex ON EatenIngredients(uID, date); 
+CREATE INDEX RemoveEatenIngredientsIndex ON EatenIngredients(foodID, uID, date);
+CREATE INDEX RemoveEatenMealsIndex ON EatenCustomMeals(mealID, uID, date); 
+
 -- Testing User Table
 INSERT INTO Users (accountType, firstName, lastName, username, password, email, gender, age, weight, height, desiredWeight, caloricGoal) VALUES ("Admin", "Admin", "Account", "admin1", "admin1", "admin1FoodTracker@gmmail.com", null, null, null, null, null, null);
 INSERT INTO Users (accountType, firstName, lastName, username, password, email, gender, age, weight, height, desiredWeight, caloricGoal) VALUES ("User", "Akshen", "Jasikumar", "akshen28", "akshen123", "akshen.jasikumar@gmmail.com", "M", 21, 160.0, 69, 150.0, 1800);
@@ -170,7 +181,11 @@ CREATE TABLE ProgressInfo(
     totalFat DECIMAL(5, 2) NOT NULL,
     PRIMARY KEY(uID, date),
     FOREIGN KEY (uID) REFERENCES Users(uID));
-    
+
+-- Indexes 
+CREATE INDEX DiaryIndex ON ProgressInfo(uID, date);
+CREATE INDEX ProgressIndex ON ProgressInfo(uID, date, calories); 
+
 -- Procedure to insert and update rows in ProgressInfo when foods are eaten
 DELIMITER //
 CREATE PROCEDURE afterEatenIngredientInsert(newFoodID INT, userID INT, addedDate DATE)
