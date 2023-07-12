@@ -14,6 +14,9 @@ Run the command "npm start" in food-tracker
 How to generate the production dataset:
 First the initialize.sql file will create the empty food ingredients table. Then on the backend of the application, we iterate through the json file of the production data set and fill this empty table with the desired columns we want. This is done once as soon as the application is loaded up, allowing the user to have access to the default list of food items.
 
+How to run the production dataset:
+Using SQL Workbench, use table import wizard and import nutrition.csv, selecting only columns Unknown Column, name, serving_size, total_fat, calories, protein, carbohydrate, sugars. Then Name the table Production.
+
 Features implemented in this milestone:
 
 Login/register/update account:
