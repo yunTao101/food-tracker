@@ -6,6 +6,7 @@ import SearchFoods from "../TrackFoods/SearchFoods";
 import AddIngredient from "../TrackFoods/AddIngredient";
 import Home from "../Home/Home";
 import AccountInfo from "../AccountPage/AccountInfo";
+import Cart from "../Cart/ShoppingCart"
 import Context from "../../store/context";
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/addIngredient" element={<AddIngredient />}></Route>
           <Route path="/accountInfo" element={<AccountInfo />}></Route>
           <Route path="/homePage" element={<Home />}></Route>
+          <Route path="/cart" element={<Cart />}></Route>
         </Routes>
       </BrowserRouter>
     </>
