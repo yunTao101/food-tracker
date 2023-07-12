@@ -109,50 +109,64 @@ const AccountInfo = () => {
   };
 
   const updateUser = () => {
-    if (gender!="" &&
+    if (
+      gender !== undefined &&
+      gender !== "" &&
       !(
         (gender && gender.toLocaleLowerCase() === "m") ||
-        (gender && gender.toLocaleLowerCase() === "f") 
+        (gender && gender.toLocaleLowerCase() === "f")
       )
-    ) 
-    
-    {
+    ) {
       setErrorMessage("Gender must be M or F!");
       setUpdateError(true);
     } else {
-      setErrorMessage("Gender must be M ddddor F!");
-      setUpdateError(false);
       if (
+        firstName !== undefined &&
         firstName !== "" &&
+        lastName !== undefined &&
         lastName !== "" &&
+        username !== undefined &&
         username !== "" &&
+        email !== undefined &&
         email !== "" &&
+        password !== undefined &&
         password !== ""
       ) {
-        AccountService.updateAccount(
-          userInfoState.uID,
-          "User",
-          firstName,
-          lastName,
-          username,
-          email,
-          password,
-          age,
-          gender,
-          weight,
-          height,
-          desiredWeight,
-          caloricGoal
-        ).then(({ data }) => {
-          if (data.length !== 0) {
-            setUpdateSuccess(true);
-            setUpdateError(false);
-            actions({
-              type: "setUserInfo",
-              payload: data,
-            });
+        AccountService.authAccount(username, email).then(({ data }) => {
+          if (
+            data.length !== 0 &&
+            data[0].email !== userInfoState.email &&
+            data[0].username !== userInfoState.username
+          ) {
+            setErrorMessage("Duplicate Account!");
+            setUpdateError(true);
           } else {
-            console.log("ERRORR");
+            AccountService.updateAccount(
+              userInfoState.uID,
+              "User",
+              firstName,
+              lastName,
+              username,
+              email,
+              password,
+              age,
+              gender,
+              weight,
+              height,
+              desiredWeight,
+              caloricGoal
+            ).then(({ data }) => {
+              if (data.length !== 0) {
+                setUpdateSuccess(true);
+                setUpdateError(false);
+                actions({
+                  type: "setUserInfo",
+                  payload: data,
+                });
+              } else {
+                console.log("ERRORR");
+              }
+            });
           }
         });
       } else {
@@ -357,7 +371,7 @@ const AccountInfo = () => {
                         value={weight}
                         fullWidth
                         id="weight"
-                        label="Weight"
+                        label="Weight (lbs)"
                         name="weight"
                         InputLabelProps={{ shrink: weight ? true : false }}
                       />
@@ -368,7 +382,7 @@ const AccountInfo = () => {
                         value={height}
                         fullWidth
                         id="height"
-                        label="Height"
+                        label="Height (cm)"
                         name="height"
                         InputLabelProps={{ shrink: height ? true : false }}
                       />
@@ -379,7 +393,7 @@ const AccountInfo = () => {
                         value={desiredWeight}
                         fullWidth
                         id="desiredWeight"
-                        label="Desired Weight"
+                        label="Desired Weight (lbs)"
                         name="desiredWeight"
                         InputLabelProps={{
                           shrink: desiredWeight ? true : false,
