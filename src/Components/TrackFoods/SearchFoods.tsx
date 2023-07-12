@@ -203,7 +203,11 @@ const SearchFoods = () => {
         count = item.quantity;
       }
     })
-    return count.toString();
+    if (count) {
+      return count.toString();
+    } else {
+      return "0";
+    }
   }
 
   const handleDelete = (foodID: any, uID: any, name:any) => {

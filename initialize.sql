@@ -48,8 +48,8 @@ select * from FoodIngredients;
 select count(*) from FoodIngredients;
 select * from Users;
 INSERT INTO Users VALUES (1, "Admin", "Admin", "Account", "admin1", "admin1", "admin1FoodTracker@gmmail.com", null, null, null, null, null, null);
+INSERT INTO Users VALUES (2, "User", "User1", "User1", "user1", "user1", "user1@gmail.com", 21, "F", 130, 160, 125, 1800);
 create user 'cs348admin'@'localhost' identified by 'admin';
 grant all on foodData.* to 'cs348admin'@'localhost';	
 alter user 'cs348admin'@'localhost' identified with mysql_native_password by 'admin';
-
 
