@@ -42,7 +42,7 @@ export function getMyIngredients(uID, startIndex, range) {
 
 export function getMeals(startIndex, range, uID) {
     const vals = {startIndex, range, uID};
-    return axios.post(start_point + "/getMeals", vals);
+    return axios.post(start_point + "/getMealsWithLimit", vals);
 }
 
 export function getRowsSearch(tableName, prefix, uID) {

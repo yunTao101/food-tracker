@@ -86,7 +86,7 @@ function routes(app) {
       // get meals with limit
   app.post("/getMealsWithLimit", (req, res) => {
     const vals = req.body;
-    let sql = `select mealID, name from FoodCustomMeals Group By mealID, name Limit ${vals.startIndex},${vals.range}`;
+    let sql = `select mealID, name, uID from FoodCustomMeals Where uID = ${vals.uID} Group By mealID, name Limit ${vals.startIndex},${vals.range}`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);

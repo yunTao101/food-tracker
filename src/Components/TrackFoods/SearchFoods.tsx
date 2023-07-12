@@ -152,17 +152,15 @@ const SearchFoods = () => {
   };
 
   const getMeals = (startIndex: number, range: number) => {
-    FoodService.getMeals(startIndex * 25, range).then(({ data }) => {
-  const getMeals = (startIndex: Number, range: Number) => {
-    FoodService.getMeals(startIndex, range, userInfoState.uID).then(({ data }) => {
-      if (data.length !== 0) {
-        setFoods(data);
-        setfilteredFoods(data);
-      } else {
-        setfilteredFoods([]);
-        console.log("Foods not loaded");
-      }
-    });
+    FoodService.getMeals(startIndex * 25, range, userInfoState.uID).then(({ data }) => {
+        if (data.length !== 0) {
+          setFoods(data);
+          setfilteredFoods(data);
+        } else {
+          setfilteredFoods([]);
+          console.log("Foods not loaded");
+        }
+      });
   };
 
   const handleSearchChange = (event: any) => {
@@ -175,7 +173,7 @@ const SearchFoods = () => {
     switch(tabsIndex){
       case 0: name = "FoodIngredients"; break;
       case 1: name = "FoodIngredients"; uID = userInfoState.uID; break;
-      case 2: name = "FoodCustomMeals"; break;
+      case 2: name = "FoodCustomMeals"; uID = userInfoState.uID; break;
     }
     isSearching.current = true;
     FoodService.getRowsSearch(name, search.toLowerCase(), uID).then(({data})=>{
@@ -284,8 +282,8 @@ const SearchFoods = () => {
               }}
             >
               <ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}> 
-    <Stack spacing={2} sx={{ width: 1100 ,marginTop: 5, marginBottom: 5}}>
-    <IconButton
+              <Stack spacing={2} sx={{ width: 1100 ,marginTop: 5, marginBottom: 5}}>
+              <IconButton
                 style={{
                   position: "absolute",
                   top: 10,
@@ -331,14 +329,14 @@ const SearchFoods = () => {
         </Grid>
         <Grid xs={7}/>
         <Grid xs={1}>
-        <IconButton onClick={() => navigate("/cart")} color="primary" aria-label="add to shopping cart">
+        <IconButton onClick={() => {if (cartList.length > 1 ) navigate("/cart")}} color="primary" aria-label="add to shopping cart">
           <AddShoppingCartIcon sx={{width : 50 , height : 50}} htmlColor="#ECB275" />
         </IconButton>
         </Grid>
       </Grid>
 
       <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
-          <Tab id="ingrediants" onClick={handleClick} label="All Ingredients"></Tab>  
+          <Tab id="ingrediants" onClick={handleClick} label="Default Ingredients"></Tab>  
           <Tab id="myIngrediants" onClick={handleClick} label="My Ingredients"></Tab>  
           <Tab id="meals" onClick={handleClick} label="My Meals"></Tab>
       </Tabs>
@@ -393,5 +391,5 @@ const SearchFoods = () => {
     </Container>
     </Box>
   );
-};
+}
 export default SearchFoods;
