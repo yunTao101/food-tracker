@@ -12,9 +12,9 @@ export default function FoodDiary() {
       series={[
         {
           data: [
-            { id: 0, value: 10, label: "series A" },
-            { id: 1, value: 15, label: "series B" },
-            { id: 2, value: 20, label: "series C" },
+            { id: 0, value: 10, label: "Carbs (20%)" },
+            { id: 1, value: 15, label: "Fat (35%)" },
+            { id: 2, value: 20, label: "Protein (45%)" },
           ],
         },
       ]}
