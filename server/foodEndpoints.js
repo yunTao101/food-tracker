@@ -117,6 +117,18 @@ function routes(app) {
     });
   });
 
+  app.post("/getRowsSearch", (req, res) => {
+    const vals = req.body;
+    let additional = (vals.uID != null ? "uID = " + vals.uID + " AND" : "");
+    console.log(additional + "  " + vals.uID);
+    let sql = `select * from ${vals.tableName} Where ${additional} name LIKE '${vals.prefix}%'`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
   app.post("/addIngred", (req, res) => {
     const vals = req.body;
     let sql = `INSERT INTO FoodIngredients (uID, name, servingSize, calories, protein, carbohydrate, sugars, totalFat) VALUES (${vals.uID}, "${vals.name}", ${vals.servingSize}, ${vals.calories}, ${vals.protein}, ${vals.carbohydrate}, ${vals.sugars}, ${vals.totalFat})`;

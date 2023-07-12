@@ -45,11 +45,12 @@ const SearchFoods = () => {
   const [filteredFoods, setfilteredFoods] = useState(originalRows);
   
   const currentTab = useRef(0);
+  const isSearching = useRef(false);
   const [ingrediantsPageCount, setIngrediantsPageCount] = useState(0);
   const [myIngrediantsPageCount, setMyIngrediantsPageCount] = useState(0);
   const [myMealsPageCount, setMyMealsPageCount] = useState(0);
   const [pagination, setPagination] = useState(0);
-  const [pageIndex, setPageIndex] = useState(0);
+  const pageIndex= useRef(1);
 
 
   useEffect(() => { 
@@ -78,46 +79,53 @@ const SearchFoods = () => {
   }, [userInfoState]);
 
   const changePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPageIndex(value);
-    if (currentTab.current == 0){
-      getIngredients(value, 25);
+    const index = value - 1;
+    pageIndex.current =value;
+    if (isSearching.current){
+      handleSearchClick();
     }
-    else if (currentTab.current == 1){
-      getMyIngrediants(value, 25);
-    }
-    else if (currentTab.current == 2){
-      getMeals(value, 25);
+    else {
+      if (currentTab.current == 0){
+        getIngredients(index, 25);
+      }
+      else if (currentTab.current == 1){
+        getMyIngrediants(index, 25);
+      }
+      else if (currentTab.current == 2){
+        getMeals(index, 25);
+      }
     }
   };
 
 
   const handleClick = (event: any) => {
     const id: String = event.currentTarget.id;
+    isSearching.current = false;
     if (id == "ingrediants") {
       getIngredients(0, 25); 
       setPagination(ingrediantsPageCount);
       setTabsIndex(0)
-      setPageIndex(0);
+      pageIndex.current =1;
       currentTab.current = 0;
     }
     else if (id == "myIngrediants") {
       getMyIngrediants(0, 25); 
       setPagination(myIngrediantsPageCount); 
       setTabsIndex(1)
-      setPageIndex(0);
+      pageIndex.current =1;
       currentTab.current = 1;
     }
     else if (id == "meals")  {
       getMeals(0, 25);  
       setPagination(myMealsPageCount);
       setTabsIndex(2)
-      setPageIndex(0);
+      pageIndex.current =1;
       currentTab.current = 2;
     }
   };
   
-  const getMyIngrediants = (startIndex: Number, range: Number) => {
-    FoodService.getMyIngredients(userInfoState.uID, startIndex, range).then(({ data }) => {
+  const getMyIngrediants = (startIndex: number, range: number) => {
+    FoodService.getMyIngredients(userInfoState.uID, startIndex * 25, range).then(({ data }) => {
       if (data.length !== 0) {
         setFoods(data);
         setfilteredFoods(data);
@@ -128,8 +136,8 @@ const SearchFoods = () => {
     });   
   }
 
-  const getIngredients = (startIndex: Number, range: Number) => {
-    FoodService.getIngrediantsWithLimit(startIndex, range).then(({ data }) => {
+  const getIngredients = (startIndex: number, range: number) => {
+    FoodService.getIngrediantsWithLimit((startIndex * 25), range).then(({ data }) => {
       if (data.length !== 0) {
         setFoods(data);
         console.log(data);
@@ -141,8 +149,8 @@ const SearchFoods = () => {
     });
   };
 
-  const getMeals = (startIndex: Number, range: Number) => {
-    FoodService.getMeals(startIndex, range).then(({ data }) => {
+  const getMeals = (startIndex: number, range: number) => {
+    FoodService.getMeals(startIndex * 25, range).then(({ data }) => {
       if (data.length !== 0) {
         setFoods(data);
         setfilteredFoods(data);
@@ -158,12 +166,18 @@ const SearchFoods = () => {
   };
 
   const handleSearchClick = () => {
-    const filteredRows = foods
-      .filter((row) => {
-        return row.name.toLowerCase().includes(search.toLowerCase());
-      })
-      .slice(0, 20);
-    setfilteredFoods(filteredRows);
+    let name = "";
+    let uID = null;
+    switch(tabsIndex){
+      case 0: name = "FoodIngredients"; break;
+      case 1: name = "FoodIngredients"; uID = userInfoState.uID; break;
+      case 2: name = "FoodCustomMeals"; break;
+    }
+    isSearching.current = true;
+    FoodService.getRowsSearch(name, search.toLowerCase(), uID).then(({data})=>{
+      setfilteredFoods(data.slice(((pageIndex.current -1) * 25), ((pageIndex.current-1) * 25) + 25));
+      setPagination(Math.ceil(data.length / 25));
+    });
   };
 
   const handleAddIngredient = () => {
@@ -261,7 +275,7 @@ const SearchFoods = () => {
                         minWidth: "170px",
                         backgroundColor: "#ECB275",
                         marginTop: 1.5,
-                      }} onClick={handleAddIngredient}>Create Ingrediant</Button>
+                      }} onClick={handleAddIngredient}>Create Ingredient</Button>
         </Grid>
         <Grid xs={7}/>
         <Grid xs={1}>
@@ -272,14 +286,14 @@ const SearchFoods = () => {
       </Grid>
 
       <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
-          <Tab id="ingrediants" onClick={handleClick} label="All Ingrediants"></Tab>  
-          <Tab id="myIngrediants" onClick={handleClick} label="My Ingrediants"></Tab>  
+          <Tab id="ingrediants" onClick={handleClick} label="All Ingredients"></Tab>  
+          <Tab id="myIngrediants" onClick={handleClick} label="My Ingredients"></Tab>  
           <Tab id="meals" onClick={handleClick} label="My Meals"></Tab>
       </Tabs>
       <TableContainer>
         <Table aria-label="simple table">
           <TableHead>
-          <Pagination count={pagination} page={pageIndex} variant="outlined" onChange={changePage} />
+          <Pagination count={pagination} page={pageIndex.current} variant="outlined" onChange={changePage} />
             <TableRow>
               <TableCell>Food (100g serving)</TableCell>
               <TableCell align="right">Calories</TableCell>

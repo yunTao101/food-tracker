@@ -45,6 +45,11 @@ export function getMeals(startIndex, range) {
     return axios.post(start_point + "/getMeals", vals);
 }
 
+export function getRowsSearch(tableName, prefix, uID) {
+    const vals = {tableName, prefix, uID};
+    return axios.post(start_point + "/getRowsSearch", vals);
+}
+
 export function addIngred(
     uID,
     name,
