@@ -7,6 +7,7 @@ import AddIngredient from "../TrackFoods/AddIngredient";
 import Home from "../Home/Home";
 import AccountInfo from "../AccountPage/AccountInfo";
 import Cart from "../Cart/ShoppingCart"
+import Progress from "../Progress/Progress";
 import Context from "../../store/context";
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/accountInfo" element={<AccountInfo />}></Route>
           <Route path="/homePage" element={<Home />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/progress-view" element={<Progress />}></Route>
         </Routes>
       </BrowserRouter>
     </>
