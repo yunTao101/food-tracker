@@ -7,6 +7,16 @@ export function getIngredients(uID) {
     return axios.post(start_point + "/getIngredients", vals);
 }
 
+export function getIngredientsByFoodID(foodID) {
+    const vals = {foodID};
+    return axios.post(start_point + "/getIngredientsByFoodID", vals);
+}
+
+export function getMealByMealID(mealID) {
+    const vals = {mealID};
+    return axios.post(start_point + "/getMealByMealID", vals);
+}
+
 export function getTotalIngrediantsCount(){
     return axios.post(start_point + "/getAllIngredientsTotalCount");
 }
@@ -45,9 +55,24 @@ export function getMeals(startIndex, range, uID) {
     return axios.post(start_point + "/getMealsWithLimit", vals);
 }
 
-export function getRowsSearch(tableName, prefix, uID) {
-    const vals = {tableName, prefix, uID};
+export function getRowsSearch(tableName, prefix, uID, date) {
+    const vals = {tableName, prefix, uID, date};
     return axios.post(start_point + "/getRowsSearch", vals);
+}
+
+export function addTrackedIngredient(foodID, uID, date){
+    const vals = {foodID, uID, date};
+    return axios.post(start_point + "/addTrackedIngredient", vals);
+}
+
+export function addTrackedMeal(mealID, uID, date){
+    const vals = {mealID, uID, date};
+    return axios.post(start_point + "/addTrackedMeals", vals);
+}
+
+export function getTotalValuesFromMeal(mealID){
+    const vals = {mealID};
+    return axios.post(start_point + "/getTotalMealValues", vals);
 }
 
 export function addIngred(

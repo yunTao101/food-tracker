@@ -26,6 +26,7 @@ const SearchFoods = () => {
 
   const originalRows = [
     {
+      mealID: 1,
       foodID: 1,
       uID: 1,
       name: "Cornstarch",
@@ -51,9 +52,11 @@ const SearchFoods = () => {
   const [ingrediantsPageCount, setIngrediantsPageCount] = useState(0);
   const [myIngrediantsPageCount, setMyIngrediantsPageCount] = useState(0);
   const [myMealsPageCount, setMyMealsPageCount] = useState(0);
+  const [tempArray, setTempArray] = useState(originalRows);
   const [pagination, setPagination] = useState(0);
-  const pageIndex= useRef(1);
-
+  const [update, SetUpdate] = useState(false);
+  const updatedMealsList = useRef(true);
+  const pageIndex= useRef(1); 
 
   useEffect(() => { 
       if (userInfoState.uID) {
@@ -79,6 +82,36 @@ const SearchFoods = () => {
           });
         }
   }, [userInfoState]);
+
+  useEffect(() => {
+    if (currentTab.current == 2 && updatedMealsList.current == false){
+      setTempArray([])
+      filteredFoods.forEach(item => {
+          if (item.mealID){
+            FoodService.getTotalValuesFromMeal(item.mealID).then(({data}) => {
+              item.calories = data[0]['TotalCalories'];
+              item.carbohydrate = data[0]['TotalCarbohydrate'];
+              item.protein = data[0]['TotalProtein'];
+              item.totalFat = data[0]['TotalFat'];
+              setTempArray(tempArray.concat(item));
+            });
+          }
+       })
+       updatedMealsList.current = true;
+    }else {
+      updatedMealsList.current = false;
+    }
+
+  }, [filteredFoods])
+
+  useEffect(() => {
+    if (currentTab.current == 2 && tempArray.length === filteredFoods.length){
+      console.log("RANs")
+       let pop =  filteredFoods.pop();
+       if (pop)
+       filteredFoods.push(pop);
+    }
+  }, [tempArray])
 
   const changePage = (event: React.ChangeEvent<unknown>, value: number) => {
     const index = value - 1;
@@ -163,6 +196,10 @@ const SearchFoods = () => {
       });
   };
 
+  const getTotalValues = (mealID: number) => {
+
+  }
+
   const handleSearchChange = (event: any) => {
     setSearch(event.target.value);
   };
@@ -177,7 +214,8 @@ const SearchFoods = () => {
     }
     isSearching.current = true;
     FoodService.getRowsSearch(name, search.toLowerCase(), uID).then(({data})=>{
-      setfilteredFoods(data.slice(((pageIndex.current -1) * 25), ((pageIndex.current-1) * 25) + 25));
+      let result = data.slice(((pageIndex.current -1) * 25), ((pageIndex.current-1) * 25) + 25);
+      setfilteredFoods(result);
       setPagination(Math.ceil(data.length / 25));
     });
   };

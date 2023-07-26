@@ -43,6 +43,23 @@ CREATE TABLE FoodCustomMeals(
     FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE
 );
 
+CREATE TABLE EatenCustomMeals(
+      mealID INT NOT NULL REFERENCES FoodCustomMeals(mealID) ,
+      uID INT NOT NULL,
+      entryID INT NOT NULL AUTO_INCREMENT,
+      date DATE,
+PRIMARY KEY(entryID),
+FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE);
+
+CREATE TABLE EatenIngredients(
+      foodID INT NOT NULL,
+      uID INT NOT NULL,
+      entryID INT NOT NULL AUTO_INCREMENT,
+      date DATE,
+PRIMARY KEY(entryID),
+FOREIGN KEY (foodID) REFERENCES FoodIngredients(foodID),
+FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE);
+
 select * from FoodCustomMeals;
 select * from FoodIngredients;
 select count(*) from FoodIngredients;

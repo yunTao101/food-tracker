@@ -8,6 +8,7 @@ import Home from "../Home/Home";
 import AccountInfo from "../AccountPage/AccountInfo";
 import Cart from "../Cart/ShoppingCart"
 import Context from "../../store/context";
+import TrackedFoods from "../TrackedFoods/TrackedFoods";
 
 const App = () => {
   const { actions } = useContext<any>(Context);
@@ -16,6 +17,11 @@ const App = () => {
     actions({
       type: "setUserInfo",
       payload: JSON.parse(sessionStorage.getItem("userInfo")!!),
+    });
+
+    actions({
+      type: "setDate",
+      payload: JSON.parse(sessionStorage.getItem("date")!!),
     });
   }, []);
 
@@ -30,6 +36,7 @@ const App = () => {
           <Route path="/accountInfo" element={<AccountInfo />}></Route>
           <Route path="/homePage" element={<Home />}></Route>
           <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/trackedFoods" element={<TrackedFoods />}></Route>
         </Routes>
       </BrowserRouter>
     </>

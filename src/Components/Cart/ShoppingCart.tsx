@@ -12,13 +12,13 @@ import backGroundImage from "../../Resources/white.jpeg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import * as FoodService from "../../Services/FoodService";
-import { Box, Container, IconButton, Pagination, Stack, Tab, Tabs, ThemeProvider, createTheme } from "@mui/material";
+import { Box, ButtonGroup, Container, IconButton, Pagination, Stack, Tab, Tabs, ThemeProvider, createTheme } from "@mui/material";
 
 
 const ShoppingCart = () => {
     const navigate = useNavigate();
     const { cartState } = useContext<any>(Context);
-    const { userInfoState } = useContext<any>(Context);
+    const { userInfoState, date} = useContext<any>(Context);
     const [name, setName] = useState<String>("");
     const cart = JSON.parse(sessionStorage.getItem('cart') || "NOOO");
 
@@ -31,11 +31,41 @@ const ShoppingCart = () => {
                 if (element.foodID != null && userInfoState.uID != null){
                     console.log(element.foodID, userInfoState.uID);
                     FoodService.addMeal(count, element.foodID, name, userInfoState.uID);
+                    FoodService.addTrackedMeal(count, userInfoState.uID, formatDateToSql(date));
                 }
             });
         });
         navigate("/searchFoods");
     }
+
+    const handleTrackFoodsIndividually = () => {
+        FoodService.getSizeOfMeals().then(({ data }) => {
+            const temp = JSON.parse(JSON.stringify(data));
+            const count = parseInt(temp[0]["count(*)"]) + 1;
+            console.log(count);
+            cart.forEach((element: { foodID: any, quantity: number }) => {
+                for (let i = 0; i < element.quantity; i++){
+                    console.log(element)
+                    if (element.foodID != null && userInfoState.uID != null){
+                        console.log(element.foodID, userInfoState.uID);
+                        FoodService.addTrackedIngredient(element.foodID, userInfoState.uID, formatDateToSql(date));
+                    }
+                }
+            });
+        });
+        navigate("/searchFoods");
+    }
+
+    function formatDateToSql(date : Date) {
+        console.log(date);
+        const jsDate = new Date(date);
+
+        const year = jsDate.getFullYear();
+        const month = String(jsDate.getMonth() + 1).padStart(2, '0');
+        const day = String(jsDate.getDate()).padStart(2, '0');
+      
+        return `${year}-${month}-${day}`;
+      }
 
     return (
         <Box style={{
@@ -109,9 +139,14 @@ const ShoppingCart = () => {
                         margin="normal"
                         required
                     />
+                    <ButtonGroup>
                     <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>
-                        Create Meal
+                        Create / Track Meal
                     </Button>
+                    <Button variant="contained" color="primary" type="submit" onClick={handleTrackFoodsIndividually}>
+                        Track Individually
+                    </Button>
+                    </ButtonGroup>
                     </TableContainer>
                     </Stack>
             </ThemeProvider></Box></Box></Container></Box>

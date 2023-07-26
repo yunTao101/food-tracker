@@ -29,6 +29,17 @@ function routes(app) {
     });
   });
 
+    // get all ingredients
+    app.post("/getIngredientsByFoodID", (req, res) => {
+      const vals = req.body;
+      let sql = `select * from FoodIngredients Where foodID = ${vals.foodID}`;
+      con.query(sql, (err, results) => {
+        if (err) throw err;
+        console.log("Search results: ", results);
+        res.send(results);
+      });
+    });
+
   // get all UID specific ingrediants
   app.post("/getAllIngredientsTotalCount", (req, res) => {
     const vals = req.body;
@@ -118,17 +129,89 @@ function routes(app) {
     });
   });
 
-  app.post("/getRowsSearch", (req, res) => {
+  app.post("/getMealByMealID", (req, res) => {
     const vals = req.body;
-    let additional = (vals.uID != null ? "uID = " + vals.uID + " AND" : "");
-    console.log(additional + "  " + vals.uID);
-    let sql = `select * from ${vals.tableName} Where ${additional} name LIKE '${vals.prefix}%'`;
+    let sql = `select * from FoodCustomMeals Where mealID = ${vals.mealID};`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
       res.send(results);
     });
   });
+
+
+  app.post("/getRowsSearch", (req, res) => {
+    const vals = req.body;
+    let selectClause = "*";
+    let whereClause = "";
+    let nameClause = "";
+    let groupByClause = "";
+
+    if (vals.uID != null || vals.prefix != "") 
+    whereClause = "Where ";
+    whereClause += (vals.uID != null ? "uID = " + vals.uID : "");
+
+    if (vals.prefix != "") 
+    nameClause += (vals.uID != null ? " AND " : "") + `name LIKE '${vals.prefix}%'`
+
+    if (vals.tableName == "FoodCustomMeals"){
+      groupByClause = " Group By mealID, name, uID"; 
+      selectClause = " mealID, name, uID";
+    }
+
+    if (vals.tableName == "EatenIngredients"){
+      selectClause = " COUNT(foodID) as quantity, foodID";
+      nameClause += (vals.uID != null ? " AND " : "") + `date = '${vals.date}'`
+      groupByClause ="GROUP BY foodID";
+    }
+
+    if (vals.tableName == "EatenCustomMeals"){
+      nameClause += (vals.uID != null ? " AND " : "") + `date = '${vals.date}'`
+    }
+
+    let sql = `select ${selectClause} from ${vals.tableName} ${whereClause} ${nameClause} ${groupByClause}`;
+
+    console.log(sql);
+    
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+  app.post("/addTrackedIngredient", (req, res) => {
+    const vals = req.body;
+    let sql = `INSERT INTO EatenIngredients (foodID, uID, date) VALUES (${vals.foodID}, ${vals.uID}, '${vals.date}')`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+  app.post("/addTrackedMeals", (req, res) => {
+    const vals = req.body;
+    let sql = `INSERT INTO EatenCustomMeals (mealID, uID, date) VALUES (${vals.mealID}, ${vals.uID}, '${vals.date}')`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });  
+
+  app.post("/getTotalMealValues", (req, res) => {
+    const vals = req.body;
+    let sql = `SELECT SUM(calories) * mealQuantity as TotalCalories, SUM(protein) * mealQuantity as TotalProtein, SUM(carbohydrate) * mealQuantity as TotalCarbohydrate, SUM(totalFat) * mealQuantity as TotalFat, mealQuantity, mealName
+    FROM FoodIngredients AS T1
+    JOIN (SELECT foodID, quantity as mealQuantity, name as mealName FROM FoodCustomMeals WHERE mealID = ${vals.mealID}) AS T2
+    ON T1.foodID = T2.foodID GROUP BY mealName, mealQuantity`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });  
 
   app.post("/addIngred", (req, res) => {
     const vals = req.body;

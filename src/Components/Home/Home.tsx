@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import * as AccountService from "../../Services/AccountService";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -19,6 +19,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FoodDiary from "./FoodDiary";
+import dayjs from "dayjs";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -33,7 +34,14 @@ const Home = () => {
   const [height, setHeight] = useState<number | null>();
   const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
-  const { actions } = useContext<any>(Context);
+  const { actions, date } = useContext<any>(Context);
+  const [dateVal, setDateVal] = useState(null);
+
+  useEffect( () => {  
+
+    setDateVal(date);
+
+  }, [date])
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -91,6 +99,18 @@ const Home = () => {
       });
     });
   };
+
+  console.log(date);
+
+  const onDatePicked = (event: any) =>{
+
+      console.log(event);
+
+      actions({
+        type: "setDate",
+        payload: event
+      })
+  }
 
   return (
     <>
@@ -169,7 +189,10 @@ const Home = () => {
                       EAT. TRACK. REPEAT.
                     </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker />
+                      <DatePicker   
+                        value={dayjs(dateVal)}
+                        onChange={onDatePicked}
+                      />
                     </LocalizationProvider>
                   </Box>
                   <Grid container spacing={1}>
@@ -208,6 +231,7 @@ const Home = () => {
                         }}
                       >
                         <Button
+                          disabled = {dateVal == null}
                           type="submit"
                           variant="contained"
                           size="large"
@@ -230,6 +254,7 @@ const Home = () => {
                           Track
                         </Button>
                         <Button
+                          disabled = {dateVal == null}
                           type="submit"
                           variant="contained"
                           size="large"
@@ -245,7 +270,9 @@ const Home = () => {
                             minWidth: "170px",
                             backgroundColor: "#ECB275",
                           }}
-                          onClick={() => {}}
+                          onClick={() => {
+                            navigate("/trackedFoods");
+                          }}
                         >
                           View Tracked
                         </Button>
