@@ -28,6 +28,26 @@ function routes(app) {
             res.send(results);
           });
     });
+
+    app.post("/monthlyCalorie", (req, res) => {
+        const vals = req.body;
+        let sql = `CALL monthlyCalorieCount(${vals.uID}, "${vals.date}");`;
+        con.query(sql, (err, results) => {
+            if (err) throw err;
+            console.log("MONTHLY CALORIES: ", results);
+            res.send(results);
+          });
+    });
+
+    app.post("/yearlyCalorie", (req, res) => {
+        const vals = req.body;
+        let sql = `CALL yearlyCalorieCount(${vals.uID}, ${vals.year});`;
+        con.query(sql, (err, results) => {
+            if (err) throw err;
+            console.log("YEARLY CALORIES: ", results);
+            res.send(results);
+          });
+    });
 }
 
 module.exports = routes;

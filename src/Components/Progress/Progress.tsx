@@ -18,17 +18,19 @@ const Progress = () => {
     }, []);
 
     const changeData = (value: string) => {
-        var xAxis_data : string[] = []
+        var weekly_xAxis_data : string[] = []
+        var monthly_xAxis_data : string[] = []
+        var yearly_xAxis_data : string[] = []
         var dates = [] 
         if (value === "week") {
             const numberOfDaysToSubstract = 6;
             const prior = new Date(new Date().setDate(currentDate.getDate() - numberOfDaysToSubstract));
             for (let i = 0; i < numberOfDaysToSubstract + 1; i++) {
                 const day = new Date().setDate(prior.getDate() + i);
-                xAxis_data.push(new Date(day).toDateString().slice(0, 3));
+                weekly_xAxis_data.push(new Date(day).toDateString().slice(0, 3));
                 dates.push(new Date(day).toDateString());
               }
-            setxAxis(xAxis_data);
+            setxAxis(weekly_xAxis_data);
             // setDatesToQuery(dates);
             setTabsIndex(0);
             ProgressService.getWeeklyCalorie(userInfoState.uID, convertDate(currentDate)).then(({data}) => {
@@ -39,35 +41,59 @@ const Progress = () => {
                     const calories = data[0][i]["calories"];
                     tempYValues[index] = calories;
                 }
-                console.log(tempYValues);
+                //console.log(tempYValues);
                 for (let i = 0; i < 7; i++) {
-                    const dateToReorder = dayList.indexOf(xAxis_data[i]);
-                    console.log(dateToReorder);
+                    const dateToReorder = dayList.indexOf(weekly_xAxis_data[i]);
+                    //console.log(dateToReorder);
                     yValues[i] = tempYValues[dateToReorder];
                 }
                 setyAxis(yValues);
-
             });
         }
-        else if (value == "month") {
+        else if (value === "month") {
+            const monthList = []
             const numberOfDaysToSubstract = 29;
             const prior = new Date(new Date().setDate(currentDate.getDate() - numberOfDaysToSubstract));
-            for (let i = 0; i < numberOfDaysToSubstract + 1; i++) {
+            console.log(new Date(new Date().setDate(currentDate.getDate())));
+            for (let i = 0; i < numberOfDaysToSubstract + 1; ++i) {
                 const day = new Date().setDate(prior.getDate() + i);
-                xAxis_data.push(new Date(day).toDateString().slice(8,10));
+                monthly_xAxis_data.push(new Date(day).toDateString().slice(8,10));
+                monthList.push()
                 dates.push(new Date(day).toDateString());
               }
-            setxAxis(xAxis_data);
+            setxAxis(monthly_xAxis_data);
             // setDatesToQuery(dates);
-            setyAxis(Array.from({length: 30}, () => Math.floor(Math.random() * 40)));
             setTabsIndex(1);
+            ProgressService.getMonthlyCalorie(userInfoState.uID, convertDate(currentDate)).then(({data}) => {
+                var yValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                for (let k = 0; k < data[0].length; ++k) {
+                    console.log(monthly_xAxis_data);
+                    const index = data[0][k]["DAY(date)"];
+                    const calories = data[0][k]["calories"];
+                    const indexToReorder = monthly_xAxis_data.indexOf(`${index}`);
+                    yValues[indexToReorder] = calories;
+                }
+                console.log(yValues)
+                setyAxis(yValues);
+            });
         } 
-        else if (value == "year") {
-            xAxis_data = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-            setxAxis(xAxis_data);
+        else if (value === "year") {
+            yearly_xAxis_data = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            setxAxis(yearly_xAxis_data);
             // setDatesToQuery([currentDate.getFullYear()])
-            setyAxis(Array.from({length: 12}, () => Math.floor(Math.random() * 40)));
+            //setyAxis(Array.from({length: 12}, () => Math.floor(Math.random() * 40)));
             setTabsIndex(2);
+            ProgressService.getYearlyCalorie(userInfoState.uID, currentDate.getFullYear()).then(({data}) => {
+                var yValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                console.log(data);
+                for (let k = 0; k < data[0].length; ++k) {
+                    const index = data[0][k]["MONTH(date)"] - 1;
+                    const calories = data[0][k]["AVG(calories)"];
+                    yValues[index] = calories;
+                }
+                console.log(yValues)
+                setyAxis(yValues);
+            });
         }
     }
 
@@ -80,21 +106,61 @@ const Progress = () => {
         return newDate;
     }
 
-    return (
-        <div>
+    if (tabsIndex === 0) {
+        return (
+            <div>
             <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
                 <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
                 <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
                 <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
             </Tabs>
             <BarChart
-                xAxis={[{ scaleType: 'band', data: xAxis }]}
+                title="Last 7 Days"
+                xAxis={[{ scaleType: 'band', data: xAxis, label: "Day of the Week" }]}
+                yAxis={[{label: "Calories Consumed" }]}
                 series={[{ data: yAxis }]}
                 width={1000}
                 height={300}
             />
         </div>
-    )
+        )
+    } else if (tabsIndex === 1) {
+        return (
+            <div>
+            <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
+                <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
+                <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
+                <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
+            </Tabs>
+            <BarChart
+                title="Last 30 Days"
+                xAxis={[{ scaleType: 'band', data: xAxis, label: "Day" }]}
+                yAxis={[{label: "Calories Consumed" }]}
+                series={[{ data: yAxis }]}
+                width={1000}
+                height={300}
+            />
+        </div>
+        )
+    } else {
+        return (
+            <div>
+            <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
+                <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
+                <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
+                <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
+            </Tabs>
+            <BarChart
+                title= "Current Year"
+                xAxis={[{ scaleType: 'band', data: xAxis, label: "Month" }]}
+                yAxis={[{label: "Average Calories Consumed" }]}
+                series={[{ data: yAxis }]}
+                width={1000}
+                height={300}
+            />
+        </div>
+        )
+    }
 }
 
 export default Progress;

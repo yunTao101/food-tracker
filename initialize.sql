@@ -187,7 +187,7 @@ CREATE PROCEDURE weeklyCalorieCount(userID INT, givenDay DATE)
 
 CREATE PROCEDURE monthlyCalorieCount(userID INT, givenDay DATE)
 	BEGIN
-		SELECT DAY(date), calories FROM ProgressInfo WHERE uID = userID AND date BETWEEN givenDay-30 AND givenDay;
+		SELECT DAY(date), calories FROM ProgressInfo WHERE uID = userID AND date BETWEEN givenDay-29 AND givenDay;
 	END//
 
 CREATE PROCEDURE yearlyCalorieCount(userID INT, year INT)
