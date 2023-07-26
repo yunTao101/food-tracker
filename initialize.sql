@@ -152,19 +152,19 @@ DELIMITER ;
 
 -- Get calories and macros consumed by a user on a specific day
 DELIMITER //
-CREATE PROCEDURE currentCalories(IN userID INT, IN date DATE, OUT currentCal INT)
+CREATE PROCEDURE currentCalories(IN userID INT, IN date DATE)
 	BEGIN
 		SELECT p.calories FROM ProgressInfo p WHERE p.date = date;
 	END//
-CREATE PROCEDURE currentProtein(IN userID INT, IN date DATE, OUT currentPro INT)
+CREATE PROCEDURE currentProtein(IN userID INT, IN date DATE)
 	BEGIN
 		SELECT p.protein FROM ProgressInfo p WHERE p.date = date;
 	END//
-CREATE PROCEDURE currentCarbohydrate(IN userID INT, IN date DATE, OUT currentCarb INT)
+CREATE PROCEDURE currentCarbohydrate(IN userID INT, IN date DATE)
 	BEGIN
 		SELECT p.carbohydrate FROM ProgressInfo p WHERE p.date = date;
 	END//
-CREATE PROCEDURE currentTotalFat(IN userID INT, IN date DATE, OUT currentFat INT)
+CREATE PROCEDURE currentTotalFat(IN userID INT, IN date DATE)
 	BEGIN
 		SELECT p.totalFat FROM ProgressInfo p WHERE p.date = date;
 	END//
@@ -222,7 +222,5 @@ INSERT INTO ProgressInfo VALUES (1, "2023-07-24", 233, 43.66, 1.7, 11.5);
 INSERT INTO ProgressInfo VALUES (1, "2023-07-20", 233, 43.66, 1.7, 11.5);
 INSERT INTO ProgressInfo VALUES (1, "2023-08-10", 1056, 101.66, 10.0, 50.5); 
 INSERT INTO ProgressInfo VALUES (1, "2023-08-11", 233, 43.66, 1.7, 11.5);
-CALL weeklyCalorieCount(1, "2023-7-25");
 
 select * from ProgressInfo;
-

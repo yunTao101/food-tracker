@@ -24,7 +24,7 @@ function routes(app) {
         let sql = `CALL weeklyCalorieCount(${vals.uID}, "${vals.date}");`;
         con.query(sql, (err, results) => {
             if (err) throw err;
-            console.log("WEEKLY CALORIES: ", results);
+            // console.log("WEEKLY CALORIES: ", results);
             res.send(results);
           });
     });
@@ -34,7 +34,7 @@ function routes(app) {
         let sql = `CALL monthlyCalorieCount(${vals.uID}, "${vals.date}");`;
         con.query(sql, (err, results) => {
             if (err) throw err;
-            console.log("MONTHLY CALORIES: ", results);
+            // console.log("MONTHLY CALORIES: ", results);
             res.send(results);
           });
     });
@@ -44,7 +44,48 @@ function routes(app) {
         let sql = `CALL yearlyCalorieCount(${vals.uID}, ${vals.year});`;
         con.query(sql, (err, results) => {
             if (err) throw err;
-            console.log("YEARLY CALORIES: ", results);
+            // console.log("YEARLY CALORIES: ", results);
+            res.send(results);
+          });
+    });
+
+    app.post("/currentCalories", (req, res) => {
+        const vals = req.body;
+        let sql = `CALL currentCalories(${vals.uID}, "${vals.date}");`;
+        con.query(sql, (err, results) => {
+            if (err) throw err;
+            console.log("Current calories: ", results);
+            res.send(results);
+          });
+    });
+
+    app.post("/currentProtein", (req, res) => {
+        const vals = req.body;
+        let sql = `CALL currentProtein(${vals.uID}, "${vals.date}");`;
+        con.query(sql, (err, results) => {
+            if (err) throw err;
+            console.log("currentProtein: ", results);
+            res.send(results);
+          });
+    });
+
+    app.post("/currentCarbohydrate", (req, res) => {
+        const vals = req.body;
+        let sql = `CALL currentCarbohydrate(${vals.uID}, "${vals.date}");`;
+        con.query(sql, (err, results) => {
+            if (err) throw err;
+            console.log("currentCarbohydrate: ", results);
+            res.send(results);
+          });
+    });
+
+
+    app.post("/currentTotalFat", (req, res) => {
+        const vals = req.body;
+        let sql = `CALL currentTotalFat(${vals.uID}, "${vals.date}");`;
+        con.query(sql, (err, results) => {
+            if (err) throw err;
+            console.log("currentTotalFat: ", results);
             res.send(results);
           });
     });
