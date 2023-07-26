@@ -25,7 +25,7 @@ export default function FoodDiary(props : any) {
   }
 
   useEffect(() => { 
-    if (props.selectedDate) {
+    if (currentDate) {
       ProgressService.getcurrentCarbohydrate(userInfoState.uID, convertDate(currentDate)).then(({data}) => {
         if (data[0].length == 0) {
           setCarbs(0);

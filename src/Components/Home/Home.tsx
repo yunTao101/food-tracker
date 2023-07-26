@@ -190,7 +190,7 @@ const Home = () => {
                       EAT. TRACK. REPEAT.
                     </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker onChange={handleDateChange} format="YYYY-MM-DD"/>
+                      <DatePicker onChange={handleDateChange}/>
                     </LocalizationProvider>
                   </Box>
                   <Grid container spacing={1}>
