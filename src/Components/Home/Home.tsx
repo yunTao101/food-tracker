@@ -6,6 +6,7 @@ import backGroundImage from "../../Resources/white.jpeg";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
+import TimelineIcon from '@mui/icons-material/Timeline';
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -138,6 +139,21 @@ const Home = () => {
               >
                 <Avatar sx={{ bgcolor: "#ffffff" }}>
                   <PersonIcon sx={{ color: "black" }} />
+                </Avatar>
+              </IconButton>
+              <IconButton
+                style={{
+                  position: "absolute",
+                  top: "1%",
+                  right: "1%",
+                  color: "white",
+                }}
+                onClick={() => {
+                  navigate("/progressView");
+                }}
+              >
+                <Avatar sx={{ bgcolor: "#ffffff" }}>
+                  <TimelineIcon sx={{ color: "black" }} />
                 </Avatar>
               </IconButton>
               <ThemeProvider
