@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import * as AccountService from "../../Services/AccountService";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -20,6 +20,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FoodDiary from "./FoodDiary";
+import * as ProgressService from "../../Services/ProgressService";
+
 
 const Home = () => {
   const navigate = useNavigate();
@@ -34,69 +36,49 @@ const Home = () => {
   const [height, setHeight] = useState<number | null>();
   const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
-  const { actions } = useContext<any>(Context);
   const [selectedDate, setSelectedDate] = useState(null);
-
-  const handleTextFieldChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    if (event.target.id === "firstName") {
-      setFirstName(event.target.value);
-    } else if (event.target.id === "lastName") {
-      setLastName(event.target.value);
-    } else if (event.target.id === "username") {
-      setUsername(event.target.value);
-    } else if (event.target.id === "email") {
-      setEmail(event.target.value);
-    } else if (event.target.id === "password") {
-      setPassword(event.target.value);
-    } else if (event.target.id === "age") {
-      setAge(parseInt(event.target.value, 10));
-    } else if (event.target.id === "gender") {
-      setGender(event.target.value);
-    } else if (event.target.id === "weight") {
-      setWeight(parseInt(event.target.value, 10));
-    } else if (event.target.id === "height") {
-      setHeight(parseInt(event.target.value, 10));
-    } else if (event.target.id === "desiredWeight") {
-      setDesiredWeight(parseInt(event.target.value, 10));
-    } else if (event.target.id === "caloricGoal") {
-      setCaloricGoal(parseInt(event.target.value, 10));
-    }
-  };
-
-  const registerUser = () => {
-    AccountService.registerAccount(
-      "User",
-      firstName,
-      lastName,
-      username,
-      email,
-      password,
-      age,
-      gender,
-      weight,
-      height,
-      desiredWeight,
-      caloricGoal
-    ).then(() => {
-      AccountService.loginAccount(username, password).then(({ data }) => {
-        if (data.length !== 0) {
-          actions({
-            type: "setUserInfo",
-            payload: data[0],
-          });
-          navigate("/homePage");
-        } else {
-          console.log("ERRORR");
-        }
-      });
-    });
-  };
+  const [caloriesConsumed, setCaloriesConsumed] = useState<number>(0);
+  const { actions } = useContext<any>(Context);
+  const { userInfoState } = useContext<any>(Context);
 
   const handleDateChange = (date: any) => {
     setSelectedDate(date["$d"]);
   };
+
+  const caloriesLeft = () => {
+    if (caloricGoal == null) {
+      return "No Goal Set"
+    } else {
+      const left = caloricGoal - caloriesConsumed
+      if (left < 0) {
+        return 0;
+      }
+      return left;
+    }
+  }
+
+  useEffect(() => { 
+    setCaloricGoal(userInfoState.caloricGoal);
+    if (selectedDate) {
+      ProgressService.getcurrentCalories(userInfoState.uID, convertDate(selectedDate)).then(({data}) => {
+        // console.log(data[0][0]["calories"]);
+        if (data[0].length > 0) {
+          setCaloriesConsumed(data[0][0]["calories"]);
+        } else {
+          setCaloriesConsumed(0);
+        }
+      });
+    }
+  });
+
+  const convertDate = (date: Date) => {
+    var newDate = "";
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    newDate += year + "-" + month + "-" + day;
+    return newDate;
+  }
 
   return (
     <>
@@ -209,10 +191,10 @@ const Home = () => {
                         }}
                       >
                         <Typography variant="h6" component="span" color="black">
-                          Calories Consumed: 239
+                          Calories Consumed: {caloriesConsumed}
                         </Typography>
                         <Typography variant="h6" component="span" color="black">
-                          Calories Left: 1900
+                          Calories Left: {caloriesLeft()}
                         </Typography>
                       </Box>
                     </Grid>

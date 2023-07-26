@@ -1,10 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import { BarChart } from "@mui/x-charts";
-import { Tab, Tabs } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Stack, Box, Container, Pagination, Tab, Tabs, ThemeProvider, createTheme } from "@mui/material";
+import backGroundImage from "../../Resources/white.jpeg";
 import Context from "../../store/context";
+import { useNavigate } from "react-router-dom";
 import * as ProgressService from "../../Services/ProgressService";
 
+
 const Progress = () => {
+    const navigate = useNavigate();
     const currentDate = new Date();
     const { userInfoState } = useContext<any>(Context);
     const [xAxis, setxAxis] = useState<Array<any>>(["helllo"]);
@@ -108,57 +114,201 @@ const Progress = () => {
 
     if (tabsIndex === 0) {
         return (
-            <div>
-            <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
-                <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
-                <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
-                <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
-            </Tabs>
-            <BarChart
-                title="Last 7 Days"
-                xAxis={[{ scaleType: 'band', data: xAxis, label: "Day of the Week" }]}
-                yAxis={[{label: "Calories Consumed" }]}
-                series={[{ data: yAxis }]}
-                width={1000}
-                height={300}
-            />
-        </div>
+                <Box style={{
+                backgroundColor: "#ffffff",
+                backgroundImage: `url(${backGroundImage})`,
+                height: "100vh",
+                color: "#f5f5f5",
+                }}> 
+                <Container>
+                <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                    filter: "drop-shadow(0 0 0.75rem black)",
+                }}
+                > 
+                <Box
+                style={{
+                    backgroundSize: "cover",
+                    height: "97vh",
+                    backgroundColor: "#EC7C75",
+                    borderRadius: "40px",
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "150vh",
+                    position: "relative",
+                }}
+                >
+                <ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}> 
+                <Stack spacing={2} sx={{ width: 1100 ,marginTop: 5, marginBottom: 5}}>
+                    <IconButton
+                        style={{
+                        position: "absolute",
+                        top: 10,
+                        left: 10,
+                        color: "white",
+                        }}
+                        onClick={() => {
+                        navigate("/homePage");
+                        }}
+                    >
+                        <ArrowBackIcon />
+                    </IconButton>
+                        <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
+                            <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
+                            <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
+                            <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
+                        </Tabs>
+                        <BarChart
+                            title="Last 7 Days"
+                            xAxis={[{ scaleType: 'band', data: xAxis, label: "Day of the Week"}]}
+                            yAxis={[{label: "Calories"}]}
+                            series={[{ data: yAxis }]}
+                            width={1000}
+                            height={300}
+                            margin={{ top: 0, right: 0, bottom: 0, left: 80 }}
+                        />
+            </Stack>
+            </ThemeProvider>
+            </Box>
+            </Box>
+            </Container>
+            </Box>
         )
     } else if (tabsIndex === 1) {
         return (
-            <div>
-            <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
-                <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
-                <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
-                <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
-            </Tabs>
-            <BarChart
-                title="Last 30 Days"
-                xAxis={[{ scaleType: 'band', data: xAxis, label: "Day" }]}
-                yAxis={[{label: "Calories Consumed" }]}
-                series={[{ data: yAxis }]}
-                width={1000}
-                height={300}
-            />
-        </div>
+                <Box style={{
+                backgroundColor: "#ffffff",
+                backgroundImage: `url(${backGroundImage})`,
+                height: "100vh",
+                color: "#f5f5f5",
+                }}> 
+                <Container>
+                <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                    filter: "drop-shadow(0 0 0.75rem black)",
+                }}
+                > 
+                <Box
+                style={{
+                    backgroundSize: "cover",
+                    height: "97vh",
+                    backgroundColor: "#EC7C75",
+                    borderRadius: "40px",
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "150vh",
+                    position: "relative",
+                }}
+                >
+                <ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}> 
+                <Stack spacing={2} sx={{ width: 1100 ,marginTop: 5, marginBottom: 5}}>
+                    <IconButton
+                        style={{
+                        position: "absolute",
+                        top: 10,
+                        left: 10,
+                        color: "white",
+                        }}
+                        onClick={() => {
+                        navigate("/homePage");
+                        }}
+                    >
+                        <ArrowBackIcon />
+                    </IconButton>
+                        <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
+                            <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
+                            <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
+                            <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
+                        </Tabs>
+                        <BarChart
+                            title="Last 30 Days"
+                            xAxis={[{ scaleType: 'band', data: xAxis, label: "Day" }]}
+                            yAxis={[{label: "Calories" }]}
+                            series={[{ data: yAxis }]}
+                            width={1000}
+                            height={300}
+                            margin={{ top: 0, right: 0, bottom: 0, left: 80 }}
+                        />
+            </Stack>
+            </ThemeProvider>
+            </Box>
+            </Box>
+            </Container>
+            </Box>
         )
     } else {
         return (
-            <div>
-            <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
-                <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
-                <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
-                <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
-            </Tabs>
-            <BarChart
-                title= "Current Year"
-                xAxis={[{ scaleType: 'band', data: xAxis, label: "Month" }]}
-                yAxis={[{label: "Average Calories Consumed" }]}
-                series={[{ data: yAxis }]}
-                width={1000}
-                height={300}
-            />
-        </div>
+            <Box style={{
+            backgroundColor: "#ffffff",
+            backgroundImage: `url(${backGroundImage})`,
+            height: "100vh",
+            color: "#f5f5f5",
+            }}> 
+            <Container>
+            <Box
+            sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100%",
+                filter: "drop-shadow(0 0 0.75rem black)",
+            }}
+            > 
+            <Box
+            style={{
+                backgroundSize: "cover",
+                height: "97vh",
+                backgroundColor: "#EC7C75",
+                borderRadius: "40px",
+                display: "flex",
+                justifyContent: "center",
+                width: "150vh",
+                position: "relative",
+            }}
+            >
+            <ThemeProvider theme={createTheme({ palette: { mode: "dark" } })}> 
+            <Stack spacing={2} sx={{ width: 1100 ,marginTop: 5, marginBottom: 5}}>
+                <IconButton
+                    style={{
+                    position: "absolute",
+                    top: 10,
+                    left: 10,
+                    color: "white",
+                    }}
+                    onClick={() => {
+                    navigate("/homePage");
+                    }}
+                >
+                    <ArrowBackIcon />
+                </IconButton>
+                    <Tabs value = {tabsIndex} sx={{ borderBottom: 1, borderColor: 'divider' }}> 
+                        <Tab id="week" onClick={() => changeData("week")} label="Week"></Tab>  
+                        <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
+                        <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
+                    </Tabs>
+                    <BarChart
+                        title= "Current Year"
+                        xAxis={[{ scaleType: 'band', data: xAxis, label: "Month" }]}
+                        yAxis={[{label: "Average Calories" }]}
+                        series={[{ data: yAxis }]}
+                        width={1000}
+                        height={300}
+                        margin={{ top: 0, right: 0, bottom: 0, left: 80 }}
+                    />
+        </Stack>
+        </ThemeProvider>
+        </Box>
+        </Box>
+        </Container>
+        </Box>
         )
     }
 }
