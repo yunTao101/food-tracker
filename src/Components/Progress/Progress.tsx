@@ -17,6 +17,7 @@ const Progress = () => {
     const [yAxis, setyAxis] = useState<Array<any>>([3]);
     const [datesToQuery, setDatesToQuery] = useState<Array<any>>();
     const [tabsIndex, setTabsIndex] = useState(0);
+    const [averageCalories, setAverageCalories] = useState(0);
     let dayList = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
     useEffect(() => { 
@@ -53,6 +54,15 @@ const Progress = () => {
                     //console.log(dateToReorder);
                     yValues[i] = tempYValues[dateToReorder];
                 }
+                var denom = 0;
+                var numer = 0;
+                for (let p = 0; p < 30; ++p) {
+                    if (yValues[p] > 0) {
+                        numer += yValues[p];
+                        denom += 1;
+                    }
+                }
+                setAverageCalories(numer / denom);
                 setyAxis(yValues);
             });
         }
@@ -72,6 +82,8 @@ const Progress = () => {
             setTabsIndex(1);
             ProgressService.getMonthlyCalorie(userInfoState.uID, convertDate(currentDate)).then(({data}) => {
                 var yValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                var denom = 0;
+                var numer = 0;
                 for (let k = 0; k < data[0].length; ++k) {
                     console.log(monthly_xAxis_data);
                     const index = data[0][k]["DAY(date)"];
@@ -79,6 +91,13 @@ const Progress = () => {
                     const indexToReorder = monthly_xAxis_data.indexOf(`${index}`);
                     yValues[indexToReorder] = calories;
                 }
+                for (let p = 0; p < 30; ++p) {
+                    if (yValues[p] > 0) {
+                        numer += yValues[p];
+                        denom += 1;
+                    }
+                }
+                setAverageCalories(numer / denom);
                 console.log(yValues)
                 setyAxis(yValues);
             });
@@ -91,13 +110,22 @@ const Progress = () => {
             setTabsIndex(2);
             ProgressService.getYearlyCalorie(userInfoState.uID, currentDate.getFullYear()).then(({data}) => {
                 var yValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                var denom = 0;
+                var numer = 0;
                 console.log(data);
                 for (let k = 0; k < data[0].length; ++k) {
                     const index = data[0][k]["MONTH(date)"] - 1;
                     const calories = data[0][k]["AVG(calories)"];
                     yValues[index] = calories;
                 }
-                console.log(yValues)
+                for (let p = 0; p < 12; ++p) {
+                    if (yValues[p] > 0) {
+                        numer += yValues[p];
+                        denom += 1;
+                    }
+                }
+                setAverageCalories(numer / denom);
+                console.log(yValues);
                 setyAxis(yValues);
             });
         }
@@ -162,6 +190,8 @@ const Progress = () => {
                             <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
                             <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
                         </Tabs>
+                        <h1>AVERAGE</h1>
+                        <h1>{averageCalories} Cal</h1>
                         <BarChart
                             title="Last 7 Days"
                             xAxis={[{ scaleType: 'band', data: xAxis, label: "Day of the Week"}]}
@@ -228,6 +258,8 @@ const Progress = () => {
                             <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
                             <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
                         </Tabs>
+                        <h1>AVERAGE</h1>
+                        <h1>{averageCalories} Cal</h1>
                         <BarChart
                             title="Last 30 Days"
                             xAxis={[{ scaleType: 'band', data: xAxis, label: "Day" }]}
@@ -294,6 +326,8 @@ const Progress = () => {
                         <Tab id="month" onClick={() => changeData("month")} label="Month"></Tab>  
                         <Tab id="year" onClick={() => changeData("year")} label="Year"></Tab>
                     </Tabs>
+                    <h1>AVERAGE</h1>
+                    <h1>{averageCalories} Cal</h1>
                     <BarChart
                         title= "Current Year"
                         xAxis={[{ scaleType: 'band', data: xAxis, label: "Month" }]}
