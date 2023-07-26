@@ -35,6 +35,7 @@ const Home = () => {
   const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
   const { actions } = useContext<any>(Context);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -91,6 +92,10 @@ const Home = () => {
         }
       });
     });
+  };
+
+  const handleDateChange = (date: any) => {
+    setSelectedDate(date["$d"]);
   };
 
   return (
@@ -185,7 +190,7 @@ const Home = () => {
                       EAT. TRACK. REPEAT.
                     </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker />
+                      <DatePicker onChange={handleDateChange} format="YYYY-MM-DD"/>
                     </LocalizationProvider>
                   </Box>
                   <Grid container spacing={1}>
@@ -302,7 +307,7 @@ const Home = () => {
                           backgroundColor: "white",
                         }}
                       >
-                        <FoodDiary />
+                        <FoodDiary selectedDate={selectedDate}/>
                       </Box>
                     </Grid>
                   </Grid>
