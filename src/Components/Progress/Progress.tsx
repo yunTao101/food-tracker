@@ -51,21 +51,21 @@ const Progress = () => {
             });
         }
         else if (value === "month") {
-            const monthList = []
+            const monthList: any[] = []
             const numberOfDaysToSubstract = 29;
             const prior = new Date(new Date().setDate(currentDate.getDate() - numberOfDaysToSubstract));
             console.log(new Date(new Date().setDate(currentDate.getDate())));
-            for (let i = 0; i < numberOfDaysToSubstract + 1; ++i) {
+            for (let i = 0; i < numberOfDaysToSubstract + 2; ++i) {
                 const day = new Date().setDate(prior.getDate() + i);
                 monthly_xAxis_data.push(new Date(day).toDateString().slice(8,10));
                 monthList.push()
                 dates.push(new Date(day).toDateString());
-              }
+            }
             setxAxis(monthly_xAxis_data);
             // setDatesToQuery(dates);
             setTabsIndex(1);
             ProgressService.getMonthlyCalorie(userInfoState.uID, convertDate(currentDate)).then(({data}) => {
-                var yValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                var yValues = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
                 for (let k = 0; k < data[0].length; ++k) {
                     console.log(monthly_xAxis_data);
                     const index = data[0][k]["DAY(date)"];
