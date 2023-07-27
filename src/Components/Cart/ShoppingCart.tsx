@@ -12,6 +12,7 @@ import backGroundImage from "../../Resources/white.jpeg";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import * as FoodService from "../../Services/FoodService";
+import * as ProgressService from "../../Services/ProgressService";
 import {
   Box,
   ButtonGroup,
@@ -64,7 +65,14 @@ const ShoppingCart = () => {
         count,
         userInfoState.uID,
         formatDateToSql(date)
-      );
+      ).then(({ data }) => {
+        console.log("bruh is: ", formatDateToSql(date));
+        ProgressService.addToProgressWithCustomMeal(
+          count,
+          userInfoState.uID,
+          formatDateToSql(date)
+        );
+      });
     });
     actions({
       type: "setCart",
@@ -76,14 +84,18 @@ const ShoppingCart = () => {
   const handleTrackMeals = () => {
     cartItems.forEach((element) => {
       for (let i = 0; i < element.quantity; i++) {
-        console.log("gay: ", element);
         if (element.mealID != null && userInfoState.uID != null) {
-          console.log("reacheddddd");
           FoodService.addTrackedMeal(
             element.mealID,
             userInfoState.uID,
             formatDateToSql(date)
-          );
+          ).then(({ data }) => {
+            ProgressService.addToProgressWithCustomMeal(
+              element.mealID,
+              userInfoState.uID,
+              formatDateToSql(date)
+            );
+          });
         }
       }
     });
@@ -104,7 +116,13 @@ const ShoppingCart = () => {
             element.foodID,
             userInfoState.uID,
             formatDateToSql(date)
-          );
+          ).then(({ data }) => {
+            ProgressService.addToProgressWithIngredient(
+              element.foodID,
+              userInfoState.uID,
+              formatDateToSql(date)
+            );
+          });
         }
       }
     });
@@ -198,15 +216,25 @@ const ShoppingCart = () => {
                   {cartItems[0].foodID ? (
                     <>
                       <TextField
-                        label="Name"
+                        label="Meal Name"
                         value={name}
                         onChange={(event) => setName(event.target.value)}
                         fullWidth
                         margin="normal"
-                        required
                       />
                       <ButtonGroup>
                         <Button
+                          sx={{
+                            ":hover": {
+                              bgcolor: "white",
+                              color: "black",
+                            },
+                            mt: "10px",
+                            color: "#ffffff",
+                            minWidth: "170px",
+                            backgroundColor: "#ECB275",
+                            marginTop: 1.5,
+                          }}
                           variant="contained"
                           color="primary"
                           type="submit"
@@ -215,6 +243,17 @@ const ShoppingCart = () => {
                           Create / Track Meal
                         </Button>
                         <Button
+                          sx={{
+                            ":hover": {
+                              bgcolor: "white",
+                              color: "black",
+                            },
+                            mt: "10px",
+                            color: "#ffffff",
+                            minWidth: "170px",
+                            backgroundColor: "#ECB275",
+                            marginTop: 1.5,
+                          }}
                           variant="contained"
                           color="primary"
                           type="submit"
@@ -225,14 +264,17 @@ const ShoppingCart = () => {
                       </ButtonGroup>
                     </>
                   ) : (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      onClick={handleTrackMeals}
-                    >
-                      Track Meals
-                    </Button>
+                    <>
+                      <Box sx={{ height: "10px" }}></Box>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        onClick={handleTrackMeals}
+                      >
+                        Track Meals
+                      </Button>
+                    </>
                   )}
                 </TableContainer>
               </Stack>

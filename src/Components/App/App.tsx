@@ -7,6 +7,7 @@ import AddIngredient from "../TrackFoods/AddIngredient";
 import Home from "../Home/Home";
 import AccountInfo from "../AccountPage/AccountInfo";
 import ShoppingCart from "../Cart/ShoppingCart";
+import Progress from "../Progress/Progress";
 import Context from "../../store/context";
 import TrackedFoods from "../TrackedFoods/TrackedFoods";
 
@@ -41,6 +42,7 @@ const App = () => {
           <Route path="/homePage" element={<Home />}></Route>
           <Route path="/cart" element={<ShoppingCart />}></Route>
           <Route path="/trackedFoods" element={<TrackedFoods />}></Route>
+          <Route path="/progressView" element={<Progress />}></Route>
         </Routes>
       </BrowserRouter>
     </>

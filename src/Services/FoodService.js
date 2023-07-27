@@ -155,3 +155,12 @@ export function delSpecificMealFromEaten(id, uID, date) {
 export function getSizeOfMeals() {
   return axios.post(start_point + "/getSizeOfMeals");
 }
+
+export function getNumOfMeal(id, uID, date) {
+  const vals = {
+    id: id,
+    uID: uID,
+    date: date,
+  };
+  return axios.post(start_point + "/getNumOfMeal", vals);
+}

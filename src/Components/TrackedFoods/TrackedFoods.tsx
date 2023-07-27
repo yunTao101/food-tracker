@@ -17,6 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Grid from "@mui/material/Grid";
 import * as FoodService from "../../Services/FoodService";
+import * as ProgressService from "../../Services/ProgressService";
 import Context from "../../store/context";
 import { useNavigate } from "react-router-dom";
 import {
@@ -71,12 +72,14 @@ const TrackedFoods = () => {
         if (item.foodID) {
           FoodService.getIngredientsByFoodID(item.foodID).then(({ data }) => {
             item.name = data[0].name;
-            item.calories = Math.round(data[0].calories * item.quantity);
-            item.carbohydrate = Math.round(
-              data[0].carbohydrate * item.quantity
-            );
-            item.protein = Math.round(data[0].protein * item.quantity);
-            item.totalFat = Math.round(data[0].totalFat * item.quantity);
+            item.calories =
+              Math.round(data[0].calories * item.quantity * 100) / 100;
+            item.carbohydrate =
+              Math.round(data[0].carbohydrate * item.quantity * 100) / 100;
+            item.protein =
+              Math.round(data[0].protein * item.quantity * 100) / 100;
+            item.totalFat =
+              Math.round(data[0].totalFat * item.quantity * 100) / 100;
             setTempArray(tempArray.concat(data[0]));
           });
         }
@@ -92,14 +95,15 @@ const TrackedFoods = () => {
         if (item.mealID) {
           FoodService.getTotalValuesFromMeal(item.mealID).then(({ data }) => {
             item.name = data[0]["mealName"];
-            item.calories = Math.round(
-              data[0]["TotalCalories"] * item.quantity
-            );
-            item.carbohydrate = Math.round(
-              data[0]["TotalCarbohydrate"] * item.quantity
-            );
-            item.protein = Math.round(data[0]["TotalProtein"] * item.quantity);
-            item.totalFat = Math.round(data[0]["TotalFat"] * item.quantity);
+            item.calories =
+              Math.round(data[0]["TotalCalories"] * item.quantity * 100) / 100;
+            item.carbohydrate =
+              Math.round(data[0]["TotalCarbohydrate"] * item.quantity * 100) /
+              100;
+            item.protein =
+              Math.round(data[0]["TotalProtein"] * item.quantity * 100) / 100;
+            item.totalFat =
+              Math.round(data[0]["TotalFat"] * item.quantity * 100) / 100;
             console.log(data[0]);
             setTempArray2(tempArray2.concat(data[0]));
           });
@@ -187,15 +191,26 @@ const TrackedFoods = () => {
     if (currentTab.current === 0) {
       FoodService.delSpecificIngFromEaten(id, uID, formatDateToSql(date)).then(
         ({ data }) => {
-          handleGetFoodData();
+          ProgressService.removeFromProgressWithIngredient(
+            id,
+            userInfoState.uID,
+            formatDateToSql(date)
+          ).then(() => {
+            handleGetFoodData();
+          });
         }
       );
     } else if (currentTab.current === 1) {
-      console.log("jenfenfenwonf");
       FoodService.delSpecificMealFromEaten(id, uID, formatDateToSql(date)).then(
         ({ data }) => {
-          console.log("dwefwef");
-          handleGetFoodData();
+          ProgressService.removeFromProgressWithCustomMeal(
+            id,
+            userInfoState.uID,
+            formatDateToSql(date),
+            1
+          ).then(() => {
+            handleGetFoodData();
+          });
         }
       );
     }

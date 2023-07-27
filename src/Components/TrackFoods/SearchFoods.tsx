@@ -18,6 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Grid from "@mui/material/Grid";
 import * as FoodService from "../../Services/FoodService";
+import * as ProgressService from "../../Services/ProgressService";
 import Context from "../../store/context";
 import { useNavigate } from "react-router-dom";
 import {
@@ -47,8 +48,7 @@ const SearchFoods = () => {
     },
   ];
   const navigate = useNavigate();
-  const { cartState, actions } = useContext<any>(Context);
-  const { userInfoState } = useContext<any>(Context);
+  const { userInfoState, date, cartState, actions } = useContext<any>(Context);
   const [search, setSearch] = useState<String>("");
   const [foods, setFoods] = useState(originalRows);
   const [tabsIndex, setTabsIndex] = useState(0);
@@ -64,12 +64,26 @@ const SearchFoods = () => {
   const [pagination, setPagination] = useState(0);
   const updatedMealsList = useRef(true);
   const pageIndex = useRef(1);
+  const [mealAmount, setMealAmount] = useState(null);
+  const [deletedId, setDeletedId] = useState(null);
 
   useEffect(() => {
     if (cartState) {
       setCartList(cartState);
     }
   }, [cartState]);
+
+  // useEffect(() => {
+  //   if (mealAmount && deletedId) {
+  //     conosle.log("qunt")
+  //     ProgressService.removeFromProgressWithCustomMeal(
+  //       deletedId,
+  //       userInfoState.uID,
+  //       formatDateToSql(date),
+  //       mealAmount
+  //     );
+  //   }
+  // }, [mealAmount, deletedId]);
 
   useEffect(() => {
     if (userInfoState.uID) {
@@ -232,6 +246,17 @@ const SearchFoods = () => {
   const handleSearchChange = (event: any) => {
     setSearch(event.target.value);
   };
+
+  function formatDateToSql(date: Date) {
+    console.log(date);
+    const jsDate = new Date(date);
+
+    const year = jsDate.getFullYear();
+    const month = String(jsDate.getMonth() + 1).padStart(2, "0");
+    const day = String(jsDate.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
 
   const handleSearchClick = () => {
     let name = "";
@@ -428,7 +453,28 @@ const SearchFoods = () => {
           }
         });
       });
+      ProgressService.removeFromProgressWithIngredient(
+        id,
+        userInfoState.uID,
+        formatDateToSql(date)
+      );
     } else {
+      FoodService.getNumOfMeal(
+        id,
+        userInfoState.uID,
+        formatDateToSql(date)
+      ).then(({ data }) => {
+        setDeletedId(id);
+        setMealAmount(data[0].quantity);
+      });
+
+      ProgressService.removeFromProgressWithCustomMeal(
+        deletedId,
+        userInfoState.uID,
+        formatDateToSql(date),
+        1
+      );
+
       FoodService.delMeal(id, userInfoState.uID).then(() => {
         const filteredRows = filteredFoods.filter((row) => {
           return row.mealID.valueOf() != id;
