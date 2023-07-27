@@ -57,7 +57,7 @@ CREATE TABLE EatenIngredients(
       entryID INT NOT NULL AUTO_INCREMENT,
       date DATE,
 PRIMARY KEY(entryID),
-FOREIGN KEY (foodID) REFERENCES FoodIngredients(foodID),
+FOREIGN KEY (foodID) REFERENCES FoodIngredients(foodID) ON DELETE CASCADE,
 FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE);
 
 select * from FoodCustomMeals;
