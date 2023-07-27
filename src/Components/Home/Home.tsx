@@ -37,11 +37,9 @@ const Home = () => {
   const { actions, date } = useContext<any>(Context);
   const [dateVal, setDateVal] = useState(null);
 
-  useEffect( () => {  
-
+  useEffect(() => {
     setDateVal(date);
-
-  }, [date])
+  }, [date]);
 
   const handleTextFieldChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -102,15 +100,14 @@ const Home = () => {
 
   console.log(date);
 
-  const onDatePicked = (event: any) =>{
+  const onDatePicked = (event: any) => {
+    console.log(event);
 
-      console.log(event);
-
-      actions({
-        type: "setDate",
-        payload: event
-      })
-  }
+    actions({
+      type: "setDate",
+      payload: event,
+    });
+  };
 
   return (
     <>
@@ -189,7 +186,7 @@ const Home = () => {
                       EAT. TRACK. REPEAT.
                     </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker   
+                      <DatePicker
                         value={dayjs(dateVal)}
                         onChange={onDatePicked}
                       />
@@ -231,7 +228,7 @@ const Home = () => {
                         }}
                       >
                         <Button
-                          disabled = {dateVal == null}
+                          disabled={dateVal == null}
                           type="submit"
                           variant="contained"
                           size="large"
@@ -254,7 +251,7 @@ const Home = () => {
                           Track
                         </Button>
                         <Button
-                          disabled = {dateVal == null}
+                          disabled={dateVal == null}
                           type="submit"
                           variant="contained"
                           size="large"

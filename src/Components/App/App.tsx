@@ -6,7 +6,7 @@ import SearchFoods from "../TrackFoods/SearchFoods";
 import AddIngredient from "../TrackFoods/AddIngredient";
 import Home from "../Home/Home";
 import AccountInfo from "../AccountPage/AccountInfo";
-import Cart from "../Cart/ShoppingCart"
+import ShoppingCart from "../Cart/ShoppingCart";
 import Context from "../../store/context";
 import TrackedFoods from "../TrackedFoods/TrackedFoods";
 
@@ -23,6 +23,10 @@ const App = () => {
       type: "setDate",
       payload: JSON.parse(sessionStorage.getItem("date")!!),
     });
+    actions({
+      type: "setCart",
+      payload: JSON.parse(sessionStorage.getItem("cart")!!),
+    });
   }, []);
 
   return (
@@ -35,7 +39,7 @@ const App = () => {
           <Route path="/addIngredient" element={<AddIngredient />}></Route>
           <Route path="/accountInfo" element={<AccountInfo />}></Route>
           <Route path="/homePage" element={<Home />}></Route>
-          <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/cart" element={<ShoppingCart />}></Route>
           <Route path="/trackedFoods" element={<TrackedFoods />}></Route>
         </Routes>
       </BrowserRouter>

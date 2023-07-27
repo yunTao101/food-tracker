@@ -2,8 +2,8 @@ import { useState } from "react";
 
 const useGlobalState = () => {
   const [userInfoState, setUserInfoState] = useState("UserInfo");
-  const [cartState, setCartState] = useState("Cart");
   const [date, setDate] = useState(null);
+  const [cartState, setCartState] = useState([]);
 
   const actions = (action: any) => {
     const { type, payload } = action;
@@ -15,8 +15,8 @@ const useGlobalState = () => {
         sessionStorage.setItem("cart", JSON.stringify(payload));
         return setCartState(payload);
       case "setDate":
-          sessionStorage.setItem("date", JSON.stringify(payload));
-          return setDate(payload);
+        sessionStorage.setItem("date", JSON.stringify(payload));
+        return setDate(payload);
       default:
         return setUserInfoState;
     }
