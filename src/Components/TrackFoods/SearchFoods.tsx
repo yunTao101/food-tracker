@@ -64,26 +64,12 @@ const SearchFoods = () => {
   const [pagination, setPagination] = useState(0);
   const updatedMealsList = useRef(true);
   const pageIndex = useRef(1);
-  const [mealAmount, setMealAmount] = useState(null);
-  const [deletedId, setDeletedId] = useState(null);
 
   useEffect(() => {
     if (cartState) {
       setCartList(cartState);
     }
   }, [cartState]);
-
-  // useEffect(() => {
-  //   if (mealAmount && deletedId) {
-  //     conosle.log("qunt")
-  //     ProgressService.removeFromProgressWithCustomMeal(
-  //       deletedId,
-  //       userInfoState.uID,
-  //       formatDateToSql(date),
-  //       mealAmount
-  //     );
-  //   }
-  // }, [mealAmount, deletedId]);
 
   useEffect(() => {
     if (userInfoState.uID) {
@@ -464,28 +450,25 @@ const SearchFoods = () => {
         userInfoState.uID,
         formatDateToSql(date)
       ).then(({ data }) => {
-        setDeletedId(id);
-        setMealAmount(data[0].quantity);
-      });
-
-      ProgressService.removeFromProgressWithCustomMeal(
-        deletedId,
-        userInfoState.uID,
-        formatDateToSql(date),
-        1
-      );
-
-      FoodService.delMeal(id, userInfoState.uID).then(() => {
-        const filteredRows = filteredFoods.filter((row) => {
-          return row.mealID.valueOf() != id;
+        ProgressService.removeFromProgressWithCustomMeal(
+          id,
+          userInfoState.uID,
+          formatDateToSql(date),
+          data[0].quantity
+        ).then(({ data }) => {
+          FoodService.delMeal(id, userInfoState.uID).then(() => {
+            const filteredRows = filteredFoods.filter((row) => {
+              return row.mealID.valueOf() != id;
+            });
+            setfilteredFoods(filteredRows);
+          });
+          FoodService.delMealFromEaten(id, userInfoState.uID).then(() => {
+            const filteredRows = filteredFoods.filter((row) => {
+              return row.mealID.valueOf() != id;
+            });
+            setfilteredFoods(filteredRows);
+          });
         });
-        setfilteredFoods(filteredRows);
-      });
-      FoodService.delMealFromEaten(id, userInfoState.uID).then(() => {
-        const filteredRows = filteredFoods.filter((row) => {
-          return row.mealID.valueOf() != id;
-        });
-        setfilteredFoods(filteredRows);
       });
     }
   };
