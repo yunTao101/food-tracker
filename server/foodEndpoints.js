@@ -177,26 +177,6 @@ function routes(app) {
     });
   });
 
-  app.post("/addTrackedIngredient", (req, res) => {
-    const vals = req.body;
-    let sql = `INSERT INTO EatenIngredients (foodID, uID, date) VALUES (${vals.foodID}, ${vals.uID}, '${vals.date}')`;
-    con.query(sql, (err, results) => {
-      if (err) throw err;
-      console.log("Search results: ", results);
-      res.send(results);
-    });
-  });
-
-  app.post("/addTrackedMeals", (req, res) => {
-    const vals = req.body;
-    let sql = `INSERT INTO EatenCustomMeals (mealID, uID, date) VALUES (${vals.mealID}, ${vals.uID}, '${vals.date}')`;
-    con.query(sql, (err, results) => {
-      if (err) throw err;
-      console.log("Search results: ", results);
-      res.send(results);
-    });
-  });
-
   app.post("/getTotalMealValues", (req, res) => {
     const vals = req.body;
     let sql = `SELECT SUM(calories*FoodQuantity) as TotalCalories, SUM(protein*FoodQuantity) as TotalProtein, SUM(carbohydrate*FoodQuantity) as TotalCarbohydrate, SUM(totalFat*FoodQuantity) as TotalFat, mealName
@@ -275,6 +255,29 @@ function routes(app) {
     });
   });
 
+  // Add tracked ingredient
+  app.post("/addTrackedIngredient", (req, res) => {
+    const vals = req.body;
+    let sql = `INSERT INTO EatenIngredients (foodID, uID, date) VALUES (${vals.foodID}, ${vals.uID}, '${vals.date}')`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+  // Add tracked meal
+  app.post("/addTrackedMeals", (req, res) => {
+    const vals = req.body;
+    let sql = `INSERT INTO EatenCustomMeals (mealID, uID, date) VALUES (${vals.mealID}, ${vals.uID}, '${vals.date}')`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("Search results: ", results);
+      res.send(results);
+    });
+  });
+
+  // Untrack Ingredient
   app.post("/delSpecificIngFromEaten", (req, res) => {
     const vals = req.body;
     let sql = `DELETE FROM EatenIngredients WHERE uID = ${vals.uID} AND foodID = ${vals.id} AND date = '${vals.date}' LIMIT 1;`;
@@ -285,6 +288,7 @@ function routes(app) {
     });
   });
 
+  // Untrack Meal
   app.post("/delSpecificMealFromEaten", (req, res) => {
     const vals = req.body;
     let sql = `DELETE FROM EatenCustomMeals WHERE uID = ${vals.uID} AND mealID = ${vals.id} AND date = '${vals.date}' LIMIT 1;`;
