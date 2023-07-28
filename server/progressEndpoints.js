@@ -97,7 +97,7 @@ function routes(app) {
 
   app.post("/removeFromProgressWithIngredient", (req, res) => {
     const vals = req.body;
-    let sql = `CALL afterEatenIngredientDelete(${vals.foodID}, ${vals.uID}, "${vals.date}");`;
+    let sql = `CALL afterEatenIngredientDelete(${vals.foodID}, ${vals.uID}, "${vals.date}", ${vals.quantity});`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       res.send(results);
@@ -117,6 +117,15 @@ function routes(app) {
   app.post("/removeFromProgressWithCustomMeal", (req, res) => {
     const vals = req.body;
     let sql = `CALL beforeEatenCustomMealDelete(${vals.mealID}, ${vals.uID}, "${vals.date}", ${vals.quantity});`;
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      res.send(results);
+    });
+  });
+
+  app.post("/recalculateProgressInfo", (req, res) => {
+    const vals = req.body;
+    let sql = `CALL recalculateProgressInfo(${vals.uID}, "${vals.date}");`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       res.send(results);

@@ -164,3 +164,12 @@ export function getNumOfMeal(id, uID, date) {
   };
   return axios.post(start_point + "/getNumOfMeal", vals);
 }
+
+export function getNumOfIngredient(id, uID, date) {
+  const vals = {
+    id: id,
+    uID: uID,
+    date: date,
+  };
+  return axios.post(start_point + "/getNumOfIngredient", vals);
+}

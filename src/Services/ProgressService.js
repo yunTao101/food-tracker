@@ -42,8 +42,8 @@ export function addToProgressWithIngredient(foodID, uID, date) {
   return axios.post(start_point + "/addToProgressWithIngredient", vals);
 }
 
-export function removeFromProgressWithIngredient(foodID, uID, date) {
-  const vals = { foodID: foodID, uID: uID, date: date };
+export function removeFromProgressWithIngredient(foodID, uID, date, quantity) {
+  const vals = { foodID: foodID, uID: uID, date: date, quantity: quantity };
   return axios.post(start_point + "/removeFromProgressWithIngredient", vals);
 }
 
@@ -55,4 +55,9 @@ export function addToProgressWithCustomMeal(mealID, uID, date) {
 export function removeFromProgressWithCustomMeal(mealID, uID, date, quantity) {
   const vals = { mealID: mealID, uID: uID, date: date, quantity: quantity };
   return axios.post(start_point + "/removeFromProgressWithCustomMeal", vals);
+}
+
+export function recalculateProgressInfo(uID, date) {
+  const vals = { uID: uID, date: date };
+  return axios.post(start_point + "/recalculateProgressInfo", vals);
 }

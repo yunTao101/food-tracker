@@ -439,11 +439,6 @@ const SearchFoods = () => {
           }
         });
       });
-      ProgressService.removeFromProgressWithIngredient(
-        id,
-        userInfoState.uID,
-        formatDateToSql(date)
-      );
     } else {
       FoodService.getNumOfMeal(
         id,

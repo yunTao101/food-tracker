@@ -39,7 +39,7 @@ CREATE TABLE FoodCustomMeals(
     quantity INT, 
     uID INT NOT NULL,
     PRIMARY KEY(foodID, mealID),
-    FOREIGN KEY (foodID) REFERENCES FoodIngredients(foodID),
+    FOREIGN KEY (foodID) REFERENCES FoodIngredients(foodID) ON DELETE CASCADE,
     FOREIGN KEY (uID) REFERENCES Users(uID) ON DELETE CASCADE
 );
 
@@ -88,6 +88,18 @@ CREATE TABLE ProgressInfo(
 CREATE INDEX DiaryIndex ON ProgressInfo(uID, date);
 CREATE INDEX ProgressIndex ON ProgressInfo(uID, date, calories); 
 
+-- Procedure to recalculate progress info
+DELIMITER //
+CREATE PROCEDURE recalculateProgressInfo(userID INT, selectedDate DATE)
+    BEGIN
+    UPDATE ProgressInfo p, (SELECT SUM(i.calories * quantity) as calories, SUM(i.protein * quantity) as protein, SUM(i.carbohydrate * quantity) as carb, SUM(i.totalFat * quantity) as fat FROM FoodIngredients i, FoodCustomMeals c, EatenCustomMeals e WHERE e.mealID = c.mealID AND c.foodID = i.foodID AND e.uID = userID) as t,
+    (SELECT SUM(i.calories) as calories, SUM(i.protein) as protein, SUM(i.carbohydrate) as carb, SUM(i.totalFat) as fat FROM FoodIngredients i, EatenIngredients e WHERE e.foodID = i.foodID AND e.uID = userID) as q
+    SET p.calories = t.calories + q.calories, p.protein = t.protein + q.protein,
+        p.carbohydrate = t.carb + q.carb, p.totalFat = t.fat + q.fat
+    WHERE p.uID = userID AND p.date = selectedDate;
+    END//
+DELIMITER ; 
+
 -- Procedure to insert and update rows in ProgressInfo when foods are eaten
 DELIMITER //
 CREATE PROCEDURE afterEatenIngredientInsert(newFoodID INT, userID INT, addedDate DATE)
@@ -110,11 +122,11 @@ DELIMITER ;
 
 -- Procedure to update rows in ProgressInfo when ingredients are removed from eaten
 DELIMITER //
-CREATE PROCEDURE afterEatenIngredientDelete(newFoodID INT, userID INT, addedDate DATE)
+CREATE PROCEDURE afterEatenIngredientDelete(newFoodID INT, userID INT, addedDate DATE, foodQuantity INT)
 	BEGIN
 		UPDATE ProgressInfo p, FoodIngredients i
-            SET p.calories=p.calories - i.calories, p.protein = p.protein - i.protein,
-            p.carbohydrate = p.carbohydrate - i.carbohydrate, p.totalFat = p.totalFat - i.totalFat 
+            SET p.calories=p.calories - (i.calories * foodQuantity), p.protein = p.protein - (i.protein * foodQuantity),
+            p.carbohydrate = p.carbohydrate - (i.carbohydrate * foodQuantity), p.totalFat = p.totalFat - (i.totalFat * foodQuantity)
             WHERE i.foodID = newFoodID AND p.uID = userID AND addedDate = p.date;
 	END//
 DELIMITER ;

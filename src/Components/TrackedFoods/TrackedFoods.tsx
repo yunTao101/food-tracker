@@ -194,7 +194,8 @@ const TrackedFoods = () => {
           ProgressService.removeFromProgressWithIngredient(
             id,
             userInfoState.uID,
-            formatDateToSql(date)
+            formatDateToSql(date),
+            1
           ).then(() => {
             handleGetFoodData();
           });

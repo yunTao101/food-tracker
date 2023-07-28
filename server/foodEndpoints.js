@@ -318,6 +318,29 @@ function routes(app) {
       res.send(results);
     });
   });
+
+  app.post("/getNumOfIngredient", (req, res) => {
+    const vals = req.body;
+    let nameClause = "";
+    let whereClause = "";
+
+    if (vals.uID != null || vals.prefix != "") whereClause = "Where ";
+    whereClause += vals.uID != null ? "uID = " + vals.uID : "";
+    whereClause += ` AND foodID = ${vals.id}`;
+
+    let selectClause = " COUNT(foodID) as quantity, foodID, uID, date";
+    nameClause += (vals.uID != null ? " AND " : "") + `date = '${vals.date}'`;
+    let groupByClause = "GROUP BY foodID";
+
+    let sql = `select ${selectClause} from EatenIngredients ${whereClause} ${nameClause} ${groupByClause}`;
+
+    con.query(sql, (err, results) => {
+      if (err) throw err;
+      console.log("akshensssss", sql);
+      console.log("delete results: ", results);
+      res.send(results);
+    });
+  });
 }
 
 function parseJson() {
