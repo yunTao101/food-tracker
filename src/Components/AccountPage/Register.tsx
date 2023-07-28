@@ -119,6 +119,10 @@ const Register = () => {
                       type: "setUserInfo",
                       payload: data[0],
                     });
+                    actions({
+                      type: "setDate",
+                      payload: new Date(),
+                    });
                     navigate("/homePage");
                   } else {
                     console.log("ERRORR");

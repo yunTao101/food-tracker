@@ -1,94 +1,83 @@
-import React, { useState, useContext } from "react";
-import * as AccountService from "../../Services/AccountService";
+import React, { useState, useContext, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import backGroundImage from "../../Resources/white.jpeg";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
+import TimelineIcon from "@mui/icons-material/Timeline";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import LockOpenIcon from "@mui/icons-material/LockOpen";
 import Context from "../../store/context";
 import PersonIcon from "@mui/icons-material/Person";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import FoodDiary from "./FoodDiary";
+import dayjs from "dayjs";
+import * as ProgressService from "../../Services/ProgressService";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [firstName, setFirstName] = useState<String>();
-  const [lastName, setLastName] = useState<String>();
-  const [username, setUsername] = useState<String>();
-  const [email, setEmail] = useState<String>();
-  const [password, setPassword] = useState<String>();
-  const [age, setAge] = useState<number | null>();
-  const [gender, setGender] = useState<String>();
-  const [weight, setWeight] = useState<number | null>();
-  const [height, setHeight] = useState<number | null>();
-  const [desiredWeight, setDesiredWeight] = useState<number | null>();
   const [caloricGoal, setCaloricGoal] = useState<number | null>();
-  const { actions } = useContext<any>(Context);
+  const { userInfoState, actions, date } = useContext<any>(Context);
+  const [dateVal, setDateVal] = useState(null);
+  const [caloriesConsumed, setCaloriesConsumed] = useState<number>(0);
 
-  const handleTextFieldChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    if (event.target.id === "firstName") {
-      setFirstName(event.target.value);
-    } else if (event.target.id === "lastName") {
-      setLastName(event.target.value);
-    } else if (event.target.id === "username") {
-      setUsername(event.target.value);
-    } else if (event.target.id === "email") {
-      setEmail(event.target.value);
-    } else if (event.target.id === "password") {
-      setPassword(event.target.value);
-    } else if (event.target.id === "age") {
-      setAge(parseInt(event.target.value, 10));
-    } else if (event.target.id === "gender") {
-      setGender(event.target.value);
-    } else if (event.target.id === "weight") {
-      setWeight(parseInt(event.target.value, 10));
-    } else if (event.target.id === "height") {
-      setHeight(parseInt(event.target.value, 10));
-    } else if (event.target.id === "desiredWeight") {
-      setDesiredWeight(parseInt(event.target.value, 10));
-    } else if (event.target.id === "caloricGoal") {
-      setCaloricGoal(parseInt(event.target.value, 10));
+  useEffect(() => {
+    setDateVal(date);
+  }, [date]);
+
+  const caloriesLeft = () => {
+    if (caloricGoal == null) {
+      return "No Goal Set";
+    } else {
+      const left = caloricGoal - caloriesConsumed;
+      if (left < 0) {
+        return 0;
+      }
+      return left;
     }
   };
 
-  const registerUser = () => {
-    AccountService.registerAccount(
-      "User",
-      firstName,
-      lastName,
-      username,
-      email,
-      password,
-      age,
-      gender,
-      weight,
-      height,
-      desiredWeight,
-      caloricGoal
-    ).then(() => {
-      AccountService.loginAccount(username, password).then(({ data }) => {
-        if (data.length !== 0) {
-          actions({
-            type: "setUserInfo",
-            payload: data[0],
-          });
-          navigate("/homePage");
+  useEffect(() => {
+    setCaloricGoal(userInfoState.caloricGoal);
+    if (dateVal) {
+      ProgressService.getcurrentCalories(
+        userInfoState.uID,
+        formatDateToSql(dateVal)
+      ).then(({ data }) => {
+        // console.log(data[0][0]["calories"]);
+        if (data[0].length > 0) {
+          setCaloriesConsumed(data[0][0]["calories"]);
         } else {
-          console.log("ERRORR");
+          setCaloriesConsumed(0);
         }
       });
+    }
+  }, [caloricGoal, dateVal, userInfoState.caloricGoal, userInfoState.uID]);
+
+  function formatDateToSql(date: Date) {
+    console.log(date);
+    const jsDate = new Date(date);
+
+    const year = jsDate.getFullYear();
+    const month = String(jsDate.getMonth() + 1).padStart(2, "0");
+    const day = String(jsDate.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
+  console.log(date);
+
+  const onDatePicked = (event: any) => {
+    console.log(event);
+
+    actions({
+      type: "setDate",
+      payload: event,
     });
   };
 
@@ -140,6 +129,21 @@ const Home = () => {
                   <PersonIcon sx={{ color: "black" }} />
                 </Avatar>
               </IconButton>
+              <IconButton
+                style={{
+                  position: "absolute",
+                  top: "1%",
+                  right: "1%",
+                  color: "white",
+                }}
+                onClick={() => {
+                  navigate("/progressView");
+                }}
+              >
+                <Avatar sx={{ bgcolor: "#ffffff" }}>
+                  <TimelineIcon sx={{ color: "black" }} />
+                </Avatar>
+              </IconButton>
               <ThemeProvider
                 theme={createTheme({ palette: { mode: "light" } })}
               >
@@ -169,7 +173,10 @@ const Home = () => {
                       EAT. TRACK. REPEAT.
                     </Typography>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DatePicker />
+                      <DatePicker
+                        value={dayjs(dateVal)}
+                        onChange={onDatePicked}
+                      />
                     </LocalizationProvider>
                   </Box>
                   <Grid container spacing={1}>
@@ -188,10 +195,10 @@ const Home = () => {
                         }}
                       >
                         <Typography variant="h6" component="span" color="black">
-                          Calories Consumed: 239
+                          Calories Consumed: {caloriesConsumed}
                         </Typography>
                         <Typography variant="h6" component="span" color="black">
-                          Calories Left: 1900
+                          Calories Left: {caloriesLeft()}
                         </Typography>
                       </Box>
                     </Grid>
@@ -208,6 +215,7 @@ const Home = () => {
                         }}
                       >
                         <Button
+                          disabled={dateVal == null}
                           type="submit"
                           variant="contained"
                           size="large"
@@ -230,6 +238,7 @@ const Home = () => {
                           Track
                         </Button>
                         <Button
+                          disabled={dateVal == null}
                           type="submit"
                           variant="contained"
                           size="large"
@@ -245,7 +254,9 @@ const Home = () => {
                             minWidth: "170px",
                             backgroundColor: "#ECB275",
                           }}
-                          onClick={() => {}}
+                          onClick={() => {
+                            navigate("/trackedFoods");
+                          }}
                         >
                           View Tracked
                         </Button>
@@ -296,6 +307,7 @@ const Home = () => {
           </Grid>
         </Box>
       </Box>
+      <FoodDiary />
     </>
   );
 };

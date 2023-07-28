@@ -40,6 +40,10 @@ const Login = () => {
           payload: data[0],
         });
         setLoginError(false);
+        actions({
+          type: "setDate",
+          payload: new Date(),
+        });
         navigate("/homePage");
       } else {
         setLoginError(true);
