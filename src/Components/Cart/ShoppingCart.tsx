@@ -44,7 +44,7 @@ const ShoppingCart = () => {
   }, [cartState]);
 
   const handleTrackAndAddMeal = () => {
-    FoodService.getSizeOfMeals().then(({ data }) => {
+    FoodService.getSizeOfMeals(userInfoState.uID).then(({ data }) => {
       const temp = JSON.parse(JSON.stringify(data));
       const count = parseInt(temp[0]["count(DISTINCT mealID)"]) + 1;
       console.log("meals: ", count);

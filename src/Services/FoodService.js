@@ -26,8 +26,9 @@ export function getTotalMyIngrediantsCount(uID) {
   return axios.post(start_point + "/getMyIngredientsTotalCount", vals);
 }
 
-export function getTotalMyMealsCount() {
-  return axios.post(start_point + "/getMyMealsTotalCount");
+export function getTotalMyMealsCount(uID) {
+  const vals = { uID };
+  return axios.post(start_point + "/getMyMealsTotalCount", vals);
 }
 
 export function getIngrediantsWithLimit(startIndex, range) {
@@ -152,8 +153,11 @@ export function delSpecificMealFromEaten(id, uID, date) {
   return axios.post(start_point + "/delSpecificMealFromEaten", vals);
 }
 
-export function getSizeOfMeals() {
-  return axios.post(start_point + "/getSizeOfMeals");
+export function getSizeOfMeals(uID) {
+  const vals = {
+    uID: uID,
+  };
+  return axios.post(start_point + "/getSizeOfMeals", vals);
 }
 
 export function getNumOfMeal(id, uID, date) {

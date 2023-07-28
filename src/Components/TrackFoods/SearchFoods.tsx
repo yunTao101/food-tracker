@@ -91,7 +91,7 @@ const SearchFoods = () => {
         }
       );
 
-      FoodService.getTotalMyMealsCount().then(({ data }) => {
+      FoodService.getTotalMyMealsCount(userInfoState.uID).then(({ data }) => {
         if (data.length !== 0) {
           if (data[0]["count(*)"] != 0)
             setMyMealsPageCount(Math.ceil(data[0]["count(*)"] / 25));
@@ -425,19 +425,49 @@ const SearchFoods = () => {
 
   const handleDelete = (id: any, uID: any, name: any) => {
     if (currentTab.current == 0 || currentTab.current == 1) {
-      FoodService.delIngred(uID, id).then(() => {
-        console.log(filteredFoods);
-        const filteredRows = filteredFoods.filter((row) => {
-          return row.foodID.valueOf() != id;
-        });
-        setfilteredFoods(filteredRows);
-        FoodService.getIngredients(userInfoState.uID).then(({ data }) => {
-          if (data.length !== 0) {
-            setFoods(data);
-          } else {
-            console.log("Foods not loaded");
-          }
-        });
+      FoodService.getNumOfIngredient(
+        id,
+        userInfoState.uID,
+        formatDateToSql(date)
+      ).then(({ data }) => {
+        if (data.length > 0) {
+          ProgressService.removeFromProgressWithIngredient(
+            id,
+            userInfoState.uID,
+            formatDateToSql(date),
+            data[0].quantity
+          ).then(({ data }) => {
+            FoodService.delIngred(uID, id).then(() => {
+              console.log(filteredFoods);
+              const filteredRows = filteredFoods.filter((row) => {
+                return row.foodID.valueOf() != id;
+              });
+              setfilteredFoods(filteredRows);
+              FoodService.getIngredients(userInfoState.uID).then(({ data }) => {
+                if (data.length !== 0) {
+                  setFoods(data);
+                } else {
+                  console.log("Foods not loaded");
+                }
+              });
+            });
+          });
+        } else {
+          FoodService.delIngred(uID, id).then(() => {
+            console.log(filteredFoods);
+            const filteredRows = filteredFoods.filter((row) => {
+              return row.foodID.valueOf() != id;
+            });
+            setfilteredFoods(filteredRows);
+            FoodService.getIngredients(userInfoState.uID).then(({ data }) => {
+              if (data.length !== 0) {
+                setFoods(data);
+              } else {
+                console.log("Foods not loaded");
+              }
+            });
+          });
+        }
       });
     } else {
       FoodService.getNumOfMeal(
@@ -445,12 +475,28 @@ const SearchFoods = () => {
         userInfoState.uID,
         formatDateToSql(date)
       ).then(({ data }) => {
-        ProgressService.removeFromProgressWithCustomMeal(
-          id,
-          userInfoState.uID,
-          formatDateToSql(date),
-          data[0].quantity
-        ).then(({ data }) => {
+        if (data.length > 0) {
+          console.log("jack");
+          ProgressService.removeFromProgressWithCustomMeal(
+            id,
+            userInfoState.uID,
+            formatDateToSql(date),
+            data[0].quantity
+          ).then(({ data }) => {
+            FoodService.delMeal(id, userInfoState.uID).then(() => {
+              const filteredRows = filteredFoods.filter((row) => {
+                return row.mealID.valueOf() != id;
+              });
+              setfilteredFoods(filteredRows);
+            });
+            FoodService.delMealFromEaten(id, userInfoState.uID).then(() => {
+              const filteredRows = filteredFoods.filter((row) => {
+                return row.mealID.valueOf() != id;
+              });
+              setfilteredFoods(filteredRows);
+            });
+          });
+        } else {
           FoodService.delMeal(id, userInfoState.uID).then(() => {
             const filteredRows = filteredFoods.filter((row) => {
               return row.mealID.valueOf() != id;
@@ -463,7 +509,7 @@ const SearchFoods = () => {
             });
             setfilteredFoods(filteredRows);
           });
-        });
+        }
       });
     }
   };

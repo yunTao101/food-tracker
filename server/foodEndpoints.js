@@ -62,7 +62,7 @@ function routes(app) {
 
   app.post("/getMyMealsTotalCount", (req, res) => {
     const vals = req.body;
-    let sql = `select count(*) from FoodCustomMeals Group By mealID, name`;
+    let sql = `select count(*) from FoodCustomMeals Where uID = ${vals.uID} Group By mealID, name`;
     con.query(sql, (err, results) => {
       if (err) throw err;
       console.log("Search results: ", results);
@@ -212,7 +212,8 @@ function routes(app) {
   });
 
   app.post("/getSizeOfMeals", (req, res) => {
-    let sql = `select count(DISTINCT mealID) from FoodCustomMeals;`;
+    const vals = req.body;
+    let sql = `select count(DISTINCT mealID) from FoodCustomMeals WHERE uID = ${vals.uID};`;
     con.query(sql, (err, results) => {
       if (err) {
         console.log("ERROR: ", results);
