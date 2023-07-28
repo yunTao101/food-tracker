@@ -209,32 +209,6 @@ CREATE PROCEDURE yearlyCalorieCount(userID INT, year INT)
 DELIMITER ;
 
 
-
-
-select * from ProgressInfo;
-select * from FoodIngredients;
-select count(*) from FoodIngredients;
-select * from Users;
-INSERT INTO Users VALUES (1, "Admin", "Admin", "Account", "admin1", "admin1", "admin1FoodTracker@gmmail.com", null, null, null, null, null, null);
-INSERT INTO Users VALUES (2, "User", "User1", "User1", "user1", "user1", "user1@gmail.com", 21, "F", 130, 160, 125, 1800);
-
-
-INSERT INTO ProgressInfo VALUES (1, "2023-01-01", 1565, 79.13, 11.3, 60.4); 
-INSERT INTO ProgressInfo VALUES (1, "2023-01-22", 3450, 93.42, 8.4, 40.5);
-INSERT INTO ProgressInfo VALUES (1, "2023-03-21", 2382, 87.43, 10.4, 37.6); 
-INSERT INTO ProgressInfo VALUES (1, "2023-04-09", 5374, 234.66, 12.3, 52.3); 
-INSERT INTO ProgressInfo VALUES (1, "2023-05-04", 2335, 433.66, 13.7, 131.5); 
-INSERT INTO ProgressInfo VALUES (1, "2023-06-17", 1056, 101.66, 10.0, 50.5); 
-INSERT INTO ProgressInfo VALUES (1, "2023-07-11", 233, 43.66, 1.7, 11.5);
-INSERT INTO ProgressInfo VALUES (1, "2023-07-24", 233, 143.66, 1.7, 11.5);
-INSERT INTO ProgressInfo VALUES (1, "2023-07-20", 233, 43.66, 10.7, 11.5);
-INSERT INTO ProgressInfo VALUES (1, "2023-07-26", 233, 33, 107, 75);
-INSERT INTO ProgressInfo VALUES (1, "2023-08-10", 1056, 101.66, 10.0, 50.5); 
-INSERT INTO ProgressInfo VALUES (1, "2023-08-11", 233, 43.66, 1.7, 11.5);
-
-
-
-
 create user 'cs348admin'@'localhost' identified by 'admin';
 grant all on foodData.* to 'cs348admin'@'localhost';	
 alter user 'cs348admin'@'localhost' identified with mysql_native_password by 'admin';
