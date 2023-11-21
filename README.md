@@ -17,7 +17,7 @@ First the initialize.sql file will create the empty food ingredients table. Then
 How to run the production dataset:
 Using SQL Workbench, use table import wizard and import nutrition.csv, selecting only columns Unknown Column, name, serving_size, total_fat, calories, protein, carbohydrate, sugars. Then Name the table Production.
 
-Features implemented in this milestone:
+Features implemented:
 
 Login/register/update account:
 The feature implementation for this milestone consists of three main features. It consists of the login feature, ingredients feature (add / delete custom ingredients), meals feature (add / delete custom meals). Users can create their account, log in, and update their user settings accordingly. They can also delete their account as well and log out of their account too. Insert, update and delete queries are all utilized in this feature implementation.
